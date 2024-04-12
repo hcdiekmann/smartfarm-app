@@ -1,6 +1,6 @@
-import { LoginForm } from '@/components/LoginForm';
+import { ForgotPasswordForm } from '@/components/ForgotPasswordForm';
 
-const LoginPage = () => {
+const ForgotPasswordPage = () => {
     return (
         <div className='min-h-screen bg-gradient-custom flex flex-col justify-center px-4 sm:px-6 lg:px-8'>
             <div>
@@ -20,11 +20,11 @@ const LoginPage = () => {
                 </div>
             </div>
             <div className="mt-8 space-y-6">
-                <LoginForm />
+                <ForgotPasswordForm />
             </div>
         </div>
     );
 };
 
-export default LoginPage;
+export default ForgotPasswordPage;
 

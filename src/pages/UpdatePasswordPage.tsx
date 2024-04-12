@@ -1,6 +1,7 @@
-import { LoginForm } from '@/components/LoginForm';
+import React from 'react';
+import { UpdatePasswordForm } from '@/components/UpdatePasswordForm';
 
-const LoginPage = () => {
+const UpdatePasswordPage = () => {
     return (
         <div className='min-h-screen bg-gradient-custom flex flex-col justify-center px-4 sm:px-6 lg:px-8'>
             <div>
@@ -20,11 +21,11 @@ const LoginPage = () => {
                 </div>
             </div>
             <div className="mt-8 space-y-6">
-                <LoginForm />
+                <UpdatePasswordForm />
             </div>
         </div>
     );
 };
 
-export default LoginPage;
+export default UpdatePasswordPage;
 
