@@ -5,6 +5,7 @@ import PrivateRoute from './components/PrivateRoute';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import UpdatePasswordPage from './pages/UpdatePasswordPage';
 import SignupPage from './pages/SignupPage';
+import NotFoundPage from './pages/404';
 
 const Router = () => {
   return (
@@ -15,6 +16,7 @@ const Router = () => {
         <Route path="/forgot-password" element={<ForgotPasswordPage/>} />
         <Route path="/" element={<PrivateRoute><HomePage /></PrivateRoute>} />
         <Route path="/update-password" element={<UpdatePasswordPage/>} /> {/* Make Private  */}
+        <Route path="*" element={<NotFoundPage/>} />
       </Routes>
     </BrowserRouter>
   );
