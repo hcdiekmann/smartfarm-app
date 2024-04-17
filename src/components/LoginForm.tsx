@@ -69,16 +69,16 @@ export const LoginForm = () => {
                         name="password"
                         render={({ field, fieldState }) => (
                             <FormItem>
-                                <FormLabel>Password</FormLabel>
-                                <FormControl>
-                                    <Input type="password" placeholder="Enter your password" {...field} />
-                                </FormControl>
-                                <FormMessage>{fieldState.error?.message}</FormMessage>
-                                <div className="text-right">
+                                <div className="flex justify-between items-center">
+                                    <FormLabel>Password</FormLabel>
                                     <Link to="/forgot-password" className="text-sm font-small text-[#00431C] hover:underline">
                                         Forgot password?
                                     </Link>
                                 </div>
+                                <FormControl>
+                                    <Input type="password" placeholder="Enter your password" {...field} />
+                                </FormControl>
+                                <FormMessage>{fieldState.error?.message}</FormMessage>
                             </FormItem>
                         )}
                     />

@@ -1,4 +1,4 @@
-import { LoginForm } from '@/components/LoginForm';
+import { SignupForm } from "@/components/SignupForm";
 import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
@@ -21,11 +21,11 @@ const LoginPage = () => {
                 </div>
             </div>
             <div className="mt-8 space-y-6">
-                <LoginForm />
+                <SignupForm/>
                 <div className=" text-center text-white text-sm pb-4">
-                Don&apos;t have an account?{" "}
-                <Link to="/signup" className="underline">
-                    Sign up
+                Already have an account?{" "}
+                <Link to="/login" className="underline">
+                    Sign in
                 </Link>
             </div>
             </div>

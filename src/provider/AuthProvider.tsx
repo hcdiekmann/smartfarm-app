@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { User, AuthError, AuthTokenResponsePassword, UserResponse } from '@supabase/supabase-js';
+import { User, AuthError, AuthTokenResponsePassword, UserResponse, AuthResponse } from '@supabase/supabase-js';
 import { supabase } from '../api/supabaseClient';
 
 interface AuthContextType {
   user: User | null;
+  signUp: (firstName: string, lastName: string, email: string, password: string) => Promise<AuthResponse>;
   updatePassword: (password: string) => Promise<UserResponse>;
   signIn: (email: string, password: string) => Promise<AuthTokenResponsePassword>;
   signOut: () => Promise<{ error: AuthError | null }>;
@@ -66,22 +67,40 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   }, []);
 
-  const value = {
-    signIn: (email: string, password: string) => supabase.auth.signInWithPassword({ email, password }),
-    signOut: () => supabase.auth.signOut(),
-    resetPassword: (email: string) => supabase.auth.resetPasswordForEmail(email, { redirectTo: 'http://localhost:5173/update-password' }),
-    user,
-    updatePassword: (newPassword: string) => supabase.auth.updateUser({ password: newPassword }),
+  const signUp = async (firstName: string, lastName: string, email: string, password: string) => {
+    const authResponse = await supabase.auth.signUp({ email, password });
+    if (authResponse.data.user) {
+      await setUserName(firstName, lastName);
+    }
+    return authResponse;
+  }
+
+  const setUserName = async (firstName: string, lastName: string) => {
+    return await supabase.auth.updateUser({
+      data: {
+        first_name: firstName,
+        last_name: lastName,
+      },
+    })
+  }	
+
+    const value = {
+      user,
+      signUp: signUp,
+      signIn: (email: string, password: string) => supabase.auth.signInWithPassword({ email, password }),
+      signOut: () => supabase.auth.signOut(),
+      resetPassword: (email: string) => supabase.auth.resetPasswordForEmail(email, { redirectTo: '/update-password' }),
+      updatePassword: (newPassword: string) => supabase.auth.updateUser({ password: newPassword }),
+    };
+
+    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
-
-// Custom hook to use auth context
-export const useAuth = (): AuthContextType => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-};
+  // Custom hook to use auth context
+  export const useAuth = (): AuthContextType => {
+    const context = useContext(AuthContext);
+    if (context === undefined) {
+      throw new Error('useAuth must be used within an AuthProvider');
+    }
+    return context;
+  };
