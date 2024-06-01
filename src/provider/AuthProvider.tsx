@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { User, AuthError, AuthTokenResponsePassword, UserResponse, AuthResponse } from '@supabase/supabase-js';
+import { User, AuthError, AuthTokenResponsePassword, UserResponse, AuthResponse, OAuthResponse } from '@supabase/supabase-js';
 import { supabase } from '../api/supabaseClient';
 
 interface AuthContextType {
@@ -7,6 +7,7 @@ interface AuthContextType {
   signUp: (firstName: string, lastName: string, email: string, password: string) => Promise<AuthResponse>;
   updatePassword: (password: string) => Promise<UserResponse>;
   signIn: (email: string, password: string) => Promise<AuthTokenResponsePassword>;
+  signInWithGoogle: () => Promise<OAuthResponse>;
   signOut: () => Promise<{ error: AuthError | null }>;
   resetPassword: (email: string) => Promise<{
     data: {};
@@ -23,7 +24,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const getSession = async () => {
       const { data: { session }, error } = await supabase.auth.getSession()
       setUser(session?.user ?? null);
       if (error) {
@@ -31,13 +32,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     };
 
-    fetchData();
+    getSession();
 
     const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
 
       switch (event) {
         case 'INITIAL_SESSION':
-          console.log('Initial session');
           setUser(session?.user ?? null);
           break;
         case 'SIGNED_IN':
@@ -75,6 +75,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return authResponse;
   }
 
+  const signInWithGoogle = async () => {
+    return await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/auth/v1/callback`,
+      },
+    });
+  };
+
+
   const setUserName = async (firstName: string, lastName: string) => {
     return await supabase.auth.updateUser({
       data: {
@@ -88,6 +98,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       user,
       signUp: signUp,
       signIn: (email: string, password: string) => supabase.auth.signInWithPassword({ email, password }),
+      signInWithGoogle,
       signOut: () => supabase.auth.signOut(),
       resetPassword: (email: string) => supabase.auth.resetPasswordForEmail(email, { redirectTo: '/update-password' }),
       updatePassword: (newPassword: string) => supabase.auth.updateUser({ password: newPassword }),

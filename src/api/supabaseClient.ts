@@ -1,6 +1,6 @@
 import { SupabaseClient, createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = 'http://localhost:8000' // kong gateway
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAic3VwYWJhc2UiLAogICJpYXQiOiAxNzEyODcyODAwLAogICJleHAiOiAxODcwNjM5MjAwCn0.bXY-GS1uOjpenL_OmuQ_gnIbx4rZeMvIvLgiDMCaUa0'
-
+const supabaseUrl = 'https://amvlpfduasiuxfoevnry.supabase.co'
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFtdmxwZmR1YXNpdXhmb2V2bnJ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTcxODA2NjUsImV4cCI6MjAzMjc1NjY2NX0.2E5HQqRyosrO41oWi7AyDBvoksklHBwEqbZYsyV8jWw'
+            
 export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseAnonKey);

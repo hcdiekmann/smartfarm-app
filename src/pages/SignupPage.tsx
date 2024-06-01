@@ -25,7 +25,7 @@ const LoginPage = () => {
                 <div className=" text-center text-white text-sm pb-4">
                 Already have an account?{" "}
                 <Link to="/login" className="underline">
-                    Sign in
+                     Login
                 </Link>
             </div>
             </div>

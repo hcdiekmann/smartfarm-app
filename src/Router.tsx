@@ -6,6 +6,7 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import UpdatePasswordPage from './pages/UpdatePasswordPage';
 import SignupPage from './pages/SignupPage';
 import NotFoundPage from './pages/404';
+import AuthCallback from './pages/AuthCallback';
 
 const Router = () => {
   return (
@@ -13,6 +14,7 @@ const Router = () => {
       <Routes>
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/auth/v1/callback" element={<AuthCallback />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage/>} />
         <Route path="/" element={<PrivateRoute><HomePage /></PrivateRoute>} />
         <Route path="/update-password" element={<UpdatePasswordPage/>} /> {/* Make Private  */}
