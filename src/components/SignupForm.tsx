@@ -14,6 +14,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/provider/AuthProvider";
 import { toast } from "sonner";
+import { useState } from "react";
+import { IconLoader2 } from "@tabler/icons-react";
 
 const signupFormSchema = z.object({
   firstName: z.string().min(1, "First name is required."),
@@ -30,6 +32,8 @@ type SignupFormInputs = z.infer<typeof signupFormSchema>;
 export const SignupForm = () => {
   const { signUp, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<SignupFormInputs>({
     resolver: zodResolver(signupFormSchema),
     defaultValues: {
@@ -41,12 +45,14 @@ export const SignupForm = () => {
   });
 
   const onSubmit = async (values: SignupFormInputs) => {
+    setIsLoading(true);
     const { error, data } = await signUp(
       values.firstName,
       values.lastName,
       values.email,
       values.password
     );
+    setIsLoading(false);
     if (error) {
       toast.error("Signup failed", {
         duration: 4000,
@@ -156,12 +162,20 @@ export const SignupForm = () => {
             )}
           />
           {/* Submit button */}
+          {!isLoading ? (
           <Button
             type="submit"
             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
           >
             Sign up
-          </Button>
+          </Button> ) : (
+          <Button 
+            disabled
+            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
+          >
+            <IconLoader2 stroke={2} className="mr-2 h-4 w-4 animate-spin" />
+            Signing up
+          </Button>)}
         </form>
       </Form>
       <div className="relative">

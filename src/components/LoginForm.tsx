@@ -1,8 +1,10 @@
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
+import { IconLoader2 } from '@tabler/icons-react';
 import { toast } from "sonner";
 import {
   Form,
@@ -30,6 +32,8 @@ type LoginFormInputs = z.infer<typeof formSchema>;
 export const LoginForm = () => {
   const { signIn, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<LoginFormInputs>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,7 +43,9 @@ export const LoginForm = () => {
   });
 
   const onSubmit = async (values: LoginFormInputs) => {
+    setIsLoading(true);
     const { error } = await signIn(values.email, values.password);
+    setIsLoading(false);
     if (error) {
       toast.error("Login failed", {
         duration: 4000,
@@ -111,13 +117,21 @@ export const LoginForm = () => {
               </FormItem>
             )}
           />
-          {/* Submit button */}
+          {/* Login button */}
+          {!isLoading ? (
           <Button
             type="submit"
             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
           >
             Login
-          </Button>
+          </Button> ) : (
+          <Button 
+            disabled
+            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
+          >
+            <IconLoader2 stroke={2} className="mr-2 h-4 w-4 animate-spin" />
+            Logging in
+          </Button>)}
         </form>
       </Form>
       <div className="relative">
