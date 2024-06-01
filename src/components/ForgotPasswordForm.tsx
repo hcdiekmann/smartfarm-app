@@ -65,9 +65,9 @@ export const ForgotPasswordForm = () => {
             ) : (
                 <>
                     <h1 className="text-center text-3xl font-extrabold text-[#00431C]">Password reset link sent</h1>
-                    <div class="flex flex-col items-center justify-center">
+                    <div className="flex flex-col items-center justify-center">
                         <FaEnvelope size={48} color="#00431C" />
-                        <p class="text-lg text-center">Please check your inbox to proceed with resetting your password.</p>
+                        <p className="text-lg text-center">Please check your inbox to proceed with resetting your password.</p>
                     </div>
                 </>
             )}

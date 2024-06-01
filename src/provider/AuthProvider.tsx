@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, AuthError, AuthTokenResponsePassword, UserResponse, AuthResponse, OAuthResponse } from '@supabase/supabase-js';
-import { supabase } from '../api/supabaseClient';
+import { supabase } from '../api/supabase/client';
 
 interface AuthContextType {
   user: User | null;
@@ -46,6 +46,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           break;
         case 'SIGNED_OUT':
           console.log('User signed out');
+          setUser(null);
           break;
         case 'PASSWORD_RECOVERY':
           console.log('Password recovery mode');
