@@ -1,4 +1,4 @@
-import {HashRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import PrivateRoute from './components/PrivateRoute';
@@ -10,7 +10,7 @@ import AuthCallback from './pages/AuthCallback';
 
 const Router = () => {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -20,7 +20,7 @@ const Router = () => {
         <Route path="/update-password" element={<UpdatePasswordPage/>} /> {/* Make Private  */}
         <Route path="*" element={<NotFoundPage/>} />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 };
 
