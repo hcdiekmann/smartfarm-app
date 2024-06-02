@@ -1,7 +1,7 @@
 import { SignupForm } from "@/components/SignupForm";
 import { Link } from 'react-router-dom';
 
-const LoginPage = () => {
+const SignupPage = () => {
     return (
         <div className='min-h-screen bg-gradient-custom flex flex-col justify-center px-4 sm:px-6 lg:px-8'>
             <div>
@@ -33,4 +33,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default SignupPage;

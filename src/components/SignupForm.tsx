@@ -25,6 +25,10 @@ const signupFormSchema = z.object({
     .email({ message: "Invalid email address." })
     .min(1, "Email is required."),
   password: z.string().min(6, "Password must be at least 6 characters."),
+  confirmPassword: z.string().min(6, "Password must be at least 6 characters."),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords do not match",
+  path: ["confirmPassword"],
 });
 
 type SignupFormInputs = z.infer<typeof signupFormSchema>;
@@ -41,6 +45,7 @@ export const SignupForm = () => {
       lastName: "",
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
@@ -62,7 +67,7 @@ export const SignupForm = () => {
     if (data.user) {
       toast.info("Signup successful", {
         duration: 5000,
-        description: "Check your email to confirm your account.",
+        description: "Check your email to confirm your account",
       });
       navigate("/login");
     } else {
@@ -88,7 +93,7 @@ export const SignupForm = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           {/* Name fields row */}
-          <div className="flex justify-between space-x-4">
+          <div className="flex flex-col sm:flex-row justify-between space-y-4 sm:space-y-0 sm:space-x-4">
             {/* First name input field */}
             <FormField
               control={form.control}
@@ -99,6 +104,7 @@ export const SignupForm = () => {
                   <FormControl>
                     <Input
                       type="text"
+                      className="text-md"
                       placeholder="Enter your first name"
                       {...field}
                     />
@@ -117,6 +123,7 @@ export const SignupForm = () => {
                   <FormControl>
                     <Input
                       type="text"
+                      className="text-md"
                       placeholder="Enter your last name"
                       {...field}
                     />
@@ -126,7 +133,7 @@ export const SignupForm = () => {
               )}
             />
           </div>
-          {/* Email and password fields */}
+          {/* Email field */}
           <FormField
             control={form.control}
             name="email"
@@ -136,6 +143,7 @@ export const SignupForm = () => {
                 <FormControl>
                   <Input
                     type="email"
+                    className="text-md"
                     placeholder="Enter your email"
                     {...field}
                   />
@@ -144,6 +152,7 @@ export const SignupForm = () => {
               </FormItem>
             )}
           />
+          {/* Password field */}
           <FormField
             control={form.control}
             name="password"
@@ -153,7 +162,27 @@ export const SignupForm = () => {
                 <FormControl>
                   <Input
                     type="password"
-                    placeholder="Enter your new password"
+                    className="text-md"
+                    placeholder="Enter a new password"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage>{fieldState.error?.message}</FormMessage>
+              </FormItem>
+            )}
+          />
+          {/* Confirm Password field */}
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field, fieldState }) => (
+              <FormItem>
+                <FormLabel>Confirm Password</FormLabel>
+                <FormControl>
+                  <Input
+                    type="password"
+                    className="text-md"
+                    placeholder="Confirm your new password"
                     {...field}
                   />
                 </FormControl>
@@ -163,19 +192,21 @@ export const SignupForm = () => {
           />
           {/* Submit button */}
           {!isLoading ? (
-          <Button
-            type="submit"
-            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
-          >
-            Sign up
-          </Button> ) : (
-          <Button 
-            disabled
-            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
-          >
-            <IconLoader2 stroke={2} className="mr-2 h-4 w-4 animate-spin" />
-            Signing up
-          </Button>)}
+            <Button
+              type="submit"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
+            >
+              Sign up
+            </Button>
+          ) : (
+            <Button
+              disabled
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
+            >
+              <IconLoader2 stroke={2} className="mr-2 h-4 w-4 animate-spin" />
+              Signing up
+            </Button>
+          )}
         </form>
       </Form>
       <div className="relative">

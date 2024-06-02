@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "../api/supabase/client";
-import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
+import { IconLoader2 } from "@tabler/icons-react";
 
 const AuthCallback = () => {
   const navigate = useNavigate();
@@ -42,22 +42,7 @@ const AuthCallback = () => {
 
   return (
     <div className="flex flex-col justify-center items-center space-y-3 bg-gradient-custom min-h-screen">
-        <div className="flex items-center space-x-4">
-      <Skeleton className="h-12 w-12 rounded-full" />
-      <div className="space-y-2">
-        <Skeleton className="h-4 w-[250px]" />
-        <Skeleton className="h-4 w-[250px]" />
-      </div>
-    </div>
-      <Skeleton className="h-[200px] w-[300px] rounded-xl">
-        <div className="p-4">
-            Authenticating...
-        </div>
-      </Skeleton>
-      <div className="space-y-2">
-        <Skeleton className="h-6 w-[300px]" />
-        <Skeleton className="h-6 w-[250px]" />
-      </div>
+        <IconLoader2 className="w-12 h-12 text-white animate-spin" />
     </div>
   )
 };
