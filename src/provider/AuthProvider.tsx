@@ -46,8 +46,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         case 'TOKEN_REFRESHED':
         case 'USER_UPDATED':
           console.log(event);
-          console.log(session);
-          setUser(session?.user ?? null);
+          if (session?.user) {
+            setUser(session.user);
+          }
           break;
         case 'SIGNED_OUT':
           setUser(null);
