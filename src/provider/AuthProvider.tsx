@@ -24,24 +24,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    console.log('AuthProvider: useEffect user:', user);
     const getSession = async () => {
-      const { data: { session }, error } = await supabase.auth.getSession();
+      const { data, error } = await supabase.auth.getUser();
       if (error) {
         console.error('Error fetching session:', error.message);
-      } else {
-        setUser(session?.user ?? null);
+        setUser(null);
+      }
+      if (data?.user) {
+        setUser(data.user);
       }
     };
 
     getSession();
+  }, []);
 
+  useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       switch (event) {
         case 'INITIAL_SESSION':
         case 'SIGNED_IN':
         case 'TOKEN_REFRESHED':
         case 'USER_UPDATED':
+          console.log(event);
           setUser(session?.user ?? null);
           break;
         case 'SIGNED_OUT':
