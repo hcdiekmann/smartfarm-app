@@ -83,6 +83,7 @@ export const LoginForm = () => {
                 <FormControl>
                   <Input
                     type="email"
+                    className="text-lg md:text-sm"
                     placeholder="Enter your email"
                     {...field}
                   />
@@ -109,6 +110,7 @@ export const LoginForm = () => {
                 <FormControl>
                   <Input
                     type="password"
+                    className="text-lg md:text-sm"
                     placeholder="Enter your password"
                     {...field}
                   />
