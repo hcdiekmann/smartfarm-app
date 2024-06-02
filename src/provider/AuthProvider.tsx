@@ -4,6 +4,7 @@ import { supabase } from '../api/supabase/client';
 
 interface AuthContextType {
   user: User | null;
+  loading: boolean;
   signUp: (firstName: string, lastName: string, email: string, password: string) => Promise<AuthResponse>;
   updatePassword: (password: string) => Promise<UserResponse>;
   signIn: (email: string, password: string) => Promise<AuthTokenResponsePassword>;
@@ -22,17 +23,20 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getSession = async () => {
-      const { data, error } = await supabase.auth.getUser();
+      setLoading(true);
+      const { data, error } = await supabase.auth.getSession();
       if (error) {
         console.error('Error fetching session:', error.message);
         setUser(null);
       }
-      if (data?.user) {
-        setUser(data.user);
+      if (data?.session?.user) {
+        setUser(data.session.user);
       }
+      setLoading(false);
     };
 
     getSession();
@@ -46,7 +50,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         case 'TOKEN_REFRESHED':
         case 'USER_UPDATED':
           console.log(event);
-          setUser(session?.user ?? null);
+          if (session?.user) {
+            setUser(session.user);
+          }
           break;
         case 'SIGNED_OUT':
           setUser(null);
@@ -90,6 +96,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const value = {
     user,
+    loading,
     signUp,
     signIn: (email: string, password: string) => supabase.auth.signInWithPassword({ email, password }),
     signInWithGoogle,
