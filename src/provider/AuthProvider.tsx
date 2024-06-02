@@ -71,7 +71,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signUp = async (firstName: string, lastName: string, email: string, password: string) => {
     const authResponse = await supabase.auth.signUp({ email, password });
     if (authResponse.data.user) {
-      await setUserName(firstName, lastName);
+      await setUserName(firstName, lastName); //TODO: fix this, cant update user if not auto confirmed
     }
     return authResponse;
   }
@@ -80,7 +80,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/auth/v1/callback`,
+        redirectTo: `https://app.smartfarm.ing/auth/callback`,
       },
     });
   };

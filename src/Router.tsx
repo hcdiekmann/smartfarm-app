@@ -14,7 +14,7 @@ const Router = () => {
       <Routes>
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/auth/v1/callback" element={<AuthCallback />} />
+        <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage/>} />
         <Route path="/" element={<PrivateRoute><HomePage /></PrivateRoute>} />
         <Route path="/update-password" element={<UpdatePasswordPage/>} /> {/* Make Private  */}
