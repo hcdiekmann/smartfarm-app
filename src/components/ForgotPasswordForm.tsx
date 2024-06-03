@@ -3,7 +3,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { FaEnvelope } from "react-icons/fa";
+import { IconMailCheck } from '@tabler/icons-react';
+
 import {
     Form,
     FormControl,
@@ -46,12 +47,12 @@ export const ForgotPasswordForm = () => {
         <div className="flex flex-col space-y-4 w-full max-w-md mx-auto bg-white p-8 rounded-lg shadow">
             {!emailSent ? (
                 <>
-                    <h1 className="text-center text-3xl font-extrabold text-[#00431C]">Reset your password</h1>
+                    <h1 className="text-center text-2xl md:text-3xl font-extrabold text-[#00431C]">Reset your password</h1>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                             <FormField control={form.control} name="email" render={({ field, fieldState }) => (
                                 <FormItem>
-                                    <FormLabel>Account Email</FormLabel>
+                                    <FormLabel>Email</FormLabel>
                                     <FormControl>
                                         <Input type="email" placeholder="Enter your email" {...field} />
                                     </FormControl>
@@ -64,10 +65,10 @@ export const ForgotPasswordForm = () => {
                 </>
             ) : (
                 <>
-                    <h1 className="text-center text-3xl font-extrabold text-[#00431C]">Password reset link sent</h1>
+                    <h1 className="text-center text-2xl md:text-3xl font-extrabold text-[#00431C]">Password reset link sent</h1>
                     <div className="flex flex-col items-center justify-center">
-                        <FaEnvelope size={48} color="#00431C" />
-                        <p className="text-lg text-center">Please check your inbox to proceed with resetting your password.</p>
+                        <IconMailCheck stroke={2} size={48} color="#00431C" />
+                        <p className="pt-2 text-lg text-center">Please check your inbox to proceed with resetting your password.</p>
                     </div>
                 </>
             )}
