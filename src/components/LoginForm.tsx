@@ -68,7 +68,7 @@ export const LoginForm = () => {
 
   return (
     <div className="flex flex-col space-y-4 w-full max-w-md mx-auto bg-white p-8 rounded-lg shadow">
-      <h1 className="text-center text-3xl font-extrabold text-[#00431C] mb-4">
+      <h1 className="text-center text-2xl md:text-3xl font-extrabold text-[#00431C] mb-4">
         Login to your account
       </h1>
       <Form {...form}>
