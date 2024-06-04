@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { User, AuthError, AuthTokenResponsePassword, UserResponse, AuthResponse, OAuthResponse } from '@supabase/supabase-js';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../api/supabase/client';
+import { User, AuthError, AuthTokenResponsePassword, UserResponse, AuthResponse, OAuthResponse } from '@supabase/supabase-js';
 
 interface AuthContextType {
   user: User | null;
@@ -22,6 +23,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -49,7 +51,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         case 'SIGNED_IN':
         case 'TOKEN_REFRESHED':
         case 'USER_UPDATED':
-          console.log(event);
           if (session?.user) {
             setUser(session.user);
           }
@@ -59,6 +60,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           break;
         case 'PASSWORD_RECOVERY':
           console.log('Password recovery mode');
+          navigate('/update-password');
           break;
       }
     });
@@ -69,10 +71,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const signUp = async (firstName: string, lastName: string, email: string, password: string) => {
-    const authResponse = await supabase.auth.signUp({ email, password });
-    if (authResponse.data.user) {
-      await setUserName(firstName, lastName); // TODO: fix this, cant update user if not auto confirmed
-    }
+    const authResponse = await supabase.auth.signUp(
+      {
+        email, 
+        password,
+        options: {
+          data: {
+            first_name: firstName,
+            last_name: lastName,
+          },
+        },
+      },);
+    
     return authResponse;
   };
 
@@ -81,15 +91,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       provider: 'google',
       options: {
         redirectTo: `${window.location.origin}/auth/callback`,
-      },
-    });
-  };
-
-  const setUserName = async (firstName: string, lastName: string) => {
-    return await supabase.auth.updateUser({
-      data: {
-        first_name: firstName,
-        last_name: lastName,
       },
     });
   };
