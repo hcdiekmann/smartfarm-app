@@ -29,7 +29,11 @@ const formSchema = z.object({
 
 type LoginFormInputs = z.infer<typeof formSchema>;
 
-export const LoginForm = () => {
+interface LoginFormProps {
+  OAuthCallback?: boolean;
+}
+
+export const LoginForm: React.FC<LoginFormProps> = ({ OAuthCallback=false}) => {
   const { signIn, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -57,7 +61,7 @@ export const LoginForm = () => {
   };
 
   const handleGoogleSignIn = async () => {
-    const { error } = await signInWithGoogle();
+    const { error } = await signInWithGoogle(true);
     if (error) {
       toast.error("Google sign in failed", {
         duration: 4000,
@@ -120,7 +124,7 @@ export const LoginForm = () => {
             )}
           />
           {/* Login button */}
-          {!isLoading ? (
+          {!isLoading && !OAuthCallback ? (
           <Button
             type="submit"
             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
@@ -144,6 +148,7 @@ export const LoginForm = () => {
           <span className="bg-background px-2 text-muted-foreground">Or</span>
         </div>
       </div>
+      {!OAuthCallback ? (
       <Button onClick={handleGoogleSignIn} variant={"outline"}>
         <svg
           className="mr-2"
@@ -173,6 +178,14 @@ export const LoginForm = () => {
         </svg>
         Sign in with Google
       </Button>
+      ) : (
+      <Button 
+        disabled
+        className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
+      >
+        <IconLoader2 stroke={2} className="mr-2 h-4 w-4 animate-spin" />
+        Signing in
+      </Button>)}
     </div>
   );
 };
