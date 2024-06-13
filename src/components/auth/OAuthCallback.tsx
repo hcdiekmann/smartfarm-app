@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "../../api/supabase/client";
 import { toast } from "sonner";
-import { IconLoader2 } from "@tabler/icons-react";
+// import { IconLoader2 } from "@tabler/icons-react";
+import LoginPage from "@/pages/LoginPage";
 
 const AuthCallback = () => {
   const navigate = useNavigate();
@@ -41,9 +42,7 @@ const AuthCallback = () => {
   }, [location.search, navigate]);
 
   return (
-    <div className="flex flex-col justify-center items-center space-y-3 bg-gradient-custom min-h-screen">
-        <IconLoader2 className="w-12 h-12 text-white animate-spin" />
-    </div>
+    <LoginPage />
   )
 };
 
