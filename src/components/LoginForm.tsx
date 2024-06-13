@@ -124,9 +124,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({ OAuthCallback=false}) => {
             )}
           />
           {/* Login button */}
-          {!isLoading && !OAuthCallback ? (
+          {!isLoading ? (
           <Button
             type="submit"
+            disabled={OAuthCallback}
             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
           >
             Login
@@ -135,8 +136,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ OAuthCallback=false}) => {
             disabled
             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
           >
-            <IconLoader2 stroke={2} className="mr-2 h-4 w-4 animate-spin" />
-            Logging in
+            <IconLoader2 stroke={2} className="h-4 w-4 animate-spin" />
           </Button>)}
         </form>
       </Form>
@@ -181,10 +181,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({ OAuthCallback=false}) => {
       ) : (
       <Button 
         disabled
+        variant={"outline"}
         className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
       >
         <IconLoader2 stroke={2} className="mr-2 h-4 w-4 animate-spin" />
-        Signing in
+        Sign in with Google
       </Button>)}
     </div>
   );
