@@ -43,12 +43,14 @@ const SignupOAuthCallback = () => {
 
   return (
     <div className="min-h-screen bg-gradient-custom flex flex-col justify-center pt-4 pb-4 px-4 sm:px-6 lg:px-8">
-      <IconLoader2
-        stroke={2}
-        className="w-16 h-16 md:w-32 md:h-32 text-white text-center animate-spin"
-      />
-      <div className="text-center text-white text-2xl md:text-4xl font-baloo">
-        Smart Farming Africa
+      <div>
+        <IconLoader2
+          stroke={2}
+          className="w-16 h-16 md:w-32 md:h-32 mx-auto text-white animate-spin"
+        />
+        <div className="text-center text-white text-2xl md:text-4xl font-baloo">
+          Smart Farming Africa
+        </div>
       </div>
       <div className="mt-8 space-y-6">
         <SignupForm OAuthCallback={true} />
