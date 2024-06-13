@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "../../api/supabase/client";
 import { toast } from "sonner";
-import { IconLoader2 } from "@tabler/icons-react";
+// import { IconLoader2 } from "@tabler/icons-react";
 import LoginPage from "@/pages/LoginPage";
 
 const AuthCallback = () => {
