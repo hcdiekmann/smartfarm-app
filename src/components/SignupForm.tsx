@@ -195,9 +195,10 @@ export const SignupForm: React.FC<SignupFormProps> = ({ OAuthCallback=false}) =>
             )}
           />
           {/* Submit button */}
-          {!isLoading && !OAuthCallback ? (
+          {!isLoading ? (
             <Button
               type="submit"
+              disabled={OAuthCallback}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
             >
               Sign up
@@ -208,7 +209,6 @@ export const SignupForm: React.FC<SignupFormProps> = ({ OAuthCallback=false}) =>
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
             >
               <IconLoader2 stroke={2} className="mr-2 h-4 w-4 animate-spin" />
-              Signing up
             </Button>
           )}
         </form>
@@ -254,10 +254,11 @@ export const SignupForm: React.FC<SignupFormProps> = ({ OAuthCallback=false}) =>
       ) : (
       <Button 
         disabled
+        variant={"outline"}
         className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
       >
         <IconLoader2 stroke={2} className="mr-2 h-4 w-4 animate-spin" />
-        Signing up
+        Sign up using Google
       </Button>)}
 
     </div>
