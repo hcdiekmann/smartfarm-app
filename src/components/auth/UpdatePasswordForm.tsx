@@ -14,6 +14,8 @@ import { z } from "zod";
 import { useAuth } from "@/provider/AuthProvider";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { IconLoader2 } from "@tabler/icons-react";
 
 const updatePasswordSchema = z.object({
     newPassword: z.string().min(6, { message: "Password must be at least 6 characters." }),
@@ -28,6 +30,9 @@ type UpdatePasswordFormInputs = z.infer<typeof updatePasswordSchema>;
 export const UpdatePasswordForm = () => {
     const { updatePassword } = useAuth();
     const navigate = useNavigate();
+
+    const [isLoading, setIsLoading] = useState(false);
+
     const form = useForm<UpdatePasswordFormInputs>({
         resolver: zodResolver(updatePasswordSchema),
         defaultValues: {
@@ -37,7 +42,9 @@ export const UpdatePasswordForm = () => {
     });
 
     const onSubmit = async (values: UpdatePasswordFormInputs) => {
+        setIsLoading(true);
         const { data, error } = await updatePassword(values.newPassword);
+        setIsLoading(false);
         if (error) {
             toast.error('Password update failed', { duration: 4000, description: `${error.message}` });
         }
@@ -81,8 +88,18 @@ export const UpdatePasswordForm = () => {
                         )}
                     />
                     {/* Submit button */}
+                    {!isLoading && (
                     <Button type="submit" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md">Update</Button>
-                </form>
+                    )}
+                    {isLoading && (
+                        <Button 
+                        disabled
+                        className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
+                      >
+                        <IconLoader2 stroke={2} className="h-4 w-4 animate-spin" />
+                      </Button>
+                    )}
+                    </form>
             </Form>
         </div>
     );

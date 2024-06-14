@@ -34,7 +34,7 @@ interface LoginFormProps {
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ OAuthCallback=false}) => {
-  const { signIn, signInWithGoogle } = useAuth();
+  const { login, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -48,7 +48,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ OAuthCallback=false}) => {
 
   const onSubmit = async (values: LoginFormInputs) => {
     setIsLoading(true);
-    const { error } = await signIn(values.email, values.password);
+    const { error } = await login(values.email, values.password);
     setIsLoading(false);
     if (error) {
       toast.error("Login failed", {
@@ -127,7 +127,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ OAuthCallback=false}) => {
           {!isLoading ? (
           <Button
             type="submit"
-            disabled={OAuthCallback}
+            disabled={OAuthCallback} // change to allways disabled?
             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
           >
             Login

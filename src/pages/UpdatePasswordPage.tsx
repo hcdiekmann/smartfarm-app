@@ -1,5 +1,5 @@
 import LogoAndName from '@/components/LogoAndName';
-import { UpdatePasswordForm } from '@/components/UpdatePasswordForm';
+import { UpdatePasswordForm } from '@/components/auth/UpdatePasswordForm';
 
 const UpdatePasswordPage = () => {
     return (

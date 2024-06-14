@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { supabase } from "../../api/supabase/client";
 import { toast } from "sonner";
-import { IconLoader2 } from "@tabler/icons-react";
-import { SignupForm } from "../SignupForm";
+import { SignupForm } from "./SignupForm";
+import LogoAndName from "../LogoAndName";
 
 const SignupOAuthCallback = () => {
   const navigate = useNavigate();
@@ -43,15 +43,7 @@ const SignupOAuthCallback = () => {
 
   return (
     <div className="min-h-screen bg-gradient-custom flex flex-col justify-center pt-4 pb-4 px-4 sm:px-6 lg:px-8">
-      <div>
-        <IconLoader2
-          stroke={2}
-          className="w-16 h-16 md:w-32 md:h-32 mx-auto text-white animate-spin"
-        />
-        <div className="text-center text-white text-2xl md:text-4xl font-baloo">
-          Smart Farming Africa
-        </div>
-      </div>
+      <LogoAndName />
       <div className="mt-8 space-y-6">
         <SignupForm OAuthCallback={true} />
         <div className=" text-center text-white text-sm pb-4">

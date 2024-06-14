@@ -1,5 +1,5 @@
 import LogoAndName from "@/components/LogoAndName";
-import { SignupForm } from "@/components/SignupForm";
+import { SignupForm } from "@/components/auth/SignupForm";
 import { Link } from 'react-router-dom';
 
 const SignupPage = () => {

@@ -2,6 +2,7 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "@/provider/AuthProvider";
 import { IconLoader2 } from "@tabler/icons-react";
+import LogoAndName from "../LogoAndName";
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -11,6 +12,7 @@ const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({
   if (loading) { // replace this with dashboard skeleton
     return (
       <div className="flex flex-col justify-center items-center space-y-3 bg-gradient-custom min-h-screen">
+        <LogoAndName />
         <IconLoader2 className="w-12 h-12 text-white animate-spin" />
       </div>
     );

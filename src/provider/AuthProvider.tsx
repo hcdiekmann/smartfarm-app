@@ -12,19 +12,19 @@ import { supabase } from "../api/supabase/client";
 interface AuthContextType {
   user: User | null;
   loading: boolean;
+  login: (
+    email: string,
+    password: string
+  ) => Promise<AuthTokenResponsePassword>;
   signUp: (
     firstName: string,
     lastName: string,
     email: string,
     password: string
   ) => Promise<AuthResponse>;
-  updatePassword: (password: string) => Promise<UserResponse>;
-  signIn: (
-    email: string,
-    password: string
-  ) => Promise<AuthTokenResponsePassword>;
   signInWithGoogle: (isLogin: boolean) => Promise<OAuthResponse>;
   signOut: () => Promise<{ error: AuthError | null }>;
+  updatePassword: (password: string) => Promise<UserResponse>;
   resetPassword: (email: string) => Promise<
     | {
         data: {};
@@ -47,6 +47,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const getSession = async () => {
+      if (user) return setLoading(false);
       setLoading(true);
       const { data, error } = await supabase.auth.getSession();
       if (error) {
@@ -125,7 +126,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     user,
     loading,
     signUp,
-    signIn: (email: string, password: string) =>
+    login: (email: string, password: string) =>
       supabase.auth.signInWithPassword({ email, password }),
     signInWithGoogle,
     signOut: () => supabase.auth.signOut(),

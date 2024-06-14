@@ -1,4 +1,4 @@
-import { LoginForm } from "@/components/LoginForm";
+import { LoginForm } from "@/components/auth/LoginForm";
 import LogoAndName from '@/components/LogoAndName';
 import { Link } from "react-router-dom";
 
