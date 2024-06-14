@@ -47,6 +47,7 @@ export const UpdatePasswordForm = () => {
         setIsLoading(false);
         if (error) {
             toast.error('Password update failed', { duration: 4000, description: `${error.message}` });
+            return;
         }
         if (data) {
             toast.info('Password updated', { duration: 5000, description: `Your password has been updated successfully.` });
