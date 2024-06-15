@@ -1,7 +1,7 @@
 import { Route } from "react-router-dom";
 import LoginOAuthCallback from "@/components/auth/LoginOAuthCallback";
 import SignupOAuthCallback from "@/components/auth/SignupOAuthCallback";
-import NotFoundPage from "@/pages/404";
+import NotFoundPage from "@/pages/NotFoundPage";
 import ForgotPasswordPage from "@/pages/ForgotPasswordPage";
 import LoginPage from "@/pages/LoginPage";
 import SignupPage from "@/pages/SignupPage";
