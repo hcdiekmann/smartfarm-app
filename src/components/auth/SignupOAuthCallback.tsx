@@ -16,7 +16,7 @@ const SignupOAuthCallback = () => {
       const refreshToken = hashParams.get("refresh_token");
 
       if (!accessToken || !refreshToken) {
-        console.error("Missing tokens in URL hash");
+        navigate("/signup");
         return;
       }
 
@@ -33,7 +33,6 @@ const SignupOAuthCallback = () => {
         });
         navigate("/signup");
       } else {
-        // Redirect to Dashboard
         navigate("/");
       }
     };

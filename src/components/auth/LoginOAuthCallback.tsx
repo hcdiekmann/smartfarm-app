@@ -16,7 +16,7 @@ const LoginOAuthCallback = () => {
       const refreshToken = hashParams.get("refresh_token");
 
       if (!accessToken || !refreshToken) {
-        console.error("Missing tokens in URL hash");
+        navigate("/login");
         return;
       }
 
@@ -26,14 +26,12 @@ const LoginOAuthCallback = () => {
       });
 
       if (error) {
-        console.error("Error setting session: ", error);
         toast.error("Authentication failed", {
           duration: 4000,
           description: `${error.message}`,
         });
         navigate("/login");
       } else {
-        // Redirect to Dashboard
         navigate("/");
       }
     };
