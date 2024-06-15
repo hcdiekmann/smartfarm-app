@@ -22,7 +22,7 @@ const updatePasswordSchema = z.object({
     confirmPassword: z.string().min(6, { message: "Confirm Password must be at least 6 characters." })
 }).refine((data) => data.newPassword === data.confirmPassword, {
     message: "Passwords do not match.",
-    path: ["confirmPassword"],  // This will assign the error message to confirmPassword field
+    path: ["confirmPassword"],
 });
 
 type UpdatePasswordFormInputs = z.infer<typeof updatePasswordSchema>;
@@ -46,7 +46,7 @@ export const UpdatePasswordForm = () => {
         const { data, error } = await updatePassword(values.newPassword);
         setIsLoading(false);
         if (error) {
-            toast.error('Password update failed', { duration: 4000, description: `${error.message}` });
+            toast.error('Password update failed', { duration: 5000, description: `${error.message}` });
             return;
         }
         if (data) {
