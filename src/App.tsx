@@ -1,12 +1,19 @@
-import React from 'react';
-import { AuthProvider } from '@/provider/AuthProvider';
-import Router from './Router';
+import React from "react";
+import { BrowserRouter, Routes } from "react-router-dom";
+import { AuthProvider } from "@/provider/AuthProvider";
+import PrivateRoutes from "./routes/PrivateRoutes";
+import PublicRoutes from "./routes/PublicRoutes";
 
 const App: React.FC = () => {
   return (
-    <AuthProvider>
-      <Router />
-    </AuthProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          {PublicRoutes()}
+          {PrivateRoutes()}
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
   );
 };
 
