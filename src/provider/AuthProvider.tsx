@@ -132,9 +132,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     signInWithGoogle,
     signOut: () => supabase.auth.signOut(),
     resetPassword: (email: string) =>
-      supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: "/update-password",
-      }),
+      supabase.auth.resetPasswordForEmail(email),
     updatePassword: (newPassword: string) =>
       supabase.auth.updateUser({ password: newPassword }),
   };
