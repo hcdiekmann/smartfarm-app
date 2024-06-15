@@ -8,6 +8,7 @@ import {
   OAuthResponse,
 } from "@supabase/supabase-js";
 import { supabase } from "../api/supabase/client";
+import { useNavigate } from "react-router-dom";
 
 interface AuthContextType {
   user: User | null;
@@ -42,6 +43,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -79,8 +81,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
             setUser(null);
             break;
           case "PASSWORD_RECOVERY":
-            console.log("Password recovery mode");
-            // TODO: Handle password recovery mode
+            navigate("/update-password");
             break;
         }
       }
