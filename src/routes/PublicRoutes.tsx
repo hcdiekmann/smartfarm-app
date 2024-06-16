@@ -1,10 +1,10 @@
 import { Route } from "react-router-dom";
-import LoginOAuthCallback from "@/components/auth/LoginOAuthCallback";
-import SignupOAuthCallback from "@/components/auth/SignupOAuthCallback";
+import LoginOAuthCallback from "@/pages/auth/LoginOAuthCallback";
+import SignupOAuthCallback from "@/pages/auth/SignupOAuthCallback";
 import NotFoundPage from "@/pages/NotFoundPage";
-import ForgotPasswordPage from "@/pages/ForgotPasswordPage";
-import LoginPage from "@/pages/LoginPage";
-import SignupPage from "@/pages/SignupPage";
+import ForgotPasswordPage from "@/pages/auth/ForgotPasswordPage";
+import LoginPage from "@/pages/auth/LoginPage";
+import SignupPage from "@/pages/auth/SignupPage";
 
 const PublicRoutes = () => {
   return (

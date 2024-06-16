@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { supabase } from "../../api/supabase/client";
 import { toast } from "sonner";
-import { LoginForm } from "./LoginForm";
-import LogoAndName from "../LogoAndName";
+import { SignupForm } from "../../components/auth/SignupForm";
+import { LogoIcon } from "../../components/Icons";
 
-const LoginOAuthCallback = () => {
+const SignupOAuthCallback = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -16,7 +16,7 @@ const LoginOAuthCallback = () => {
       const refreshToken = hashParams.get("refresh_token");
 
       if (!accessToken || !refreshToken) {
-        navigate("/login");
+        navigate("/signup");
         return;
       }
 
@@ -26,11 +26,12 @@ const LoginOAuthCallback = () => {
       });
 
       if (error) {
+        console.error("Error setting session: ", error);
         toast.error("Authentication failed", {
           duration: 4000,
           description: `${error.message}`,
         });
-        navigate("/login");
+        navigate("/signup");
       } else {
         navigate("/");
       }
@@ -41,13 +42,16 @@ const LoginOAuthCallback = () => {
 
   return (
     <div className="min-h-screen bg-gradient-custom flex flex-col justify-center pt-4 pb-4 px-4 sm:px-6 lg:px-8">
-      <LogoAndName />
+      <LogoIcon className="mx-auto w-24 h-24 lg:w-32 lg:h-32 fill-white" />
+      <div className="text-center text-white text-2xl md:text-4xl font-baloo pt-1">
+        Smart Farming Africa
+      </div>
       <div className="mt-8 space-y-6">
-        <LoginForm OAuthCallback={true} />
+        <SignupForm OAuthCallback={true} />
         <div className=" text-center text-white text-sm pb-4">
-          Don&apos;t have an account?{" "}
-          <Link to="/signup" className="underline">
-            Sign up
+          Already have an account?{" "}
+          <Link to="/login" className="underline">
+            Login
           </Link>
         </div>
       </div>
@@ -55,4 +59,4 @@ const LoginOAuthCallback = () => {
   );
 };
 
-export default LoginOAuthCallback;
+export default SignupOAuthCallback;
