@@ -56,8 +56,8 @@ export const UpdatePasswordForm = () => {
     };
 
     return (
-        <div className="flex flex-col space-y-4 w-full max-w-md mx-auto bg-white p-8 rounded-lg shadow">
-            <h1 className="text-center text-2xl md:text-3xl font-extrabold text-[#00431C] mb-4">Update your password</h1>
+        <div className="flex flex-col space-y-4 w-full max-w-md mx-auto bg-background p-8 rounded-lg shadow">
+            <h1 className="text-center text-2xl md:text-3xl font-extrabold text-sfagreen dark:text-white mb-4">Update your password</h1>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                     {/* New Password input field */}

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { IconLoader2 } from '@tabler/icons-react';
-import { toast } from "sonner";
+
 import {
   Form,
   FormControl,
@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useAuth } from "@/provider/AuthProvider";
+import useLogin from "@/hooks/useLogin";
 
 const formSchema = z.object({
   email: z
@@ -34,8 +34,7 @@ interface LoginFormProps {
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ OAuthCallback=false}) => {
-  const { login, signInWithGoogle } = useAuth();
-  const navigate = useNavigate();
+  const { PasswordLogin, GoogleSignin } = useLogin();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<LoginFormInputs>({
@@ -46,37 +45,25 @@ export const LoginForm: React.FC<LoginFormProps> = ({ OAuthCallback=false}) => {
     },
   });
 
-  const onSubmit = async (values: LoginFormInputs) => {
+  const handleLogin = async (values: LoginFormInputs) => {
     setIsLoading(true);
-    const { error } = await login(values.email, values.password);
+    await PasswordLogin(values.email, values.password);
     setIsLoading(false);
-    if (error) {
-      toast.error("Login failed", {
-        duration: 4000,
-        description: `${error.message}`,
-      });
-    } else {
-      navigate("/");
-    }
   };
 
   const handleGoogleSignIn = async () => {
-    const { error } = await signInWithGoogle(true);
-    if (error) {
-      toast.error("Google sign in failed", {
-        duration: 4000,
-        description: `${error.message}`,
-      });
-    }
+    setIsLoading(true);
+    await GoogleSignin();
+    setIsLoading(false);
   };
 
   return (
-    <div className="flex flex-col space-y-4 w-full max-w-md mx-auto bg-white p-8 rounded-lg shadow">
-      <h1 className="text-center text-2xl md:text-3xl font-extrabold text-[#00431C] mb-4">
+    <div className="flex flex-col space-y-4 w-full max-w-md mx-auto bg-background p-8 rounded-lg shadow">
+      <h1 className="text-center text-2xl md:text-3xl font-extrabold text-sfagreen dark:text-white mb-4">
         Login to your account
       </h1>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(handleLogin)} className="space-y-6">
           {/* Email input field */}
           <FormField
             control={form.control}
@@ -87,7 +74,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ OAuthCallback=false}) => {
                 <FormControl>
                   <Input
                     type="email"
-                    className="text-md"
+                    className="text-md appearance-none"
                     placeholder="Enter your email"
                     {...field}
                   />
@@ -106,7 +93,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ OAuthCallback=false}) => {
                   <FormLabel>Password</FormLabel>
                   <Link
                     to="/forgot-password"
-                    className="text-sm font-small text-[#00431C] hover:underline"
+                    className="text-sm font-small text-sfagreen dark:text-white hover:underline"
                   >
                     Forgot password?
                   </Link>
@@ -127,7 +114,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ OAuthCallback=false}) => {
           {!isLoading ? (
           <Button
             type="submit"
-            disabled={OAuthCallback} // change to allways disabled?
+            disabled={OAuthCallback}
             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
           >
             Login

@@ -1,12 +1,15 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
-import { Toaster } from 'sonner'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.tsx";
+import { Toaster } from "sonner";
+import { ThemeProvider } from "./provider/ThemeProvider.tsx";
+import "./index.css";
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
-    <Toaster richColors position='top-center' />
-  </React.StrictMode>,
-)
+    <ThemeProvider>
+      <App />
+      <Toaster richColors position="top-center" />
+    </ThemeProvider>
+  </React.StrictMode>
+);

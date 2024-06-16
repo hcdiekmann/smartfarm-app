@@ -24,6 +24,9 @@ module.exports = {
         'baloo': ['"Baloo Bhaijaan 2"', 'sans-serif'],
       },
       colors: {
+        sfagreen: {
+          DEFAULT: "#00431C",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
