@@ -1,11 +1,14 @@
 import { useAuth } from "@/provider/AuthProvider";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Wiggle } from "react-subtle-nudge";
+
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
+  BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -39,9 +42,22 @@ const RootPage = () => {
                 href="#"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 bg-muted text-primary text-muted-foreground transition-all hover:text-primary"
               >
-                <FarmIcon className="h-5 w-5" />
+                <FarmIcon className="h-6 w-6" />
                 Farms
-                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center bg-sfagreen dark:text-white justify-center rounded-full">
+         
+                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center dark:text-muted justify-center rounded-full">
+                  0
+                </Badge>
+        
+
+              </a>
+              <a
+                href="#"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+              >
+                <UsersIcon className="h-6 w-6" />
+                Employees
+                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center bg-muted text-current justify-center rounded-full">
                   0
                 </Badge>
               </a>
@@ -49,32 +65,23 @@ const RootPage = () => {
                 href="#"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
-                <UsersIcon className="h-5 w-5" />
-                Employees
-              </a>
-              <a
-                href="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-              >
-                <LineChartIcon className="h-5 w-5" />
+                <LineChartIcon className="h-6 w-6" />
                 Finances
               </a>
               <a
                 href="#"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
-                <ShoppingCartIcon className="h-5 w-5" />
+                <ShoppingCartIcon className="h-6 w-6" />
                 Our Products{" "}
               </a>
             </nav>
           </div>
-          <div className="mt-auto p-2">
-            <ThemeToggle />
-          </div>
+          <div className="mt-auto p-2"></div>
         </div>
       </div>
       <div className="flex flex-col">
-        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+        <header className="flex h-14 items-center gap-2 border-b bg-muted/40 px-1 lg:h-[60px] lg:px-6">
           <div className="md:hidden">
             <a href="/">
               <LogoIcon className="w-12 h-12 fill-current text-sfagreen dark:text-current" />
@@ -83,14 +90,15 @@ const RootPage = () => {
           <div className="flex-1">
             <Breadcrumb>
               <BreadcrumbList>
+                <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/">/</BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbItem>
-                  <BreadcrumbLink href="/dashboard">Farms</BreadcrumbLink>
+                  <BreadcrumbLink href="/farms">Farms</BreadcrumbLink>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
+          </div>
+          <div className="hidden md:block">
+            <ThemeToggle />
           </div>
           <Sheet>
             <SheetTrigger asChild>
@@ -104,24 +112,24 @@ const RootPage = () => {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="flex flex-col">
-              <nav className="grid gap-2 text-lg font-medium">
+              <nav className="grid gap-2 mt-8 text-lg font-medium">
                 <a
-                  href="#"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                  href="/farms"
+                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 bg-muted text-foreground hover:text-foreground"
                 >
                   <FarmIcon className="h-5 w-5" />
                   Farms
                 </a>
-                
+
                 <a
-                  href="#"
+                  href="/employees"
                   className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
                 >
                   <UsersIcon className="h-5 w-5" />
                   Employees
                 </a>
                 <a
-                  href="#"
+                  href="/finances"
                   className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
                 >
                   <LineChartIcon className="h-5 w-5" />
@@ -129,13 +137,10 @@ const RootPage = () => {
                 </a>
                 <a
                   href="#"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
+                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl  px-3 py-2 text-muted-foreground hover:text-foreground"
                 >
                   <ShoppingCartIcon className="h-5 w-5" />
                   Our Products
-                  <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                    6
-                  </Badge>
                 </a>
               </nav>
               <div className="mt-auto flex items-center justify-between">
@@ -163,7 +168,9 @@ const RootPage = () => {
               <p className="text-sm text-muted-foreground">
                 Get started by adding your first farm instance.
               </p>
-              <Button className="mt-4">Create Farm</Button>
+              <Wiggle initialDelay="7s" iterationDelay="2.5s">
+                <Button className="mt-4">Create Farm</Button>
+              </Wiggle>
             </div>
           </div>
         </main>
