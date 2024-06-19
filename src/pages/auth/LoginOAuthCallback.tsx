@@ -1,9 +1,8 @@
 import { useEffect } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "../../api/supabase/client";
 import { toast } from "sonner";
-import { LoginForm } from "../../components/auth/LoginForm";
-import { LogoIcon } from "../../components/Icons";
+import Skeleton from "@/components/Skeleton";
 
 const LoginOAuthCallback = () => {
   const navigate = useNavigate();
@@ -39,23 +38,7 @@ const LoginOAuthCallback = () => {
     handleAuth();
   }, [location.hash]);
 
-  return (
-    <div className="min-h-screen bg-gradient-custom flex flex-col justify-center pt-4 pb-4 px-4 sm:px-6 lg:px-8">
-      <LogoIcon className="mx-auto w-24 h-24 lg:w-32 lg:h-32 fill-white" />
-      <div className="text-center text-white text-2xl md:text-4xl font-baloo pt-1">
-        Smart Farming Africa
-      </div>
-      <div className="mt-8 space-y-6">
-        <LoginForm OAuthCallback={true} />
-        <div className=" text-center text-white text-sm pb-4">
-          Don&apos;t have an account?{" "}
-          <Link to="/signup" className="underline">
-            Sign up
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
+  return <Skeleton />;
 };
 
 export default LoginOAuthCallback;

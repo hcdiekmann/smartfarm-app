@@ -16,6 +16,9 @@ const PrivateRoutes = () => {
   return (
     <>
       <Route path="/" element={<Private element={<RootPage />} />} />
+      <Route path="/farm" element={<Navigate to="/" />} />
+      <Route path="/employees" element={<Navigate to="/" />} />
+      <Route path="/settings" element={<Navigate to="/" />} />
       <Route
         path="/update-password"
         element={<Private element={<UpdatePasswordPage />} />}

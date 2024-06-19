@@ -34,11 +34,7 @@ const signupFormSchema = z.object({
 
 type SignupFormInputs = z.infer<typeof signupFormSchema>;
 
-interface SignupFormProps {
-  OAuthCallback?: boolean;
-}
-
-export const SignupForm: React.FC<SignupFormProps> = ({ OAuthCallback=false}) => {
+export const SignupForm: React.FC = () => {
   const { signUp, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -83,7 +79,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ OAuthCallback=false}) =>
   const handleGoogleSignUp = async () => {
     const { error } = await signInWithGoogle(false);
     if (error) {
-      toast.error("Google Signin failed", {
+      toast.error("Google signup failed", {
         duration: 4000,
         description: `${error.message}`,
       });
@@ -199,7 +195,6 @@ export const SignupForm: React.FC<SignupFormProps> = ({ OAuthCallback=false}) =>
           {!isLoading ? (
             <Button
               type="submit"
-              disabled={OAuthCallback}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
             >
               Sign up
@@ -222,7 +217,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ OAuthCallback=false}) =>
           <span className="bg-background px-2 text-muted-foreground">Or</span>
         </div>
       </div>
-      {!OAuthCallback ? (
+      {!isLoading ? (
       <Button onClick={handleGoogleSignUp} variant={"outline"}>
         <GoogleLogoIcon className="mr-2" />
         Sign up using Google
