@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "../../api/supabase/client";
 import { toast } from "sonner";
-import Skeleton from "@/components/Skeleton";
+import RootSkeleton from "@/components/RootSkeleton";
+
 
 const LoginOAuthCallback = () => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const LoginOAuthCallback = () => {
     handleAuth();
   }, [location.hash]);
 
-  return <Skeleton />;
+  return <RootSkeleton />;
 };
 
 export default LoginOAuthCallback;
