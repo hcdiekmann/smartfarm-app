@@ -1,4 +1,3 @@
-import { useAuth } from "@/provider/AuthProvider";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Wiggle } from "react-subtle-nudge";
@@ -20,9 +19,9 @@ import {
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { FarmIcon, LogoIcon } from "@/components/Icons";
 import { AvatarMenu } from "@/components/AvatarMenu";
+import Greeting from "@/components/Greeting";
 
 const RootPage = () => {
-  const { user } = useAuth();
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -154,11 +153,7 @@ const RootPage = () => {
           </div>
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-          <div className="flex items-center">
-            <h1 className="text-lg font-semibold md:text-2xl">
-              Welcome, {user?.user_metadata.name}
-            </h1>
-          </div>
+          <Greeting />
           <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
             <div className="flex flex-col items-center gap-1 text-center">
               <FarmIcon className="w-24 h-24 " />

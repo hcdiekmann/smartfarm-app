@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "../../api/supabase/client";
 import { toast } from "sonner";
-import Skeleton from "@/components/Skeleton";
+import RootSkeleton from "@/components/RootSkeleton";
 
 const SignupOAuthCallback = () => {
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ const SignupOAuthCallback = () => {
     handleAuth();
   }, [location.hash]);
 
-  return <Skeleton />;
+  return <RootSkeleton />;
 };
 
 export default SignupOAuthCallback;

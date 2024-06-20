@@ -18,8 +18,7 @@ import useSignup from "@/hooks/useSignup";
 import useLogin from "@/hooks/useLogin";
 
 const signupFormSchema = z.object({
-  firstName: z.string().min(1, "First name is required."),
-  lastName: z.string().min(1, "Last name is required."),
+  name: z.string().min(1, "Your name is required."),
   email: z
     .string()
     .email({ message: "Invalid email address." })
@@ -41,8 +40,7 @@ export const SignupForm: React.FC = () => {
   const form = useForm<SignupFormInputs>({
     resolver: zodResolver(signupFormSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      name: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -52,8 +50,7 @@ export const SignupForm: React.FC = () => {
   const handleSignUp = async (values: SignupFormInputs) => {
     setIsLoading(true);
     await PasswordSignup(
-      values.firstName,
-      values.lastName,
+      values.name,
       values.email,
       values.password
     );
@@ -73,20 +70,18 @@ export const SignupForm: React.FC = () => {
       </h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSignUp)} className="space-y-6">
-          {/* Name fields row */}
-          <div className="flex flex-col sm:flex-row justify-between space-y-4 sm:space-y-0 sm:space-x-4">
-            {/* First name input field */}
+          {/* Name field */}
             <FormField
               control={form.control}
-              name="firstName"
+              name="name"
               render={({ field, fieldState }) => (
                 <FormItem className="flex-1">
-                  <FormLabel>First Name</FormLabel>
+                  <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input
                       type="text"
                       className="text-md dark:bg-muted"
-                      placeholder="Enter your first name"
+                      placeholder="Enter your full name"
                       {...field}
                     />
                   </FormControl>
@@ -94,26 +89,6 @@ export const SignupForm: React.FC = () => {
                 </FormItem>
               )}
             />
-            {/* Last name input field */}
-            <FormField
-              control={form.control}
-              name="lastName"
-              render={({ field, fieldState }) => (
-                <FormItem className="flex-1">
-                  <FormLabel>Last Name</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="text"
-                      className="text-md dark:bg-muted"
-                      placeholder="Enter your last name"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage>{fieldState.error?.message}</FormMessage>
-                </FormItem>
-              )}
-            />
-          </div>
           {/* Email field */}
           <FormField
             control={form.control}

@@ -27,8 +27,7 @@ interface AuthContextType {
     password: string
   ) => Promise<AuthTokenResponsePassword>;
   signUp: (
-    firstName: string,
-    lastName: string,
+    name: string,
     email: string,
     password: string
   ) => Promise<AuthResponse>;
@@ -93,12 +92,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   const signUp = async (
-    firstName: string,
-    lastName: string,
+    name: string,
     email: string,
     password: string
   ) => {
-    const name = `${firstName} ${lastName}`;
     const authResponse = await supabase.auth.signUp({
       email,
       password,
@@ -106,8 +103,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         data: {
           full_name: name,
           email: email,
-          first_name: firstName,
-          last_name: lastName,
         },
       },
     });

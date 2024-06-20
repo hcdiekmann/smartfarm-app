@@ -7,15 +7,14 @@ const useSignup = () => {
   const navigate = useNavigate();
 
   const PasswordSignup = async (
-    firstName: string,
-    lastName: string,
+    name: string,
     email: string,
     password: string
   ) => {
-    const { error, data } = await signUp(firstName, lastName, email, password);
+    const { error, data } = await signUp(name, email, password);
     if (error) {
       toast.error("Signup failed", {
-        duration: 4000,
+        duration: 5000,
         description: `${error.message}`,
       });
     }
