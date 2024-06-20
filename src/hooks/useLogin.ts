@@ -9,16 +9,18 @@ const useLogin = () => {
   const PasswordLogin = async (email: string, password: string) => {
     const { error } = await login(email, password);
     if (error) {
-      toast.error('Error while logging in', { duration: 4000, description: `${error.message}` });
+      toast.error('Error while logging in', { 
+        duration: 4000, 
+        description: `${error.message}` });
     } else {
       navigate('/');
     }
   };
 
-  const GoogleSignin = async () => {
-    const { error } = await signInWithGoogle(true);
+  const GoogleSignin = async (isLogin: boolean) => {
+    const { error } = await signInWithGoogle(isLogin);
     if (error) {
-      toast.error("Google sign in failed", {
+      toast.error(`Google ${isLogin ? 'login' : 'signup'} failed`, {
         duration: 4000,
         description: `${error.message}`,
       });
