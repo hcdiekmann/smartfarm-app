@@ -50,7 +50,7 @@ export const LoginForm: React.FC = () => {
 
   const handleGoogleSignIn = async () => {
     setIsLoading(true);
-    await GoogleSignin();
+    await GoogleSignin(true);
     setIsLoading(false);
   };
 

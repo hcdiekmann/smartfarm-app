@@ -10,6 +10,15 @@ import {
 import { supabase } from "../api/supabase/client";
 import { useNavigate } from "react-router-dom";
 
+type PasswordResetResponse = {
+  data: {};
+  error: null;
+}
+| {
+  data: null;
+  error: AuthError;
+}
+
 interface AuthContextType {
   user: User | null;
   loading: boolean;
@@ -26,16 +35,7 @@ interface AuthContextType {
   signInWithGoogle: (isLogin: boolean) => Promise<OAuthResponse>;
   signOut: () => Promise<{ error: AuthError | null }>;
   updatePassword: (password: string) => Promise<UserResponse>;
-  resetPassword: (email: string) => Promise<
-    | {
-        data: {};
-        error: null;
-      }
-    | {
-        data: null;
-        error: AuthError;
-      }
-  >;
+  resetPassword: (email: string) => Promise<PasswordResetResponse>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -50,7 +50,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     const getSession = async () => {
       if (user) return setLoading(false);
-      setLoading(true);
+
       const { data, error } = await supabase.auth.getSession();
       if (error) {
         console.error("Error fetching session:", error.message);
@@ -104,7 +104,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       password,
       options: {
         data: {
-          name: name,
+          full_name: name,
           first_name: firstName,
           last_name: lastName,
         },

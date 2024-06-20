@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -12,11 +11,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useAuth } from "@/provider/AuthProvider";
-import { toast } from "sonner";
 import { useState } from "react";
 import { IconLoader2 } from "@tabler/icons-react";
 import { GoogleLogoIcon } from "../Icons";
+import useSignup from "@/hooks/useSignup";
+import useLogin from "@/hooks/useLogin";
 
 const signupFormSchema = z.object({
   firstName: z.string().min(1, "First name is required."),
@@ -35,8 +34,8 @@ const signupFormSchema = z.object({
 type SignupFormInputs = z.infer<typeof signupFormSchema>;
 
 export const SignupForm: React.FC = () => {
-  const { signUp, signInWithGoogle } = useAuth();
-  const navigate = useNavigate();
+  const  PasswordSignup = useSignup();
+  const { GoogleSignin } = useLogin();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<SignupFormInputs>({
@@ -50,40 +49,21 @@ export const SignupForm: React.FC = () => {
     },
   });
 
-  const onSubmit = async (values: SignupFormInputs) => {
+  const handleSignUp = async (values: SignupFormInputs) => {
     setIsLoading(true);
-    const { error, data } = await signUp(
+    await PasswordSignup(
       values.firstName,
       values.lastName,
       values.email,
       values.password
     );
     setIsLoading(false);
-    if (error) {
-      toast.error("Signup failed", {
-        duration: 4000,
-        description: `${error.message}`,
-      });
-    }
-    if (data.user) {
-      toast.info("Signup successful", {
-        duration: 5000,
-        description: "Check your email to confirm your account",
-      });
-      navigate("/login");
-    } else {
-      navigate("/");
-    }
   };
 
   const handleGoogleSignUp = async () => {
-    const { error } = await signInWithGoogle(false);
-    if (error) {
-      toast.error("Google signup failed", {
-        duration: 4000,
-        description: `${error.message}`,
-      });
-    }
+    setIsLoading(true);
+    await GoogleSignin(false);
+    setIsLoading(false);
   };
 
   return (
@@ -92,7 +72,7 @@ export const SignupForm: React.FC = () => {
         Create a new account
       </h1>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(handleSignUp)} className="space-y-6">
           {/* Name fields row */}
           <div className="flex flex-col sm:flex-row justify-between space-y-4 sm:space-y-0 sm:space-x-4">
             {/* First name input field */}
