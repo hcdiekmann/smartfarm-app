@@ -6,7 +6,7 @@ import {
   ShoppingCartIcon,
 } from "lucide-react";
 import { AvatarMenu } from "./AvatarMenu";
-import { LogoIcon, FarmIcon } from "./Icons";
+import { LogoIcon, FarmIcon } from "../Icons";
 import { ThemeToggle } from "./ThemeToggle";
 import {
   Breadcrumb,
@@ -14,9 +14,9 @@ import {
   BreadcrumbSeparator,
   BreadcrumbItem,
   BreadcrumbLink,
-} from "./ui/breadcrumb";
-import { Button } from "./ui/button";
-import { SheetTrigger, SheetContent } from "./ui/sheet";
+} from "../ui/breadcrumb";
+import { Button } from "../ui/button";
+import { SheetTrigger, SheetContent } from "../ui/sheet";
 
 const Header = () => {
   return (

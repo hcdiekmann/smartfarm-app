@@ -16,9 +16,9 @@ import {
   ShoppingCartIcon,
   UsersIcon,
 } from "lucide-react";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { ThemeToggle } from "@/components/header/ThemeToggle";
 import { FarmIcon, LogoIcon } from "@/components/Icons";
-import { AvatarMenu } from "@/components/AvatarMenu";
+import { AvatarMenu } from "@/components/header/AvatarMenu";
 import Greeting from "@/components/Greeting";
 
 const RootPage = () => {

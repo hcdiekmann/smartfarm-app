@@ -7,9 +7,9 @@ import {
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu";
 import { CircleUserIcon, User, Settings, LogOut } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { useAuth } from "@/provider/AuthProvider";
-import useLogout from "@/hooks/useLogout";
+import useLogout from "@/hooks/auth/useLogout";
 
 export function AvatarMenu() {
   const { user } = useAuth();

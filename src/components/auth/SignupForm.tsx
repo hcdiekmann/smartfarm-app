@@ -14,8 +14,8 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { IconLoader2 } from "@tabler/icons-react";
 import { GoogleLogoIcon } from "../Icons";
-import useSignup from "@/hooks/useSignup";
-import useLogin from "@/hooks/useLogin";
+import useSignup from "@/hooks/auth/useSignup";
+import useLogin from "@/hooks/auth/useLogin";
 
 const signupFormSchema = z.object({
   name: z.string().min(1, "Your name is required."),
