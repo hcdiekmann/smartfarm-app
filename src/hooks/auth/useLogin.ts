@@ -9,7 +9,7 @@ const useLogin = () => {
   const PasswordLogin = async (email: string, password: string) => {
     const { error } = await login(email, password);
     if (error) {
-      toast.error('Error while logging in', { 
+      toast.error('Error logging in', { 
         duration: 4000, 
         description: `${error.message}` });
     } else {
