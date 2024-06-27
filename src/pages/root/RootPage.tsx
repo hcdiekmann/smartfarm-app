@@ -12,6 +12,7 @@ import {
 import Home from "./Home";
 import Account from "./Account";
 import { ThemeToggle } from "@/components/header/ThemeToggle";
+import { AvatarMenu } from "@/components/header/AvatarMenu";
 
 const Nav = () => {
   return (
@@ -83,6 +84,7 @@ const Nav = () => {
         </div>
         <div className="mt-auto p-4">
           <ThemeToggle />
+          <AvatarMenu  />
         </div>
       </div>
     </div>
