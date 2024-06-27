@@ -56,7 +56,7 @@ export default function MapComponent() {
         sources: {
           protomaps: {
             attribution:
-              '<a href="https://github.com.protomaps/basemaps">Protomaps</a> © <a href="https://openstreetmap.org">OpenStreetMap</a>',
+              '<a href="https://github.com/protomaps/basemaps">Protomaps</a> © <a href="https://openstreetmap.org">OpenStreetMap</a>',
             type: "vector",
             url: "pmtiles://https://amvlpfduasiuxfoevnry.supabase.co/storage/v1/object/public/public-maps/namibia.pmtiles",
           },
