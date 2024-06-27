@@ -1,3 +1,4 @@
+import MapComponent from "@/components/Map";
 
 const FarmDashboard: React.FC = () => {
   return (
@@ -5,6 +6,7 @@ const FarmDashboard: React.FC = () => {
       <h2 className="text-muted-foreground uppercase tracking-wide text-sm">
         Map
       </h2>
+      <MapComponent />
       <h2 className="text-muted-foreground uppercase tracking-wide text-sm">
         Assets
       </h2>
