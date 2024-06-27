@@ -76,11 +76,6 @@ const RootSkeleton = () => {
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
           <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
-            <div className="flex flex-col items-center gap-1 text-center">
-              <Skeleton className="w-24 h-24 rounded-full" />
-              <Skeleton className="h-8 w-40 mt-4" />
-              <Skeleton className="h-4 w-64 mt-2" />
-            </div>
           </div>
         </main>
       </div>

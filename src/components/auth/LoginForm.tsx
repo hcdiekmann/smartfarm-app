@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import useLogin from "@/hooks/useLogin";
+import useLogin from "@/hooks/auth/useLogin";
 import { GoogleLogoIcon } from "../Icons";
 
 const formSchema = z.object({

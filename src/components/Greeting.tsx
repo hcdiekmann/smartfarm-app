@@ -3,17 +3,24 @@ import { useAuth } from '@/provider/AuthProvider';
 
 const getGreeting = () => {
   const currentHour = new Date().getHours();
-  if (currentHour < 12) {
+  if (currentHour < 3) {
+    return 'Good night';
+  } else if (currentHour < 11) {
     return 'Good morning';
+  } else if (currentHour < 13) {
+    return 'Good day';
   } else if (currentHour < 18) {
     return 'Good afternoon';
-  } else {
+  } else if (currentHour < 22) {
     return 'Good evening';
+  } else {
+    return 'Good night';
   }
 };
 
+
 const Greeting = () => {
-    const { user } = useAuth();
+  const { user } = useAuth();
   const [greeting, setGreeting] = useState('');
 
   useEffect(() => {
