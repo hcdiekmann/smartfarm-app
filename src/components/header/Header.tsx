@@ -15,6 +15,7 @@ import { Button } from "../ui/button";
 import { Sheet, SheetTrigger, SheetContent } from "../ui/sheet";
 
 const Header = () => {
+  
   return (
     <header className="flex h-14 items-center gap-2 border-b bg-muted/40 px-2 lg:h-[60px] lg:px-6">
           <div className="md:hidden">
