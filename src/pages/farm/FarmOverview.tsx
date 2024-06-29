@@ -1,6 +1,6 @@
 import MapComponent from "@/components/Map";
 
-const FarmDashboard: React.FC = () => {
+const FarmOverview: React.FC = () => {
   return (
     <>
       <h2 className="text-muted-foreground uppercase tracking-wide text-sm">
@@ -17,4 +17,4 @@ const FarmDashboard: React.FC = () => {
   );
 };
 
-export default FarmDashboard;
+export default FarmOverview;

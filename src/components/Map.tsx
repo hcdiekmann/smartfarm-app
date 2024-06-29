@@ -255,8 +255,8 @@ export default function MapComponent() {
   };
 
   return (
-    <>
-      <div className="flex items-center justify-between">
+    <div>
+      <div className="flex items-center justify-between mb-2">
         <div className="flex items-center space-x-2">
           <Checkbox
             id="showPOIs"
@@ -293,7 +293,7 @@ export default function MapComponent() {
           latitude: -20,
           zoom: 3,
         }}
-        style={{ width: "100%", height: "32em", borderRadius: "6px" }}
+        style={{ width: "100%", height: "36em", borderRadius: "6px" }}
         attributionControl={true}
         mapStyle={mapStyle}
         //@ts-ignore
@@ -341,6 +341,6 @@ export default function MapComponent() {
           </Popup>
         )}
       </Map>
-    </>
+    </div>
   );
 }
