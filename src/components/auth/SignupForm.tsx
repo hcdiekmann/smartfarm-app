@@ -17,25 +17,30 @@ import { GoogleLogoIcon } from "../Icons";
 import useSignup from "@/hooks/auth/useSignup";
 import useLogin from "@/hooks/auth/useLogin";
 
-const signupFormSchema = z.object({
-  name: z.string().min(1, "Your name is required."),
-  email: z
-    .string()
-    .email({ message: "Invalid email address." })
-    .min(1, "Email is required."),
-  password: z.string().min(6, "Password must be at least 6 characters."),
-  confirmPassword: z.string().min(6, "Password must be at least 6 characters."),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords do not match",
-  path: ["confirmPassword"],
-});
+const signupFormSchema = z
+  .object({
+    name: z.string().min(1, "Your name is required."),
+    email: z
+      .string()
+      .email({ message: "Invalid email address." })
+      .min(1, "Email is required."),
+    password: z.string().min(6, "Password must be at least 6 characters."),
+    confirmPassword: z
+      .string()
+      .min(6, "Password must be at least 6 characters."),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 type SignupFormInputs = z.infer<typeof signupFormSchema>;
 
 export const SignupForm: React.FC = () => {
-  const  PasswordSignup = useSignup();
+  const PasswordSignup = useSignup();
   const { GoogleSignin } = useLogin();
-  const [isLoading, setIsLoading] = useState(false);
+  const [signupLoading, setSignupLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
 
   const form = useForm<SignupFormInputs>({
     resolver: zodResolver(signupFormSchema),
@@ -48,19 +53,15 @@ export const SignupForm: React.FC = () => {
   });
 
   const handleSignUp = async (values: SignupFormInputs) => {
-    setIsLoading(true);
-    await PasswordSignup(
-      values.name,
-      values.email,
-      values.password
-    );
-    setIsLoading(false);
+    setSignupLoading(true);
+    await PasswordSignup(values.name, values.email, values.password);
+    setSignupLoading(false);
   };
 
   const handleGoogleSignUp = async () => {
-    setIsLoading(true);
+    setGoogleLoading(true);
     await GoogleSignin(false);
-    setIsLoading(false);
+    setGoogleLoading(false);
   };
 
   return (
@@ -71,24 +72,24 @@ export const SignupForm: React.FC = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSignUp)} className="space-y-6">
           {/* Name field */}
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field, fieldState }) => (
-                <FormItem className="flex-1">
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="text"
-                      className="text-md dark:bg-muted"
-                      placeholder="Enter your full name"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage>{fieldState.error?.message}</FormMessage>
-                </FormItem>
-              )}
-            />
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field, fieldState }) => (
+              <FormItem className="flex-1">
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input
+                    type="text"
+                    className="text-md dark:bg-muted"
+                    placeholder="Enter your full name"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage>{fieldState.error?.message}</FormMessage>
+              </FormItem>
+            )}
+          />
           {/* Email field */}
           <FormField
             control={form.control}
@@ -147,8 +148,9 @@ export const SignupForm: React.FC = () => {
             )}
           />
           {/* Submit button */}
-          {!isLoading ? (
+          {!signupLoading ? (
             <Button
+              disabled={googleLoading}
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
             >
@@ -172,21 +174,25 @@ export const SignupForm: React.FC = () => {
           <span className="bg-background px-2 text-muted-foreground">Or</span>
         </div>
       </div>
-      {!isLoading ? (
-      <Button onClick={handleGoogleSignUp} variant={"outline"}>
-        <GoogleLogoIcon className="mr-2" />
-        Sign up using Google
-      </Button>
+      {!googleLoading ? (
+        <Button
+          disabled={signupLoading}
+          onClick={handleGoogleSignUp}
+          variant={"outline"}
+        >
+          <GoogleLogoIcon className="mr-2" />
+          Continue with Google
+        </Button>
       ) : (
-      <Button 
-        disabled
-        variant={"outline"}
-        className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
-      >
-        <IconLoader2 stroke={2} className="mr-2 h-4 w-4 animate-spin" />
-        Sign up using Google
-      </Button>)}
-
+        <Button
+          disabled
+          variant={"outline"}
+          className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
+        >
+          <IconLoader2 stroke={2} className="mr-2 h-4 w-4 animate-spin" />
+          Continue with Google
+        </Button>
+      )}
     </div>
   );
 };

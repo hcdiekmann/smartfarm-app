@@ -228,7 +228,6 @@ export default function MapComponent() {
     );
   };
 
-  // Define the complete style object
   const mapStyle: MapStyle = {
     version: 8,
     glyphs:
@@ -307,10 +306,11 @@ export default function MapComponent() {
             latitude={popupInfo.latitude}
             closeButton={true}
             closeOnClick={false}
+
             onClose={() => setPopupInfo(null)}
             anchor="top"
           >
-            <div className="p-2 bg-white rounded-lg shadow-md">
+            <div className="bg-white text rounded-lg shadow-sm">
               <table className="text-sm text-left text-gray-500">
                 <tbody>
                   <tr>
