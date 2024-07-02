@@ -7,6 +7,7 @@ import { supabase } from "../../api/supabase/client";
 import { Checkbox } from "../ui/checkbox";
 import { Switch } from "../ui/switch";
 import { getMapStyle } from "./mapStyles";
+import { base64ToArrayBuffer } from "@/utils/utils";
 
 type MapTheme = "light" | "dark";
 
@@ -64,19 +65,6 @@ export default function MapComponent() {
     };
   }, []);
 
-  function base64ToArrayBuffer(base64: string) {
-    const binaryString = atob(base64);
-    const bytes = new Uint8Array(binaryString.length);
-    for (let i = 0; i < binaryString.length; i++) {
-      bytes[i] = binaryString.charCodeAt(i);
-    }
-    return bytes.buffer;
-  }
-
-  const handleCheckboxChange = () => {
-    setShowPOIs(!showPOIs);
-  };
-
   const loadDetails = async (id: string) => {
     const { data, error } = await supabase
       .from("places")
@@ -118,7 +106,7 @@ export default function MapComponent() {
 
   const renderDetails = (details: any) => {
     return (
-      <div className="mt-2 p-2 bg-gray-100 rounded">
+      <div className="text-gray-900 mt-2 p-1 bg-gray-100 rounded">
         <div>
           <strong>Websites:</strong>{" "}
           {details.websites ? details.websites.join(", ") : "None"}
@@ -161,7 +149,7 @@ export default function MapComponent() {
           <Checkbox
             id="showPOIs"
             checked={showPOIs}
-            onCheckedChange={handleCheckboxChange}
+            onCheckedChange={() => setShowPOIs(!showPOIs)}
           />
           <label
             htmlFor="showPOIs"
@@ -210,7 +198,7 @@ export default function MapComponent() {
             onClose={() => setPopupInfo(null)}
             anchor="top"
           >
-            <div className="bg-white text rounded-lg shadow-sm">
+            <div className="bg-white rounded-lg shadow-sm">
               <table className="text-sm text-left text-gray-500">
                 <tbody>
                   <tr>
@@ -230,7 +218,7 @@ export default function MapComponent() {
                         className="cursor-pointer text-blue-500 underline"
                         onClick={() => loadDetails(popupInfo.properties.id)}
                       >
-                        Show details
+                        More info
                       </span>
                     </td>
                   </tr>
