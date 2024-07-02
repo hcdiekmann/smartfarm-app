@@ -46,7 +46,7 @@ const Home: React.FC = () => {
                       Assets: 0
                     </span>
                     <span className="text-sm text-muted-foreground">
-                      People: 0
+                      People: 1
                     </span>
                   </div>
                 </CardContent>
