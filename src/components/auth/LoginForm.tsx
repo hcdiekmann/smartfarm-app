@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { IconLoader2 } from '@tabler/icons-react';
+import { IconLoader2 } from "@tabler/icons-react";
 
 import {
   Form,
@@ -32,7 +32,8 @@ type LoginFormInputs = z.infer<typeof formSchema>;
 
 export const LoginForm: React.FC = () => {
   const { PasswordLogin, GoogleSignin } = useLogin();
-  const [isLoading, setIsLoading] = useState(false);
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
 
   const form = useForm<LoginFormInputs>({
     resolver: zodResolver(formSchema),
@@ -43,15 +44,15 @@ export const LoginForm: React.FC = () => {
   });
 
   const handleLogin = async (values: LoginFormInputs) => {
-    setIsLoading(true);
+    setLoginLoading(true);
     await PasswordLogin(values.email, values.password);
-    setIsLoading(false);
+    setLoginLoading(false);
   };
 
   const handleGoogleSignIn = async () => {
-    setIsLoading(true);
+    setGoogleLoading(true);
     await GoogleSignin(true);
-    setIsLoading(false);
+    setGoogleLoading(false);
   };
 
   return (
@@ -108,19 +109,22 @@ export const LoginForm: React.FC = () => {
             )}
           />
           {/* Login button */}
-          {!isLoading ? (
-          <Button
-            type="submit"
-            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
-          >
-            Login
-          </Button> ) : (
-          <Button 
-            disabled
-            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
-          >
-            <IconLoader2 stroke={2} className="h-4 w-4 animate-spin" />
-          </Button>)}
+          {!loginLoading ? (
+            <Button
+              type="submit"
+              disabled={googleLoading}
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
+            >
+              Login
+            </Button>
+          ) : (
+            <Button
+              disabled
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
+            >
+              <IconLoader2 stroke={2} className="h-4 w-4 animate-spin" />
+            </Button>
+          )}
         </form>
       </Form>
       <div className="relative">
@@ -131,20 +135,25 @@ export const LoginForm: React.FC = () => {
           <span className="bg-background px-2 text-muted-foreground">Or</span>
         </div>
       </div>
-      {!isLoading ? (
-      <Button onClick={handleGoogleSignIn} variant={"outline"}>
-        <GoogleLogoIcon className="w-5 h-5 mr-2" />
-        Sign in with Google
-      </Button>
+      {!googleLoading ? (
+        <Button
+          disabled={loginLoading}
+          onClick={handleGoogleSignIn}
+          variant={"outline"}
+        >
+          <GoogleLogoIcon className="w-5 h-5 mr-2" />
+          Continue with Google
+        </Button>
       ) : (
-      <Button 
-        disabled
-        variant={"outline"}
-        className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
-      >
-        <IconLoader2 stroke={2} className="mr-2 h-4 w-4 animate-spin" />
-        Sign in with Google
-      </Button>)}
+        <Button
+          disabled
+          variant={"outline"}
+          className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md"
+        >
+          <IconLoader2 stroke={2} className="mr-2 h-4 w-4 animate-spin" />
+          Continue with Google
+        </Button>
+      )}
     </div>
   );
 };
