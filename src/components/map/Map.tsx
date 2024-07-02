@@ -1,13 +1,16 @@
+import "./styles.css";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { useState, useEffect } from "react";
-import Map, { Popup, MapStyle } from "react-map-gl";
 import maplibregl from "maplibre-gl";
+import Map, { Popup, MapStyle, MapLayerMouseEvent, MapRef } from "react-map-gl";
 import { Protocol } from "pmtiles";
+import { useState, useEffect, useRef } from "react";
 import { supabase } from "../../api/supabase/client";
 import { Checkbox } from "../ui/checkbox";
 import { Switch } from "../ui/switch";
 import { getMapStyle } from "./mapStyles";
 import { base64ToArrayBuffer } from "@/utils/utils";
+import { Button } from "../ui/button";
+import { ChevronDown, ChevronUp, ExternalLink, Info } from "lucide-react";
 
 type MapTheme = "light" | "dark";
 
@@ -18,6 +21,9 @@ export default function MapComponent() {
     getMapStyle(mapTheme, showPOIs)
   );
   const [popupInfo, setPopupInfo] = useState<any>(null);
+  const [showDetails, setShowDetails] = useState(false);
+
+  const mapRef = useRef<MapRef>(null);
 
   useEffect(() => {
     setMapStyle(getMapStyle(mapTheme, showPOIs));
@@ -66,39 +72,60 @@ export default function MapComponent() {
   }, []);
 
   const loadDetails = async (id: string) => {
-    const { data, error } = await supabase
-      .from("places")
-      .select(
-        `
+    if (popupInfo.details) {
+      setShowDetails(!showDetails);
+    } else {
+      const { data, error } = await supabase
+        .from("places")
+        .select(
+          `
         websites,
         socials,
         phones,
         addresses,
         source: sources->0->dataset
       `
-      )
-      .eq("id", id)
-      .single();
+        )
+        .eq("id", id)
+        .single();
 
-    if (error) {
-      console.error(error);
-      return;
+      if (error) {
+        setShowDetails(false);
+        console.error(error);
+        return;
+      }
+
+      setPopupInfo((prev: any) => ({
+        ...prev,
+        details: data,
+      }));
+      setShowDetails(true);
     }
-
-    setPopupInfo((prev: any) => ({
-      ...prev,
-      details: data,
-    }));
   };
 
-  const handleMapClick = (event: any) => {
+  const handleMapClick = (event: MapLayerMouseEvent) => {
+    setShowDetails(false);
     const feature = event.features && event.features[0];
     if (feature) {
+      const [longitude, latitude] = event.lngLat.toArray();
       setPopupInfo({
-        longitude: event.lngLat.lng,
-        latitude: event.lngLat.lat,
+        longitude,
+        latitude,
         properties: feature.properties,
       });
+
+      const currentZoom = mapRef.current?.getZoom() || 0;
+      const centerPoint = mapRef.current?.project([longitude, latitude]);
+      if (centerPoint) {
+        centerPoint.y += 120; // Adjust offset from the center here
+        const newCenter = mapRef.current?.unproject(centerPoint);
+        // Fly to the new center
+        mapRef.current?.flyTo({
+          center: newCenter,
+          zoom: Math.max(currentZoom, 14), // Zoom in to at least level 14
+          duration: 1000, // Animation duration in milliseconds
+        });
+      }
     } else {
       setPopupInfo(null);
     }
@@ -106,40 +133,63 @@ export default function MapComponent() {
 
   const renderDetails = (details: any) => {
     return (
-      <div className="text-gray-900 mt-2 p-1 bg-gray-100 rounded">
-        <div>
-          <strong>Websites:</strong>{" "}
-          {details.websites ? details.websites.join(", ") : "None"}
-        </div>
-        <div>
-          <strong>Socials:</strong>{" "}
-          {details.socials ? details.socials.join(", ") : "None"}
-        </div>
-        <div>
-          <strong>Phones:</strong>{" "}
-          {details.phones ? details.phones.join(", ") : "None"}
-        </div>
-        <div>
-          <strong>Addresses:</strong>
-          {details.addresses ? (
-            details.addresses.map((address: any, index: number) => (
+      <div className="text-gray-900 mt-1 p-2 bg-gray-100 rounded-lg text-sm">
+        {details.websites && details.websites.length > 0 && (
+          <div>
+            <strong>Websites:</strong>
+            <div className="flex flex-wrap gap-2">
+              {details.websites.map((website: string, index: number) => (
+                <Button key={index} size="sm" variant="link">
+                  <ExternalLink size={16} className="mr-1" />
+                  <a href={website} target="_blank" rel="noopener noreferrer">
+                    Visit Website
+                  </a>
+                </Button>
+              ))}
+            </div>
+          </div>
+        )}
+        {details.socials && details.socials.length > 0 && (
+          <div>
+            <strong>Socials:</strong>
+            <div className="flex flex-wrap gap-2">
+              {details.socials.map((social: string, index: number) => (
+                <Button key={index} size="sm" variant="link">
+                  <ExternalLink size={16} className="mr-1" />
+                  <a href={social} target="_blank" rel="noopener noreferrer">
+                    Visit Page
+                  </a>
+                </Button>
+              ))}
+            </div>
+          </div>
+        )}
+        {details.phones && (
+          <div className="mb-1">
+            <strong>Phones:</strong>
+            <div className="ml-4">{details.phones.join(", ")}</div>
+          </div>
+        )}
+        {details.addresses && (
+          <div>
+            <strong>Address:</strong>
+            {details.addresses.map((address: any, index: number) => (
               <div key={index} className="ml-4">
                 {address.freeform && <div>{address.freeform}</div>}
-                {address.locality && <div>{address.locality}</div>}
-                {address.postcode && <div>{address.postcode}</div>}
-                {address.region && <div>{address.region}</div>}
-                {address.country && <div>{address.country}</div>}
+                {address.locality && <span>{address.locality}, </span>}
+                {address.postcode && <span>{address.postcode}, </span>}
+                {address.region && <span>{address.region}, </span>}
+                {address.country && <span>{address.country}</span>}
               </div>
-            ))
-          ) : (
-            <div>None</div>
-          )}
-        </div>
-        <div>
-          <strong>Source:</strong> {details.source}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     );
+  };
+
+  const formatMainCategory = (category: string): string => {
+    return category?.replace(/_/g, " ").toUpperCase();
   };
 
   return (
@@ -175,6 +225,7 @@ export default function MapComponent() {
         </div>
       </div>
       <Map
+        ref={mapRef}
         cursor="pointer"
         initialViewState={{
           longitude: 24,
@@ -195,10 +246,15 @@ export default function MapComponent() {
             latitude={popupInfo.latitude}
             closeButton={true}
             closeOnClick={false}
-            onClose={() => setPopupInfo(null)}
+            onClose={() => {
+              setPopupInfo(null);
+              setShowDetails(false);
+            }}
             anchor="top"
+            className="custom-popup"
+            maxWidth="300px"
           >
-            <div className="bg-white rounded-lg shadow-sm">
+            <div className="bg-white rounded-lg">
               <table className="text-sm text-left text-gray-500">
                 <tbody>
                   <tr>
@@ -207,24 +263,32 @@ export default function MapComponent() {
                     </td>
                   </tr>
                   <tr>
-                    <td className="text-gray-900">
-                      {popupInfo.properties.main_category}
+                    <td className="text-gray-500 text-sm">
+                      {formatMainCategory(popupInfo.properties.main_category)}
                     </td>
-                    <td></td>
                   </tr>
                   <tr>
                     <td>
-                      <span
-                        className="cursor-pointer text-blue-500 underline"
+                      <Button
+                        size="sm"
+                        variant="outline"
                         onClick={() => loadDetails(popupInfo.properties.id)}
                       >
-                        More info
-                      </span>
+                        <Info size={16} className="mr-1" />
+                        {showDetails ? "Hide Details" : "Show Details"}
+                        {showDetails ? (
+                          <ChevronUp className="ml-1" size={16} />
+                        ) : (
+                          <ChevronDown className="ml-1" size={16} />
+                        )}
+                      </Button>
                     </td>
                   </tr>
                 </tbody>
               </table>
-              {popupInfo.details && renderDetails(popupInfo.details)}
+              {showDetails &&
+                popupInfo.details &&
+                renderDetails(popupInfo.details)}
             </div>
           </Popup>
         )}

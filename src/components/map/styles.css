@@ -1,0 +1,11 @@
+.custom-popup .maplibregl-popup-content {
+    padding-right: 35px;
+    padding-left: 15px;
+    border-radius: 8px;
+  }
+  
+  .custom-popup .maplibregl-popup-close-button {
+    font-size: 20px;
+    padding: 5px 10px;
+    color: black;
+  }
