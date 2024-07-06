@@ -31,7 +31,7 @@ export default function MapComponent() {
               setMapTheme(mapTheme === "dark" ? "light" : "dark")
             }
           />
-          <label htmlFor="showPOIs">Dark</label>
+          <label htmlFor="mapTheme">Dark</label>
         </div>
       </div>
       <MapView
