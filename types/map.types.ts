@@ -34,4 +34,4 @@ export type Coordinate = {
   
   export type PopupInfo = POIPopupInfo | AssetPopupInfo;
   
-  export type MapTheme = 'light' | 'dark';
+  export type MapTheme = 'light' | 'dark' | 'satellite' ;

@@ -115,7 +115,6 @@ export const getOverturePOIsText = (theme: MapTheme) => ({
   },
 });
 
-
 export const getMapStyle = (theme: MapTheme, showPOIs: boolean): MapStyle => {
     const baseLayers: LayerSpecification[] = getBaseLayers(theme);
     const labelsLayer: LayerSpecification[] = getLabelsLayer(theme);

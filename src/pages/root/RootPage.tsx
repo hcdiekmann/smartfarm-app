@@ -11,8 +11,6 @@ import {
 } from "@/components/ui/breadcrumb";
 import Home from "./Home";
 import Account from "./Account";
-import { ThemeToggle } from "@/components/header/ThemeToggle";
-import { AvatarMenu } from "@/components/header/AvatarMenu";
 
 const Nav = () => {
   return (
@@ -55,19 +53,6 @@ const Nav = () => {
               News
             </NavLink>
             <NavLink
-              to="/account"
-              className={({ isActive }) =>
-                `flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
-                  isActive
-                    ? "bg-muted text-primary"
-                    : "text-muted-foreground hover:text-primary"
-                }`
-              }
-            >
-              <UserIcon className="h-6 w-6" />
-              Account
-            </NavLink>
-            <NavLink
               to="/store"
               className={({ isActive }) =>
                 `flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
@@ -80,11 +65,20 @@ const Nav = () => {
               <Store className="h-6 w-6" />
               Our Products
             </NavLink>
+            <NavLink
+              to="/account"
+              className={({ isActive }) =>
+                `flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
+                  isActive
+                    ? "bg-muted text-primary"
+                    : "text-muted-foreground hover:text-primary"
+                }`
+              }
+            >
+              <UserIcon className="h-6 w-6" />
+              Account
+            </NavLink>
           </nav>
-        </div>
-        <div className="mt-auto p-4">
-          <ThemeToggle />
-          <AvatarMenu  />
         </div>
       </div>
     </div>

@@ -7,6 +7,7 @@ export function useMap() {
   const [popupInfo, setPopupInfo] = useState<PopupInfo | null>(null);
   const [popupExpanded, setPopupExpanded] = useState(false);
   const [showPOIs, setShowPOIs] = useState(false);
+  const [showAssets, setShowAssets] = useState(false);
 
   return {
     mapTheme,
@@ -17,5 +18,7 @@ export function useMap() {
     setPopupExpanded,
     showPOIs,
     setShowPOIs,
+    showAssets,
+    setShowAssets,
   };
 }
