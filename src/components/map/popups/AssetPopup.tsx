@@ -6,7 +6,7 @@ type AssetPopupProps = {
   onToggleExpanded: () => void;
 };
 
-export function AssetPopup({ info, expanded, onToggleExpanded }: AssetPopupProps) {
+export function AssetPopup({ info }: AssetPopupProps) {
 
   return (
     <div className="bg-white rounded-lg">
