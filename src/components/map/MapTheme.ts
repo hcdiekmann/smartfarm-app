@@ -2,7 +2,7 @@ import type { MapStyle } from "react-map-gl";
 import { noLabels, labels } from "protomaps-themes-base";
 import { LayerSpecification } from "maplibre-gl";
 import { MapTheme } from "@/map.types";
-import { mapSources } from "./MapSources";
+import { mapSources } from "./mapSources";
 
 export const getMapStyle = (theme: MapTheme, showPOIs: boolean): MapStyle => {
   let baseLayers: LayerSpecification[];
