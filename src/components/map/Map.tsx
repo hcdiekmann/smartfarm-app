@@ -4,8 +4,8 @@ import { MapView } from "./MapView";
 import { Toggle } from "../ui/toggle";
 import { MapPinned, Moon, Satellite, Sun } from "lucide-react";
 import { TractorIcon } from "../Icons";
-import { MapTheme } from "@/map.types";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
+import { MapTheme } from "./mapTheme";
 
 export default function MapComponent() {
   const {
@@ -34,17 +34,6 @@ export default function MapComponent() {
       <div className="flex flex-col space-y-2 sm:flex-row sm:justify-between sm:items-center sm:space-y-0 sm:space-x-2 mb-1">
         <div className="flex flex-wrap gap-2">
           <Toggle
-            aria-label="Toggle public POI"
-            variant="outline"
-            size="sm"
-            pressed={showPOIs}
-            onPressedChange={togglePOIs}
-            className="flex-grow sm:flex-grow-0"
-          >
-            <MapPinned className="h-4 w-4 mr-1" />
-            Public POI
-          </Toggle>
-          <Toggle
             aria-label="Toggle assets"
             variant="outline"
             size="sm"
@@ -54,6 +43,17 @@ export default function MapComponent() {
           >
             <TractorIcon className="h-4 w-4 mr-1" />
             Assets
+          </Toggle>
+          <Toggle
+            aria-label="Toggle public POI"
+            variant="outline"
+            size="sm"
+            pressed={showPOIs}
+            onPressedChange={togglePOIs}
+            className="flex-grow sm:flex-grow-0"
+          >
+            <MapPinned className="h-4 w-4 mr-1" />
+            Public POI
           </Toggle>
         </div>
         <Tabs value={mapTheme} onValueChange={handleThemeChange} className="w-full sm:w-auto">
@@ -66,7 +66,7 @@ export default function MapComponent() {
               <Moon className="h-4 w-4 mr-1 sm:mr-2" />
               <span className=" sm:inline">Dark</span>
             </TabsTrigger>
-            <TabsTrigger value="satellite" disabled>
+            <TabsTrigger value="satellite">
               <Satellite className="h-4 w-4 mr-1 sm:mr-2" />
               <span className=" sm:inline">Satellite</span>
             </TabsTrigger>
