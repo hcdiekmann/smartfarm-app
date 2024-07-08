@@ -5,7 +5,7 @@ import { Toggle } from "../ui/toggle";
 import { MapPinned, Moon, Satellite, Sun } from "lucide-react";
 import { TractorIcon } from "../Icons";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
-import { MapTheme } from "./mapTheme";
+import { MapTheme } from "@/map.types";
 
 export default function MapComponent() {
   const {

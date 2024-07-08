@@ -4,8 +4,9 @@ import maplibregl from "maplibre-gl";
 import Map, { Popup, MapRef, MapLayerMouseEvent } from "react-map-gl";
 import { useMap } from "@/hooks/map/useMap";
 import { PopupContent } from "./PopupContent";
-import { MapTheme, getMapStyle } from "./mapTheme";
-import { initializeMapProtocols } from "./mapProtocols";
+import { initializeMapProtocols } from "./MapProtocols";
+import { MapTheme } from "@/map.types";
+import { getMapStyle } from "./MapTheme";
 
 type MapViewProps = {
   mapTheme: MapTheme;
