@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PopupInfo } from '@/map.types';
+import { MapTheme, PopupInfo } from '@/map.types';
 
 export function useMap() {
   const [mapTheme, setMapTheme] = useState<MapTheme>('light');
