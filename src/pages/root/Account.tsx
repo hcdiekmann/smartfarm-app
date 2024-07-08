@@ -38,7 +38,7 @@ export default function Account() {
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="space-y-1">
-              <Label htmlFor="name">Name</Label>
+              <Label htmlFor="name">Full Name</Label>
               <Input id="name" placeholder="Name" defaultValue={user?.user_metadata.full_name} />
             </div>
             <div className="space-y-1">
@@ -75,22 +75,9 @@ export default function Account() {
       <TabsContent value="billing" className="space-y-2">
         <Card>
           <CardHeader>
-            <CardTitle>Billing</CardTitle>
-            <CardDescription>Update your billing information</CardDescription>
+            <CardTitle>Free Beta Plan</CardTitle>
+            <CardDescription>Our services are currently free during the beta period. </CardDescription>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-1">
-              <Label htmlFor="card">Card Number</Label>
-              <Input id="card" placeholder="**** **** **** 1234" />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="expiry">Expiry Date</Label>
-              <Input id="expiry" placeholder="MM/YY" />
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button>Save</Button>
-          </CardFooter>
         </Card>
       </TabsContent>
     </Tabs>
