@@ -7,7 +7,7 @@ import { Toaster } from "sonner";
 import { ThemeProvider } from "./provider/ThemeProvider.tsx";
 import "react-subtle-nudge/dist/index.css";
 import "./index.css";
-import { MapProvider } from "react-map-gl";
+import { MapProvider } from "react-map-gl/maplibre";
 
 const queryClient = new QueryClient();
 
