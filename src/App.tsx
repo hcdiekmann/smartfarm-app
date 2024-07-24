@@ -12,6 +12,7 @@ import LoginPage from "@/pages/auth/LoginPage";
 import SignupPage from "@/pages/auth/SignupPage";
 import { useAuth } from "@/provider/AuthProvider";
 import FarmPage from "./pages/farm/FarmPage";
+import FinancePage from "./pages/farm/finances/FinancesPage";
 
 const Private: React.FC<{ element: React.ReactElement }> = ({ element }) => {
   const { user, loading } = useAuth();
@@ -29,22 +30,14 @@ const App: React.FC = () => {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/auth/callback/login" element={<LoginOAuthCallback />} />
-          <Route
-            path="/auth/callback/signup"
-            element={<SignupOAuthCallback />}
-          />
+          <Route path="/auth/callback/signup" element={<SignupOAuthCallback />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
           {/* Private Routes */}
           <Route path="/*" element={<Private element={<RootPage />} />} />
-          <Route
-            path="/farm/*"
-            element={<Private element={<FarmPage  />} />}
-          />
-          <Route
-            path="/update-password"
-            element={<Private element={<UpdatePasswordPage />} />}
-          />
+          <Route path="/farm/:shortRef" element={<Private element={<FarmPage />} />} />
+          <Route path="/farm/:shortRef/finances" element={<Private element={<FinancePage />} />} />
+          <Route path="/update-password" element={<Private element={<UpdatePasswordPage />} />} />
 
           {/* Fallback Route */}
           <Route path="*" element={<NotFoundPage />} />
