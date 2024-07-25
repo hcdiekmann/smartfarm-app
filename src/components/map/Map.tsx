@@ -10,21 +10,21 @@ import {
 import './popups/styles.css';
 import "maplibre-gl/dist/maplibre-gl.css";
 import '@hyvilo/maplibre-gl-draw/dist/maplibre-gl-draw.css'
-import { useMap as useCustomMap } from "@/hooks/map/useMap";
+import { useCustomMap } from "@/hooks/map/useCustomMap";
 import { PopupContent } from "./PopupContent";
-import { initializeMapProtocols } from "./MapProtocols";
-import { MapTheme } from "@/map.types";
-import { getMapStyle } from "./MapTheme";
+import { initializeMapProtocols } from "./mapProtocols";
+import { getMapStyle } from "./mapTheme";
 import DrawControl from './DrawControl';
+import { MapTheme } from '@/map.types';
 
 type CustomMapProps = {
   theme: MapTheme;
-  showPOIs: boolean;
-  showAssets: boolean;
-  showDrawControls: boolean;
+  showPOIs?: boolean;
+  showAssets?: boolean;
+  showDrawControls?: boolean;
 };
 
-export default function CustomMap({ theme, showPOIs, showAssets, showDrawControls }: CustomMapProps) {
+export default function CustomMap({ theme, showPOIs=false, showAssets=false, showDrawControls=false }: CustomMapProps) {
   const mapRef = useRef<MapRef>(null);
 
   const {
@@ -57,14 +57,17 @@ export default function CustomMap({ theme, showPOIs, showAssets, showDrawControl
       mapStyle={getMapStyle(theme, showPOIs, showAssets)}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      interactiveLayerIds={["overture-pois-text", "custom-assets"]}
+      interactiveLayerIds={["overture-pois-text", "private-assets"]}
       onClick={handleMapClick}
       mapLib={maplibregl}
     >
+      {/* <MapThemeControl position="top-right" /> */}
       <FullscreenControl position="top-right" />
       <NavigationControl position="top-right" />
-      {!showDrawControls && <GeolocateControl position="bottom-left" />}
+      <GeolocateControl position="bottom-left" />
+
       {showDrawControls && <DrawControl position='top-left' />}
+
       {popupInfo && (
         <Popup
           longitude={popupInfo.longitude}

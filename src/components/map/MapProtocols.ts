@@ -7,7 +7,7 @@ export function initializeMapProtocols() {
   const pmtilesProtocol = new Protocol();
   
   maplibregl.addProtocol("pmtiles", pmtilesProtocol.tile);
-  maplibregl.addProtocol("supabase", createSupabaseProtocol()); // fix this to work with Maplibre 3.x
+  maplibregl.addProtocol("supabase", createSupabaseProtocol());
   
   return () => {
     maplibregl.removeProtocol("pmtiles");
@@ -45,7 +45,7 @@ function createSupabaseProtocol() {
   };
 }
 
-// This works for Maplibre v4.0.0 and above with the Promise-based protocol API
+// // This works for Maplibre v4.0.0 and above with the Promise-based protocol API
 // function createSupabaseProtocol() {
 //   return async (
 //     params: maplibregl.RequestParameters

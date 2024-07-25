@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { MapLayerMouseEvent } from 'react-map-gl/maplibre';
 import { PopupInfo } from '@/map.types';
 
-export function useMap() {
+export function useCustomMap() {
   const [cursor, setCursor] = useState<string | undefined>(undefined);
   const [popupInfo, setPopupInfo] = useState<PopupInfo | null>(null);
   const [popupExpanded, setPopupExpanded] = useState(false);

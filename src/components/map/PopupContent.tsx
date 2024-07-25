@@ -13,7 +13,7 @@ export function PopupContent({ info, expanded, onToggleExpanded }: PopupContentP
   switch (info.type) {
     case 'public_poi':
       return <POIPopup info={info} expanded={expanded} onToggleExpanded={onToggleExpanded} />;
-    case 'custom_asset':
+    case 'private_asset':
       return <AssetPopup info={info} expanded={expanded} onToggleExpanded={onToggleExpanded} />;
     default:
       return null;

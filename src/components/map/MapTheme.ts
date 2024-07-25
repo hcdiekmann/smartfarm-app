@@ -2,7 +2,7 @@ import type { MapStyle } from 'react-map-gl/maplibre';
 import { noLabels, labels } from "protomaps-themes-base";
 import { LayerSpecification } from "maplibre-gl";
 import { MapTheme } from "@/map.types";
-import { mapSources } from "./MapSources";
+import { mapSources } from "./mapSources";
 
 export const getMapStyle = (theme: MapTheme, showPOIs: boolean, showAssets: boolean): MapStyle => {
   let baseLayers: LayerSpecification[];
@@ -90,6 +90,86 @@ const getMaptilerLabelsLayer = (): LayerSpecification[] => {
         "text-field": ["get", "name"],
         "text-font": ["Noto Sans Regular"],
         "text-size": ["interpolate", ["linear"], ["zoom"], 3, 12, 13, 22],
+      },
+      paint: {
+        "text-color": "rgba(255, 255, 255, 0.8)",
+        "text-halo-color": "rgba(0, 0, 0, 0.7)",
+        "text-halo-width": 1,
+      },
+    },
+    {
+      id: "maptiler-labels-country",
+      type: "symbol",
+      source: "maptiler_labels",
+      "source-layer": "country",
+      layout: {
+        "text-field": ["get", "name"],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": 16,
+      },
+      paint: {
+        "text-color": "rgba(255, 255, 255, 0.8)",
+        "text-halo-color": "rgba(0, 0, 0, 0.7)",
+        "text-halo-width": 1,
+      },
+    },
+    {
+      id: "maptiler-labels-state",
+      type: "symbol",
+      source: "maptiler_labels",
+      "source-layer": "state",
+      layout: {
+        "text-field": ["get", "name"],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": 14,
+      },
+      paint: {
+        "text-color": "rgba(255, 255, 255, 0.8)",
+        "text-halo-color": "rgba(0, 0, 0, 0.7)",
+        "text-halo-width": 1,
+      },
+    },
+    {
+      id: "maptiler-labels-city",
+      type: "symbol",
+      source: "maptiler_labels",
+      "source-layer": "place_city",
+      layout: {
+        "text-field": ["get", "name"],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": 14,
+      },
+      paint: {
+        "text-color": "rgba(255, 255, 255, 0.8)",
+        "text-halo-color": "rgba(0, 0, 0, 0.7)",
+        "text-halo-width": 1,
+      },
+    },
+    {
+      id: "maptiler-labels-neighborhood",
+      type: "symbol",
+      source: "maptiler_labels",
+      "source-layer": "place_neighborhood",
+      layout: {
+        "text-field": ["get", "name"],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": 12,
+      },
+      paint: {
+        "text-color": "rgba(255, 255, 255, 0.8)",
+        "text-halo-color": "rgba(0, 0, 0, 0.7)",
+        "text-halo-width": 1,
+      },
+    },
+    {
+      id: "maptiler-labels-island",
+      type: "symbol",
+      source: "maptiler_labels",
+      "source-layer": "place_island",
+      layout: {
+        "text-field": ["get", "name"],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": 12,
       },
       paint: {
         "text-color": "rgba(255, 255, 255, 0.8)",

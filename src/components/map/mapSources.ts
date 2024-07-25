@@ -6,7 +6,7 @@ export const mapSources: { [key: string]: SourceSpecification } = {
   protomaps: {
     type: "vector",
     url: "pmtiles://https://amvlpfduasiuxfoevnry.supabase.co/storage/v1/object/public/public-maps/namibia.pmtiles",
-    attribution: '<a href="https://github.com/protomaps/basemaps">Protomaps</a> © <a href="https://openstreetmap.org">OpenStreetMap</a>',
+    attribution: '<a href="https://protomaps.com/">Protomaps</a> © <a href="https://openstreetmap.org">OpenStreetMap</a>',
   },
   supabase: {
     type: "vector",

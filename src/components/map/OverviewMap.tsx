@@ -1,15 +1,16 @@
 import  CustomMap  from "./Map";
 import { MapPinned } from "lucide-react";
 import { TractorIcon } from "../Icons";
-import MapThemeSelector from "./MapThemeSelector";
 import { useState } from "react";
-import { MapTheme } from "@/map.types";
 import { Tabs, TabsTrigger, TabsList } from "../ui/tabs";
+import MapThemeSelector from "./MapThemeSelector";
+import { MapTheme } from "@/map.types";
 
 export default function OverviewMap() {
-  const [mapTheme, setMapTheme] = useState<MapTheme>("light");
   const [showPOIs, setShowPOIs] = useState(false);
   const [showAssets, setShowAssets] = useState(true);
+  const [theme, setTheme] = useState<MapTheme>("light");
+  
 
   const handleMapLayerChange = (value: string) => {
     switch (value) {
@@ -49,11 +50,11 @@ export default function OverviewMap() {
               </TabsTrigger>
             </TabsList>
           </Tabs>
-          <MapThemeSelector mapTheme={mapTheme} setMapTheme={setMapTheme} />
+          <MapThemeSelector setMapTheme={setTheme} />
       </div>
-      <div className="">
-        <CustomMap theme={mapTheme} showPOIs={showPOIs} showAssets={showAssets} showDrawControls={true} />
-      </div>
+      
+        <CustomMap theme={theme} showPOIs={showPOIs} showAssets={showAssets} />
+      
     </div>
   );
 }

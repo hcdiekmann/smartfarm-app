@@ -9,8 +9,8 @@ type DrawControlProps = {
 };
 
 function DrawControl({ position = "top-left" }: DrawControlProps) {
-  const [area, setArea] = useState<number | null>(null);
   const drawRef = useRef<MapLibreDraw | null>(null);
+  const [area, setArea] = useState<number | null>(null);
 
   const updateArea = useCallback(() => {
     if (drawRef.current) {
@@ -20,10 +20,8 @@ function DrawControl({ position = "top-left" }: DrawControlProps) {
         const area = turf.area(data);
         const roundedArea = Math.round(area * 100) / 100;
         setArea(roundedArea);
-        console.log('Area calculated:', roundedArea);
       } else {
         setArea(null);
-        console.log('No features found');
       }
     }
   }, []);
@@ -34,8 +32,10 @@ function DrawControl({ position = "top-left" }: DrawControlProps) {
         displayControlsDefault: false,
         controls: {
           polygon: true,
-          trash: true
+          // point: true, // use this for point drawing
+          trash: true,
         },
+        defaultMode: 'draw_polygon'
       });
       return drawRef.current;
     },
@@ -57,16 +57,16 @@ function DrawControl({ position = "top-left" }: DrawControlProps) {
   );
 
   return (
-    <div className="p-4 h-75 w-150 absolute bottom-12 left-2 bg-white bg-opacity-80 text-center rounded-sm">
-      <p className="m-0 text-sm">
+    <div className="p-4 h-75 w-150 absolute bottom-12 left-2 bg-white bg-opacity-80 text-left rounded-sm">
+      <p className="m-0 text-sm underline">
         {area ? 'Area:' : 'Draw a valid polygon'}
       </p>
-      {area !== null && (
+      {area && (
         <div className='pt-1'>
-          <p className="m-0 text-xs">
-            <strong>{(area / 10000).toLocaleString()}</strong> ha 
+          <p className="m-0 text-xs text-right">
+            <strong>{(area / 10000).toFixed(2)}</strong> ha 
           </p>
-          <p className="m-0 text-xs">
+          <p className="m-0 text-xs text-right">
             <strong>{area.toLocaleString()}</strong> m² 
           </p>
         </div>

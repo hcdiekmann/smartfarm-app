@@ -26,19 +26,22 @@ export default function Account() {
   return (
     <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as AccountTabOption)} className="w-[400px]">
       <TabsList className="grid w-full grid-cols-3">
-        <TabsTrigger value="account">Account</TabsTrigger>
+        <TabsTrigger value="account">Profile</TabsTrigger>
         <TabsTrigger value="settings">Settings</TabsTrigger>
         <TabsTrigger value="billing">Billing</TabsTrigger>
       </TabsList>
       <TabsContent value="account" className="space-y-2">
         <Card>
           <CardHeader>
-            <CardTitle>Account</CardTitle>
-            <CardDescription>Make changes to your account information here. Click save when you're done.</CardDescription>
+            <CardTitle>Profile</CardTitle>
+            <CardDescription>Make changes to your account information here.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
+            {/* <div className="space-y-1">
+              <ProfilePicture />
+            </div> */}
             <div className="space-y-1">
-              <Label htmlFor="name">Full Name</Label>
+              <Label htmlFor="name">Name</Label>
               <Input id="name" placeholder="Name" defaultValue={user?.user_metadata.full_name} />
             </div>
             <div className="space-y-1">
@@ -47,7 +50,7 @@ export default function Account() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button>Save changes</Button>
+            <Button>Save</Button>
           </CardFooter>
         </Card>
       </TabsContent>
@@ -55,7 +58,7 @@ export default function Account() {
         <Card>
           <CardHeader>
             <CardTitle>Settings</CardTitle>
-            <CardDescription>Update your account settings here. Click save when you're done.</CardDescription>
+            <CardDescription>Update your account settings here.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="space-y-1">
@@ -68,15 +71,15 @@ export default function Account() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button>Save changes</Button>
+            <Button>Save</Button>
           </CardFooter>
         </Card>
       </TabsContent>
       <TabsContent value="billing" className="space-y-2">
         <Card>
           <CardHeader>
-            <CardTitle>Free Beta Plan</CardTitle>
-            <CardDescription>Our services are currently free during the beta period. </CardDescription>
+            <CardTitle>Free Beta</CardTitle>
+            <CardDescription>All our services are currently free while we are testing our platform.</CardDescription>
           </CardHeader>
         </Card>
       </TabsContent>
