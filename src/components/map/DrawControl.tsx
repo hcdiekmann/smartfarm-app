@@ -13,7 +13,6 @@ function DrawControl({ position = "top-left" }: DrawControlProps) {
   const drawRef = useRef<MapLibreDraw | null>(null);
 
   const updateArea = useCallback(() => {
-    console.log('updateArea called');
     if (drawRef.current) {
       const data = drawRef.current.getAll();
       console.log('Draw data:', data);
@@ -41,13 +40,11 @@ function DrawControl({ position = "top-left" }: DrawControlProps) {
       return drawRef.current;
     },
     ({ map }: MapContextValue) => {
-      console.log('Draw control added to map');
       map.on('draw.create', updateArea);
       map.on('draw.delete', updateArea);
       map.on('draw.update', updateArea);
     },
     ({ map }: MapContextValue) => {
-      console.log('Cleaning up draw control');
       if (drawRef.current) {
         map.off('draw.create', updateArea);
         map.off('draw.delete', updateArea);
@@ -59,35 +56,18 @@ function DrawControl({ position = "top-left" }: DrawControlProps) {
     }
   );
 
-  const handleDrawButtonClick = useCallback(() => {
-    if (drawRef.current) {
-      drawRef.current.changeMode('draw_polygon');
-      console.log('Changed mode to draw_polygon');
-    }
-  }, []);
-
   return (
-    <div className="calculation-box" style={{
-      height: 75,
-      width: 150,
-      position: 'absolute',
-      bottom: 40,
-      left: 10,
-      backgroundColor: 'rgba(255, 255, 255, 0.9)',
-      padding: 15,
-      textAlign: 'center'
-    }}>
-      <button onClick={handleDrawButtonClick}>Start Drawing</button>
-      <p style={{ fontFamily: 'Open Sans', margin: 0, fontSize: 13 }}>
-        Draw a polygon using the draw tools.
+    <div className="p-4 h-75 w-150 absolute bottom-12 left-2 bg-white bg-opacity-80 text-center rounded-sm">
+      <p className="m-0 text-sm">
+        {area ? 'Area:' : 'Draw a valid polygon'}
       </p>
       {area !== null && (
-        <div id="calculated-area">
-          <p style={{ fontFamily: 'Open Sans', margin: 0, fontSize: 13 }}>
-            <strong>{area}</strong>
+        <div className='pt-1'>
+          <p className="m-0 text-xs">
+            <strong>{(area / 10000).toLocaleString()}</strong> ha 
           </p>
-          <p style={{ fontFamily: 'Open Sans', margin: 0, fontSize: 13 }}>
-            square meters
+          <p className="m-0 text-xs">
+            <strong>{area.toLocaleString()}</strong> m² 
           </p>
         </div>
       )}

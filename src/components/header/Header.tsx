@@ -90,8 +90,9 @@ const Header = () => {
         </Popover>
       </div>
       <div className="hidden md:block">
-        <ThemeToggle />
+        {/* <ThemeToggle /> */}
       </div>
+      {/* Mobile only */}
       <Sheet>
         <SheetTrigger asChild>
           <Button

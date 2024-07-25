@@ -3,8 +3,12 @@ import { MapLayerMouseEvent } from 'react-map-gl/maplibre';
 import { PopupInfo } from '@/map.types';
 
 export function useMap() {
+  const [cursor, setCursor] = useState<string | undefined>(undefined);
   const [popupInfo, setPopupInfo] = useState<PopupInfo | null>(null);
   const [popupExpanded, setPopupExpanded] = useState(false);
+
+  const onMouseEnter = useCallback(() => setCursor('pointer'), []);
+  const onMouseLeave = useCallback(() => setCursor(undefined), []);
 
   const handleMapClick = useCallback((event: MapLayerMouseEvent) => {
     const feature = event.features && event.features[0];
@@ -55,6 +59,9 @@ export function useMap() {
   }, []);
 
   return {
+    cursor,
+    onMouseEnter,
+    onMouseLeave,
     popupInfo,
     setPopupInfo,
     popupExpanded,

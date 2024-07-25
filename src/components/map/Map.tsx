@@ -28,6 +28,9 @@ export default function CustomMap({ theme, showPOIs, showAssets, showDrawControl
   const mapRef = useRef<MapRef>(null);
 
   const {
+    cursor,
+    onMouseEnter,
+    onMouseLeave,
     popupInfo,
     popupExpanded,
     setPopupExpanded,
@@ -48,16 +51,19 @@ export default function CustomMap({ theme, showPOIs, showAssets, showDrawControl
         latitude: -20,
         zoom: 3,
       }}
+      cursor={cursor}
       style={{ width: "100%", height: "48em", borderRadius: "6px" }}
       attributionControl={true}
       mapStyle={getMapStyle(theme, showPOIs, showAssets)}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       interactiveLayerIds={["overture-pois-text", "custom-assets"]}
       onClick={handleMapClick}
       mapLib={maplibregl}
     >
       <FullscreenControl position="top-right" />
       <NavigationControl position="top-right" />
-      <GeolocateControl position="bottom-left" />
+      {!showDrawControls && <GeolocateControl position="bottom-left" />}
       {showDrawControls && <DrawControl position='top-left' />}
       {popupInfo && (
         <Popup
