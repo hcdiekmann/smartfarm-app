@@ -1,4 +1,6 @@
-import React from "react";
+import { Row } from "@tanstack/react-table";
+import { Asset, useDeleteAsset } from "@/hooks/assets/useAssets";
+
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,15 +10,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Asset, useDeleteAsset } from "@/hooks/assets/useAssets";
 
-interface AssetActionsDropdownProps {
-  asset: Asset;
+
+interface DataTableRowActionsProps<TData> {
+  row: Row<TData>
 }
 
-export const AssetActionsDropdown: React.FC<AssetActionsDropdownProps> = ({
-  asset,
-}) => {
+export function DataTableRowActions<TData>({
+  row,
+}: DataTableRowActionsProps<TData>) {
+  const asset = row.original as Asset;
   const deleteAssetMutation = useDeleteAsset();
 
   const handleDelete = async () => {

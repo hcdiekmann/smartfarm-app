@@ -4,15 +4,16 @@ import { Button } from '@/components/ui/button';
 import { CirclePlus } from 'lucide-react';
 import { useFarm } from '@/provider/FarmProvider';
 import { AddAssetDialog } from './AddAssetDialog';
-import { columns } from './columns';
-import { DataTable } from '@/components/ui/data-table';
+import { columns } from './data-table/columns';
+import { DataTable } from '@/pages/farm/assets/data-table/data-table';
+import AssetsPageSkeleton from './AssetPageSkeleton';
 
 const AssetsPage: React.FC = () => {
   const { currentFarm } = useFarm();
   const { data: assets, isPending, isError, error } = useFetchAssets(currentFarm?.id);
   const [isAddAssetDialogOpen, setIsAddAssetDialogOpen] = useState(false);
 
-  if (isPending) return <div>Loading assets...</div>;
+  if (isPending) return <AssetsPageSkeleton />;
   if (isError) return <div>Error loading assets: {error.message}</div>;
 
   return (

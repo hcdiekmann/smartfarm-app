@@ -1,18 +1,18 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { MenuIcon } from "lucide-react";
-import { AvatarMenu } from "./AvatarMenu";
-import { LogoIcon } from "../Icons";
-import { ThemeToggle } from "./ThemeToggle";
+import {  MenuIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { useFarm } from "@/provider/FarmProvider";
 import { FarmNavItems } from '@/pages/farm/FarmNavItems';
-import { FarmSelector } from './FarmSelector';
+import { LogoIcon } from '@/components/Icons';
+import { AvatarMenu } from '@/components/header/AvatarMenu';
+import { ThemeToggle } from '@/components/header/ThemeToggle';
+import { FarmSelector } from '@/components/header/FarmSelector';
 
-const Header = () => {
+const FarmHeader = () => {
   const { shortRef } = useParams<{ shortRef: string }>();
-  const { setCurrentFarm, farms } = useFarm();
+  const { setCurrentFarm, farms} = useFarm();
 
   const currentFarm = React.useMemo(() => {
     return farms.find(farm => farm.short_reference === shortRef) || null;
@@ -23,8 +23,6 @@ const Header = () => {
       setCurrentFarm(currentFarm);
     }
   }, [currentFarm, setCurrentFarm]);
-
-
 
   return (
     <header className="flex h-14 items-center gap-2 border-b px-2 lg:h-[60px] lg:px-6">
@@ -68,4 +66,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default FarmHeader;

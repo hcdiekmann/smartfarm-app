@@ -1,14 +1,11 @@
-import { Badge } from "@/components/ui/badge";
-import { UsersIcon, LayoutPanelLeft, ScrollText, ClipboardList, Cctv, Receipt } from "lucide-react";
-import { LogoIcon, MoneyIcon, TractorIcon } from "@/components/Icons";
-import { Link, useParams, useLocation } from "react-router-dom";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../components/ui/tooltip";
-import { Separator } from "../../components/ui/separator";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { LogoIcon } from "@/components/Icons";
+import { FarmNavItems } from "./FarmNavItems";
 
 export default function FarmNav() {
   const { shortRef } = useParams<{ shortRef: string }>();
-  const location = useLocation();
-  const isActive = (path: string) => location.pathname === path;
 
   return (
     <div className="hidden border-r bg-muted/40 md:block">
@@ -28,89 +25,8 @@ export default function FarmNav() {
             </Tooltip>
           </div>
         </TooltipProvider>
-        <div className="flex-1">
-          <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-            <Link
-              to={`/farm/${shortRef}`}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary ${
-                isActive(`/farm/${shortRef}`) ? "bg-muted text-primary" : "text-muted-foreground"
-              }`}
-            >
-              <LayoutPanelLeft className="h-6 w-6" />
-              Overview
-            </Link>
-            <Link
-              to={`/farm/${shortRef}/assets`}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary ${
-                isActive(`/farm/${shortRef}/assets`) ? "bg-muted text-primary" : "text-muted-foreground"
-              }`}
-            >
-              <TractorIcon className="h-6 w-6" />
-              Assets
-              <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center bg-muted text-current justify-center rounded-full">
-                0
-              </Badge>
-            </Link>
-            <Link
-              to={`/farm/${shortRef}/people`}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary ${
-                isActive(`/farm/${shortRef}/people`) ? "bg-muted text-primary" : "text-muted-foreground"
-              }`}
-            >
-              <UsersIcon className="h-6 w-6" />
-              People
-              <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center bg-muted text-current justify-center rounded-full">
-                1
-              </Badge>
-            </Link>
-            <Link to={`/farm/${shortRef}/tasks`} 
-            className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary ${
-                isActive(`/farm/${shortRef}/tasks`) ? "bg-muted text-primary" : "text-muted-foreground"
-              }`}
-            >
-              <ClipboardList className="h-6 w-6" />
-              Tasks
-            </Link>
-            <Link to={`/farm/${shortRef}/logs`} 
-            className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary ${
-                isActive(`/farm/${shortRef}/logs`) ? "bg-muted text-primary" : "text-muted-foreground"
-              }`}
-            >
-              <ScrollText  className="h-6 w-6" />
-              Logs
-             
-            </Link>
-
-            <Separator className="mt-1 mb-1" />
-            <Link
-              to={`/farm/${shortRef}/invoices`}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary ${
-                isActive(`/farm/${shortRef}/invoices`) ? "bg-muted text-primary" : "text-muted-foreground"
-              }`}
-            >
-              <Receipt className="h-6 w-6" />
-              Invoices
-            </Link>
-            <Link
-              to={`/farm/${shortRef}/finances`}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary ${
-                isActive(`/farm/${shortRef}/finances`) ? "bg-muted text-primary" : "text-muted-foreground"
-              }`}
-            >
-              <MoneyIcon className="h-6 w-6" />
-              Finances
-            </Link>
-            <Separator className="mt-1 mb-1" />
-            <Link
-              to={`#`}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
-                isActive(`/farm/${shortRef}/cameras`) ? "bg-muted text-primary" : "text-muted-foreground"
-              }`}
-            >
-              <Cctv className="h-6 w-6" />
-              Cameras
-            </Link>
-          </nav>
+        <div className="flex-1 px-2 lg:px-4">
+          <FarmNavItems shortRef={shortRef!} />
         </div>
         <div className="mt-auto p-2"></div>
       </div>
