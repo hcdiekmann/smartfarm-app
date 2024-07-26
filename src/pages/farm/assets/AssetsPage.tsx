@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useFetchAssets, Asset } from '@/hooks/assets/useAssets';
+import { useFetchAssets } from '@/hooks/assets/useAssets';
 import { Button } from '@/components/ui/button';
 import { CirclePlus } from 'lucide-react';
 import { useFarm } from '@/provider/FarmProvider';
