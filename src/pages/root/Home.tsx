@@ -4,7 +4,7 @@ import { FarmIcon } from "@/components/Icons";
 import { ChevronRight } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useFetchFarms } from "@/hooks/useFarms";
+import { useFetchFarms } from "@/hooks/farm/useFarms";
 import { Link } from "react-router-dom";
 import Greeting from "@/components/Greeting";
 

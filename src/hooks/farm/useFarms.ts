@@ -1,4 +1,4 @@
-import { supabase } from "../api/supabase/client";
+import { supabase } from "../../api/supabase/client";
 import { Tables } from "types/database.types";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";

@@ -1,36 +1,48 @@
-import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Upload } from 'lucide-react';
-import FarmSideNav from "@/components/FarmSideNav";
-import Header from "@/components/header/Header";
 
 const FinancePage = () => {
   return (
-    <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-      <FarmSideNav />
-      <div className="flex flex-col h-screen">
-        <Header />
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 overflow-auto">
-          <h2 className="text-muted-foreground uppercase tracking-wide text-sm">
-            Finances
-          </h2>
-          <Tabs defaultValue="expenses" className="w-full">
+          <Tabs defaultValue="summary" className="w-full">
             <div className="flex mb-4">
-              <TabsList className="grid w-[400px] grid-cols-3">
+              <TabsList className="grid w-[400px] grid-cols-4">
+                <TabsTrigger value="summary">Summary</TabsTrigger>
                 <TabsTrigger value="expenses">Expenses</TabsTrigger>
                 <TabsTrigger value="income">Income</TabsTrigger>
                 <TabsTrigger value="invoices">Invoices</TabsTrigger>
               </TabsList>
             </div>
+
+            <TabsContent value="summary" className="w-full">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Summary</CardTitle>
+                  <CardDescription>Overview of the farm's financials</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <div>
+                      <h3 className="text-lg font-semibold mb-2">Expenses</h3>
+                      <p className="text-2xl font-semibold">$500.00</p>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold mb-2">Income</h3>
+                      <p className="text-2xl font-semibold">$2,000.00</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
             <TabsContent value="expenses" className="w-full">
               <Card>
                 <CardHeader>
                   <CardTitle>Expenses</CardTitle>
-                  <CardDescription>Manage and track your farm expenses</CardDescription>
+                  <CardDescription>Manage and track farm expenses</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Table>
@@ -61,7 +73,7 @@ const FinancePage = () => {
               <Card>
                 <CardHeader>
                   <CardTitle>Income</CardTitle>
-                  <CardDescription>Track your farm's revenue streams</CardDescription>
+                  <CardDescription>Manage and track farm revenue</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Table>
@@ -117,9 +129,6 @@ const FinancePage = () => {
               </Card>
             </TabsContent>
           </Tabs>
-        </main>
-      </div>
-    </div>
   );
 };
 

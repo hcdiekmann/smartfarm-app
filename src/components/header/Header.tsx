@@ -18,23 +18,28 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useFetchFarms } from "@/hooks/useFarms";
+import { useFarm } from "@/provider/FarmProvider";
 
 const Header = () => {
   const navigate = useNavigate();
   const { shortRef } = useParams<{ shortRef: string }>();
-  const { data: farms, isLoading, isError } = useFetchFarms();
+  const { setCurrentFarm, farms, isLoading, isError } = useFarm();
   const [open, setOpen] = React.useState(false);
 
-  const handleFarmChange = (farm_reference: string | null ) => {
+  const currentFarm = React.useMemo(() => {
+    return farms.find(farm => farm.short_reference === shortRef) || null;
+  }, [farms, shortRef]);
+
+  React.useEffect(() => {
+    if (currentFarm) {
+      setCurrentFarm(currentFarm);
+    }
+  }, [currentFarm, setCurrentFarm]);
+
+  const handleFarmChange = (farm_reference: string) => {
     navigate(`/farm/${farm_reference}`);
     setOpen(false);
   };
-
-  const currentFarm = React.useMemo(() => 
-    farms?.find(farm => farm.short_reference === shortRef),
-    [farms, shortRef]
-  );
 
   return (
     <header className="flex h-14 items-center gap-2 border-b px-2 lg:h-[60px] lg:px-6">
@@ -71,9 +76,9 @@ const Header = () => {
                     <CommandItem
                       key={farm.short_reference}
                       value={farm.name}
-                      onSelect={() => handleFarmChange(farm.short_reference)}
+                      onSelect={() => handleFarmChange(farm.short_reference!)}
                     >
-                      {shortRef === farm.short_reference ? (
+                      {currentFarm && currentFarm.short_reference === farm.short_reference ? (
                         <Check className="mr-2 h-4 w-4" />
                       ) : (
                         <FarmIcon className="mr-2 h-4 w-4 opacity-50" />

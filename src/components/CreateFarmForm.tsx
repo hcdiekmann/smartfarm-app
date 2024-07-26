@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { useCreateFarm } from "@/hooks/useFarms";
+import { useCreateFarm } from "@/hooks/farm/useFarms";
 import {
   FormField,
   Form,

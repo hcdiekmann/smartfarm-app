@@ -46,6 +46,7 @@ export default function CustomMap({ theme, showPOIs=false, showAssets=false, sho
   return (
     <Map
       ref={mapRef}
+      reuseMaps={true} // https://visgl.github.io/react-map-gl/docs/get-started/tips-and-tricks#minimize-cost-from-frequent-re-mounting
       initialViewState={{
         longitude: 24,
         latitude: -20,
