@@ -8,7 +8,7 @@ const FarmLayout = () => {
       <FarmNav />
       <div className="flex flex-col h-screen">
         <Header />
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 overflow-auto">
+        <main className="flex flex-1 flex-col gap-4 p-2 pt-4 lg:gap-6 lg:p-6 lg:pt-4 overflow-auto">
           <Outlet />
         </main>
       </div>

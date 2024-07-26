@@ -8,7 +8,6 @@ import { Separator } from "../../components/ui/separator";
 export default function FarmNav() {
   const { shortRef } = useParams<{ shortRef: string }>();
   const location = useLocation();
-
   const isActive = (path: string) => location.pathname === path;
 
   return (

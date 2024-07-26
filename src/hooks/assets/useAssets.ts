@@ -22,8 +22,8 @@ export const useCreateAsset = () => {
       queryClient.invalidateQueries({
         queryKey: ["assets", data.farm_id],
       });
-      toast.success("Asset created successfully", {
-        duration: 4000,
+      toast.success("Asset added successfully", {
+        duration: 5000,
       });
     },
   });
@@ -48,6 +48,9 @@ export const useDeleteAsset = () => {
     onSuccess: (data) => {
       queryClient.invalidateQueries({
         queryKey: ["assets", data.farm_id],
+      });
+      toast.success("Asset deleted successfully", {
+        duration: 5000,
       });
     },
   });
@@ -101,7 +104,7 @@ const updateAsset = async (asset: AssetUpdate & { id: string }): Promise<Asset> 
 
   if (error) {
     toast.error("Error updating asset", {
-      duration: 4000,
+      duration: 5000,
       description: `${error.message}`,
     });
     throw new Error(error.message);
@@ -118,7 +121,7 @@ const deleteAsset = async (asset: { id: string; farm_id: string | null }): Promi
 
   if (error) {
     toast.error("Error deleting asset", {
-      duration: 4000,
+      duration: 5000,
       description: `${error.message}`,
     });
     throw new Error(error.message);
