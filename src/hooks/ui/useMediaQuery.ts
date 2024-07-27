@@ -1,19 +1,23 @@
 import * as React from 'react';
 
-export function useMediaQuery(query: string) {
-  const [value, setValue] = React.useState(false);
+export function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = React.useState(() => window.matchMedia(query).matches);
 
   React.useEffect(() => {
-    function onChange(event: MediaQueryListEvent) {
-      setValue(event.matches);
-    }
+    const mediaQuery = window.matchMedia(query);
+    const handleChange = (event: MediaQueryListEvent) => {
+      setMatches(event.matches);
+    };
 
-    const result = matchMedia(query);
-    result.addEventListener('change', onChange);
-    setValue(result.matches);
+    // Set the initial value
+    setMatches(mediaQuery.matches);
 
-    return () => result.removeEventListener('change', onChange);
+    // Add the event listener
+    mediaQuery.addEventListener('change', handleChange);
+
+    // Clean up
+    return () => mediaQuery.removeEventListener('change', handleChange);
   }, [query]);
 
-  return value;
+  return matches;
 }

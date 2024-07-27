@@ -5,7 +5,18 @@ import { z } from "zod";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2 } from 'lucide-react';
+import { 
+    Loader2,
+    Wrench,
+    LandPlot, 
+    PawPrint, 
+    Leaf, 
+    Building, 
+    Droplet, 
+    Package, 
+    Fence,
+    Group 
+  } from 'lucide-react';
 import {
   Form,
   FormField,
@@ -70,7 +81,7 @@ export const AddAssetDialog: React.FC<AddAssetDialogProps> = ({
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       title="New Asset"
-      description="Add a new asset for your farm."
+      description="Add a new asset for your farm"
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4 px-4 md:px-0">
@@ -81,7 +92,7 @@ export const AddAssetDialog: React.FC<AddAssetDialogProps> = ({
               <FormItem>
                 <FormLabel>Asset Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter name" {...field} />
+                  <Input placeholder="Enter a name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -94,23 +105,68 @@ export const AddAssetDialog: React.FC<AddAssetDialogProps> = ({
               <FormItem>
                 <FormLabel>Asset Type</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select asset type" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="equipment">Equipment</SelectItem>
-                    <SelectItem value="land">Land</SelectItem>
-                    <SelectItem value="animal">Animal</SelectItem>
-                    <SelectItem value="plant">Plant</SelectItem>
-                    <SelectItem value="structure">Structure</SelectItem>
-                    <SelectItem value="water">Water</SelectItem>
-                    <SelectItem value="material">Material</SelectItem>
-                    <SelectItem value="product">Product</SelectItem>
-                    <SelectItem value="group">Group</SelectItem>
-                  </SelectContent>
-                </Select>
+    <FormControl>
+      <SelectTrigger>
+        <SelectValue placeholder="Select the asset type" />
+      </SelectTrigger>
+    </FormControl>
+    <SelectContent>
+      <SelectItem value="land" className="hover:bg-accent hover:text-accent-foreground">
+        <div className="flex items-center">
+          <LandPlot className="mr-2 h-4 w-4" />
+          <span>Land</span>
+        </div>
+      </SelectItem>
+      <SelectItem value="animal" className="hover:bg-accent hover:text-accent-foreground">
+        <div className="flex items-center">
+          <PawPrint className="mr-2 h-4 w-4" />
+          <span>Animal</span>
+        </div>
+      </SelectItem>
+      <SelectItem value="plant" className="hover:bg-accent hover:text-accent-foreground">
+        <div className="flex items-center">
+          <Leaf className="mr-2 h-4 w-4" />
+          <span>Plant</span>
+        </div>
+      </SelectItem>
+      <SelectItem value="equipment" className="hover:bg-accent hover:text-accent-foreground">
+        <div className="flex items-center">
+          <Wrench className="mr-2 h-4 w-4" />
+          <span>Equipment</span>
+        </div>
+      </SelectItem>
+      <SelectItem value="structure" className="hover:bg-accent hover:text-accent-foreground">
+        <div className="flex items-center">
+          <Building className="mr-2 h-4 w-4" />
+          <span>Structure</span>
+        </div>
+      </SelectItem>
+      <SelectItem value="water" className="hover:bg-accent hover:text-accent-foreground">
+        <div className="flex items-center">
+          <Droplet className="mr-2 h-4 w-4" />
+          <span>Water</span>
+        </div>
+      </SelectItem>
+      <SelectItem value="material" className="hover:bg-accent hover:text-accent-foreground">
+        <div className="flex items-center">
+          <Fence className="mr-2 h-4 w-4" />
+          <span>Material</span>
+        </div>
+      </SelectItem>
+      <SelectItem value="product" className="hover:bg-accent hover:text-accent-foreground">
+        <div className="flex items-center">
+          <Package className="mr-2 h-4 w-4" />
+          <span>Product</span>
+        </div>
+      </SelectItem>
+      <SelectItem value="group" className="hover:bg-accent hover:text-accent-foreground">
+        <div className="flex items-center">
+          <Group className="mr-2 h-4 w-4" />
+          <span>Group</span>
+        </div>
+      </SelectItem>
+    </SelectContent>
+  </Select>
                 <FormMessage />
               </FormItem>
             )}

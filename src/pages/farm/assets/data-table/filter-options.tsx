@@ -17,11 +17,6 @@ export const assets = [
         icon: LandPlot
     },
     {
-        value: "equipment",
-        label: "Equipment",
-        icon: Wrench
-    },
-    {
         value: "animal",
         label: "Animal",
         icon: PawPrint
@@ -30,6 +25,11 @@ export const assets = [
         value: "plant",
         label: "Plant",
         icon: Leaf
+    },
+    {
+        value: "equipment",
+        label: "Equipment",
+        icon: Wrench
     },
     {
         value: "structure",

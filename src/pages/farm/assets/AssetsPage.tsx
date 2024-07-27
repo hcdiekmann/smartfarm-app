@@ -10,11 +10,10 @@ import AssetsPageSkeleton from './AssetPageSkeleton';
 
 const AssetsPage: React.FC = () => {
   const { currentFarm } = useFarm();
-  const { data: assets, isPending, isError, error } = useFetchAssets(currentFarm?.id);
+  const { data: assets, isPending } = useFetchAssets(currentFarm?.id);
   const [isAddAssetDialogOpen, setIsAddAssetDialogOpen] = useState(false);
 
   if (isPending) return <AssetsPageSkeleton />;
-  if (isError) return <div>Error loading assets: {error.message}</div>;
 
   return (
     <div className="space-y-4">
