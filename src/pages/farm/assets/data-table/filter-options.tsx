@@ -27,6 +27,11 @@ export const assets = [
         icon: Leaf
     },
     {
+        value: "water",
+        label: "Water",
+        icon: Droplet
+    },
+    {
         value: "equipment",
         label: "Equipment",
         icon: Wrench
@@ -35,11 +40,6 @@ export const assets = [
         value: "structure",
         label: "Structure",
         icon: Building
-    },
-    {
-        value: "water",
-        label: "Water",
-        icon: Droplet
     },
     {
         value: "material",
