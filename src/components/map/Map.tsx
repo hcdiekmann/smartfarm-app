@@ -1,81 +1,92 @@
+import { useEffect, useRef } from 'react';
+import maplibregl from 'maplibre-gl';
+import Map, { MapRef } from 'react-map-gl/maplibre';
+import {
+  Popup,
+  FullscreenControl,
+  GeolocateControl,
+  NavigationControl,
+} from "react-map-gl/maplibre";
+import './popups/styles.css';
 import "maplibre-gl/dist/maplibre-gl.css";
-import { useMap } from "@/hooks/map/useMap";
-import { MapView } from "./MapView";
-import { Toggle } from "../ui/toggle";
-import { MapPinned, Moon, Satellite, Sun } from "lucide-react";
-import { TractorIcon } from "../Icons";
-import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
-import { MapTheme } from "@/map.types";
+import '@hyvilo/maplibre-gl-draw/dist/maplibre-gl-draw.css'
+import { useCustomMap } from "@/hooks/map/useCustomMap";
+import { PopupContent } from "./PopupContent";
+import { initializeMapProtocols } from "./map-protocols";
+import { getMapStyle } from "./map-theme";
+import DrawControl from './DrawControl';
+import { MapTheme } from '@/map.types';
 
-export default function MapComponent() {
+type CustomMapProps = {
+  theme: MapTheme;
+  showPOIs?: boolean;
+  showAssets?: boolean;
+  showDrawControls?: boolean;
+};
+
+export default function CustomMap({ theme, showPOIs=false, showAssets=false, showDrawControls=false }: CustomMapProps) {
+  const mapRef = useRef<MapRef>(null);
+
   const {
-    mapTheme,
-    setMapTheme,
-    showPOIs,
-    setShowPOIs,
-    showAssets,
-    setShowAssets,
-  } = useMap();
+    cursor,
+    onMouseEnter,
+    onMouseLeave,
+    popupInfo,
+    popupExpanded,
+    setPopupExpanded,
+    handleMapClick,
+    handlePopupClose,
+  } = useCustomMap();
 
-  const handleThemeChange = (value: string) => {
-    setMapTheme(value as MapTheme);
-  };
-
-  const togglePOIs = () => {
-    setShowPOIs(!showPOIs);
-  };
-
-  const toggleAssets = () => {
-    setShowAssets(!showAssets);
-  };
+  useEffect(() => {
+    const cleanup = initializeMapProtocols();
+    return cleanup;
+  }, []);
 
   return (
-    <div className="space-y-2">
-      <div className="flex flex-wrap gap-2">
-        <Toggle
-          aria-label="Toggle assets"
-          variant="outline"
-          size="sm"
-          pressed={showAssets}
-          onPressedChange={toggleAssets}
-          className="flex-grow sm:flex-grow-0 rounded-3xl"
+    <Map
+      ref={mapRef}
+      reuseMaps={true} // https://visgl.github.io/react-map-gl/docs/get-started/tips-and-tricks#minimize-cost-from-frequent-re-mounting
+      initialViewState={{
+        longitude: 24,
+        latitude: -20,
+        zoom: 3,
+      }}
+      cursor={cursor}
+      style={{ width: "100%", height: "48em", borderRadius: "6px" }}
+      attributionControl={true}
+      mapStyle={getMapStyle(theme, showPOIs, showAssets)}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      interactiveLayerIds={["overture-pois-text", "private-assets"]}
+      onClick={handleMapClick}
+      mapLib={maplibregl}
+    >
+      {/* <MapThemeControl position="top-right" /> */}
+      <FullscreenControl position="top-right" />
+      <NavigationControl position="top-right" />
+      <GeolocateControl position="bottom-left" />
+
+      {showDrawControls && <DrawControl position='top-left' />}
+
+      {popupInfo && (
+        <Popup
+          longitude={popupInfo.longitude}
+          latitude={popupInfo.latitude}
+          closeButton={true}
+          closeOnClick={false}
+          onClose={handlePopupClose}
+          anchor="top"
+          className="custom-popup"
+          maxWidth="300px"
         >
-          <TractorIcon className="h-4 w-4 mr-1" />
-          Assets
-        </Toggle>
-        <Toggle
-          aria-label="Toggle public POI"
-          variant="outline"
-          size="sm"
-          pressed={showPOIs}
-          onPressedChange={togglePOIs}
-          className="flex-grow sm:flex-grow-0 rounded-3xl"
-        >
-          <MapPinned className="h-4 w-4 mr-1" />
-          Public POI
-        </Toggle>
-      </div>
-      <div className="relative">
-        <MapView mapTheme={mapTheme} showPOIs={showPOIs} />
-        <div className="absolute top-2 right-2">
-          <Tabs value={mapTheme} onValueChange={handleThemeChange} className="w-full sm:w-auto">
-            <TabsList className="grid w-full grid-cols-3 bg-white bg-opacity-80">
-              <TabsTrigger value="light" className="data-[state=active]:bg-opacity-100">
-                <Sun className="h-4 w-4 mr-1 sm:mr-2" />
-                <span className="sm:inline">Light</span>
-              </TabsTrigger>
-              <TabsTrigger value="dark" className="data-[state=active]:bg-opacity-100">
-                <Moon className="h-4 w-4 mr-1 sm:mr-2" />
-                <span className="sm:inline">Dark</span>
-              </TabsTrigger>
-              <TabsTrigger value="satellite" className="data-[state=active]:bg-opacity-100">
-                <Satellite className="h-4 w-4 mr-1 sm:mr-2" />
-                <span className="sm:inline">Satellite</span>
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
-        </div>
-      </div>
-    </div>
+          <PopupContent
+            info={popupInfo}
+            expanded={popupExpanded}
+            onToggleExpanded={() => setPopupExpanded(!popupExpanded)}
+          />
+        </Popup>
+      )}
+    </Map>
   );
 }

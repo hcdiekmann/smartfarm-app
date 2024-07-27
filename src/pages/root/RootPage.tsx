@@ -1,16 +1,9 @@
 import { Routes, Route, NavLink, Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import { LogoIcon, HomeIcon } from "@/components/Icons";
 import { UserIcon, Store, Newspaper } from "lucide-react";
-import {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-  BreadcrumbItem,
-  BreadcrumbLink,
-} from "@/components/ui/breadcrumb";
 import Home from "./Home";
 import Account from "./Account";
+import Header from "@/components/header/Header";
 
 const Nav = () => {
   return (
@@ -85,42 +78,42 @@ const Nav = () => {
   );
 };
 
-const Header = () => {
-  const location = useLocation();
-  const pathNames = location.pathname.split("/").filter((x) => x);
+// const Header = () => {
+//   const location = useLocation();
+//   const pathNames = location.pathname.split("/").filter((x) => x);
 
-  return (
-    <header className="flex h-14 items-center gap-2 border-b bg-muted/40 px-1 lg:h-[60px] lg:px-6">
-      <div className="md:hidden">
-        <a href="/">
-          <LogoIcon className="w-12 h-12 fill-current text-sfagreen dark:text-current" />
-        </a>
-      </div>
-      <div className="flex-1">
-        <Breadcrumb>
-          <BreadcrumbList>
-            {pathNames.map((name, index) => {
-              const routeTo = `/${pathNames.slice(0, index + 1).join("/")}`;
-              const isLast = index === pathNames.length - 1;
-              return (
-                <BreadcrumbItem key={name}>
-                  {isLast ? (
-                    <span>{name.charAt(0).toUpperCase() + name.slice(1)}</span>
-                  ) : (
-                    <BreadcrumbLink href={routeTo}>
-                      {name.charAt(0).toUpperCase() + name.slice(1)}
-                    </BreadcrumbLink>
-                  )}
-                  {!isLast && <BreadcrumbSeparator />}
-                </BreadcrumbItem>
-              );
-            })}
-          </BreadcrumbList>
-        </Breadcrumb>
-      </div>
-    </header>
-  );
-};
+//   return (
+//     <header className="flex h-14 items-center gap-2 border-b bg-muted/40 px-1 lg:h-[60px] lg:px-6">
+//       <div className="md:hidden">
+//         <a href="/">
+//           <LogoIcon className="w-12 h-12 fill-current text-sfagreen dark:text-current" />
+//         </a>
+//       </div>
+//       <div className="flex-1">
+//         <Breadcrumb>
+//           <BreadcrumbList>
+//             {pathNames.map((name, index) => {
+//               const routeTo = `/${pathNames.slice(0, index + 1).join("/")}`;
+//               const isLast = index === pathNames.length - 1;
+//               return (
+//                 <BreadcrumbItem key={name}>
+//                   {isLast ? (
+//                     <span>{name.charAt(0).toUpperCase() + name.slice(1)}</span>
+//                   ) : (
+//                     <BreadcrumbLink href={routeTo}>
+//                       {name.charAt(0).toUpperCase() + name.slice(1)}
+//                     </BreadcrumbLink>
+//                   )}
+//                   {!isLast && <BreadcrumbSeparator />}
+//                 </BreadcrumbItem>
+//               );
+//             })}
+//           </BreadcrumbList>
+//         </Breadcrumb>
+//       </div>
+//     </header>
+//   );
+// };
 
 const RootPage = () => {
   return (

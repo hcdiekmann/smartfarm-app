@@ -1,9 +1,10 @@
+import React from 'react';
 import { CreateFarmForm } from "@/components/CreateFarmForm";
 import { FarmIcon } from "@/components/Icons";
 import { ChevronRight } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useFetchFarms } from "@/hooks/useFarms";
+import { useFetchFarms } from "@/hooks/farm/useFarms";
 import { Link } from "react-router-dom";
 import Greeting from "@/components/Greeting";
 
@@ -32,8 +33,7 @@ const Home: React.FC = () => {
           ))
         ) : farms && farms.length > 0 ? (
           farms.map((farm) => (
-            // <Link to={`/farm/${farm.id}`} key={farm.id} className="block">
-            <Link to="/farm" key={farm.id} className="block">
+            <Link to={`/farm/${farm.short_reference}`} key={farm.short_reference} className="block">
               <Card className="shadow-sm bg-muted/40 hover:shadow-custom-md transition-shadow duration-300">
                 <CardHeader className="flex-row items-center">
                   <FarmIcon className="h-6 w-6 mr-2 text-sfagreen dark:text-current" />

@@ -25,7 +25,7 @@ export type Coordinate = {
   };
   
   export type AssetPopupInfo = Coordinate & {
-    type: 'custom_asset';
+    type: 'private_asset';
     assetId: string;
     assetName: string;
     assetType: string;
