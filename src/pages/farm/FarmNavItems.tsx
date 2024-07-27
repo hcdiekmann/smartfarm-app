@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useLocation } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { UsersIcon, LayoutPanelLeft, ScrollText, ClipboardList, Cctv, Receipt, SmartphoneNfc, Joystick,HandCoins  } from "lucide-react";
+import { UsersIcon, LayoutPanelLeft, ScrollText, ClipboardList, Receipt, HandCoins  } from "lucide-react";
 import { TractorIcon } from "@/components/Icons";
 
 interface FarmNavItemsProps {

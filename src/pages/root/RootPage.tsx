@@ -1,14 +1,6 @@
 import { Routes, Route, NavLink, Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import { LogoIcon, HomeIcon } from "@/components/Icons";
 import { UserIcon, Store, Newspaper } from "lucide-react";
-import {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-  BreadcrumbItem,
-  BreadcrumbLink,
-} from "@/components/ui/breadcrumb";
 import Home from "./Home";
 import Account from "./Account";
 import Header from "@/components/header/Header";

@@ -2,7 +2,7 @@ import type { MapStyle } from 'react-map-gl/maplibre';
 import { noLabels, labels } from "protomaps-themes-base";
 import { LayerSpecification } from "maplibre-gl";
 import { MapTheme } from "@/map.types";
-import { mapSources } from "./mapSources";
+import { mapSources } from "./map-sources";
 
 export const getMapStyle = (theme: MapTheme, showPOIs: boolean, showAssets: boolean): MapStyle => {
   let baseLayers: LayerSpecification[];
@@ -30,6 +30,7 @@ export const getMapStyle = (theme: MapTheme, showPOIs: boolean, showAssets: bool
       ...(showPOIs
         ? [getOverturePOIsCircle(theme), getOverturePOIsText(theme) as any]
         : []),
+      ...(showAssets ? [] : []), // Add private assets layer here
     ],
   };
 };

@@ -12,8 +12,8 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import '@hyvilo/maplibre-gl-draw/dist/maplibre-gl-draw.css'
 import { useCustomMap } from "@/hooks/map/useCustomMap";
 import { PopupContent } from "./PopupContent";
-import { initializeMapProtocols } from "./mapProtocols";
-import { getMapStyle } from "./mapTheme";
+import { initializeMapProtocols } from "./map-protocols";
+import { getMapStyle } from "./map-theme";
 import DrawControl from './DrawControl';
 import { MapTheme } from '@/map.types';
 
