@@ -1,6 +1,6 @@
 import  CustomMap  from "./Map";
 import { MapPinned } from "lucide-react";
-import { TractorIcon } from "../Icons";
+import { TractorIcon } from "../ui/icons";
 import { useState } from "react";
 import { Tabs, TabsTrigger, TabsList } from "../ui/tabs";
 import MapThemeSelector from "./MapThemeSelector";

@@ -1,4 +1,4 @@
-import { LogoIcon } from "@/components/Icons";
+import { LogoIcon } from "@/components/ui/icons";
 import { UpdatePasswordForm } from "@/components/auth/UpdatePasswordForm";
 
 const UpdatePasswordPage = () => {

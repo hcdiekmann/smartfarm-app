@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { MenuIcon } from "lucide-react";
 import { AvatarMenu } from "./AvatarMenu";
-import { LogoIcon } from "../Icons";
+import { LogoIcon } from "../ui/icons";
 import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";

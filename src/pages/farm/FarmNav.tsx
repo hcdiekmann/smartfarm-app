@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { LogoIcon } from "@/components/Icons";
+import { LogoIcon } from "@/components/ui/icons";
 import { FarmNavItems } from "./FarmNavItems";
 
 export default function FarmNav() {
@@ -16,7 +16,7 @@ export default function FarmNav() {
               <TooltipTrigger asChild>
                 <Link to="/" className="flex items-center gap-1">
                   <LogoIcon className="mx-auto w-12 h-12 lg:w-16 lg:h-16 fill-current text-sfagreen dark:text-current" />
-                  <span className="lg:text-xl font-baloo text-sfagreen dark:text-white pt-1">
+                  <span className="lg:text-xl font-baloo text-sfagreen dark:text-white pt-2">
                     Smart Farming Africa
                   </span>
                 </Link>

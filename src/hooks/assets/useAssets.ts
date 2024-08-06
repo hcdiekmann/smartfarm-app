@@ -56,6 +56,36 @@ export const useDeleteAsset = () => {
   });
 };
 
+export const useArchiveAsset = () => {
+  const queryClient = useQueryClient();
+  return useMutation<Asset, Error, { id: string; farm_id: string | null }>({
+    mutationFn: archiveAsset,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: ["assets", data.farm_id],
+      });
+      toast.success("Asset archived successfully", {
+        duration: 5000,
+      });
+    },
+  });
+};
+
+export const useRestoreAsset = () => {
+  const queryClient = useQueryClient();
+  return useMutation<Asset, Error, { id: string; farm_id: string | null }>({
+    mutationFn: restoreAsset,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: ["assets", data.farm_id],
+      });
+      toast.success("Asset restored successfully", {
+        duration: 5000,
+      });
+    },
+  });
+}
+
 const fetchAssets = async (farmId?: string) => {
   let query = supabase.from("assets").select();
   
@@ -128,4 +158,42 @@ const deleteAsset = async (asset: { id: string; farm_id: string | null }): Promi
   }
 
   return asset;
+};
+
+const archiveAsset = async (asset: { id: string; farm_id: string | null }): Promise<Asset> => {
+  const { data, error } = await supabase
+    .from("assets")
+    .update({ status: 'archived' })
+    .eq('id', asset.id)
+    .select()
+    .single();
+
+  if (error) {
+    toast.error("Error archiving asset", {
+      duration: 5000,
+      description: error.message,
+    });
+    throw new Error(error.message);
+  }
+
+  return data;
+};
+
+const restoreAsset = async (asset: { id: string; farm_id: string | null }): Promise<Asset> => {
+  const { data, error } = await supabase
+    .from("assets")
+    .update({ status: 'active' })
+    .eq('id', asset.id)
+    .select()
+    .single();
+
+  if (error) {
+    toast.error("Error restoring asset", {
+      duration: 5000,
+      description: error.message,
+    });
+    throw new Error(error.message);
+  }
+
+  return data;
 };

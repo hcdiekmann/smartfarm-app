@@ -31,8 +31,18 @@ export function DataTableToolbar<TData>({
         {table.getColumn("asset_type") && (
           <DataTableFacetedFilter
             column={table.getColumn("asset_type")}
-            title="Asset Type"
+            title="Type"
             options={assets}
+          />
+        )}
+        {table.getColumn("status") && (
+          <DataTableFacetedFilter
+            column={table.getColumn("status")}
+            title="Status"
+            options={[
+              { label: "Active", value: "active" },
+              { label: "Archived", value: "archived" },
+            ]}
           />
         )}
         {isFiltered && (

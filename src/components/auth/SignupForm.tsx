@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { IconLoader2 } from "@tabler/icons-react";
-import { GoogleLogoIcon } from "../Icons";
+import { GoogleLogoIcon } from "../ui/icons";
 import useSignup from "@/hooks/auth/useSignup";
 import useLogin from "@/hooks/auth/useLogin";
 

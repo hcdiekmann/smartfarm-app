@@ -10,8 +10,8 @@ import {
   FormItem,
   FormControl,
   FormMessage,
-} from "./ui/form";
-import { Button } from "./ui/button";
+} from "../../../components/ui/form";
+import { Button } from "../../../components/ui/button";
 import { Wiggle } from "react-subtle-nudge";
 import { IconLoader2 } from "@tabler/icons-react";
 import { useAuth } from "@/provider/AuthProvider";

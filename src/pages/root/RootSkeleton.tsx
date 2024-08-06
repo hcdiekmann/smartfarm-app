@@ -3,7 +3,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from "@/co
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { MenuIcon } from "lucide-react";
-import { LogoIcon } from "@/components/Icons";
+import { LogoIcon } from "@/components/ui/icons";
 
 const RootSkeleton = () => {
   return (

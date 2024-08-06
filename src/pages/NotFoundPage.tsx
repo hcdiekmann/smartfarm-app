@@ -1,5 +1,4 @@
-import { HomeIcon, PageBackIcon } from "@/components/Icons";
-import Header from "@/components/header/Header";
+import { HomeIcon, PageBackIcon } from "@/components/ui/icons";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function NotFoundPage() {
@@ -7,7 +6,6 @@ export default function NotFoundPage() {
   return (
 
     <div className="flex flex-col min-h-[100vh] bg-gradient-custom items-center justify-center space-y-4 text-center">
-      <Header />
       <img
         alt="Illustration"
         className="mx-auto max-w-full max-h-[35vh] object-contain"

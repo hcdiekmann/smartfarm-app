@@ -1,5 +1,5 @@
 import { ForgotPasswordForm } from "@/components/auth/ForgotPasswordForm";
-import { LogoIcon } from "@/components/Icons";
+import { LogoIcon } from "@/components/ui/icons";
 import { Link } from "react-router-dom";
 
 const ForgotPasswordPage = () => {

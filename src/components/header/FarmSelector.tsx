@@ -15,7 +15,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useFarm } from "@/provider/FarmProvider";
-import { FarmIcon } from '@/components/Icons';
+import { FarmIcon } from '@/components/ui/icons';
 
 interface FarmSelectorProps {
   currentFarmRef?: string;

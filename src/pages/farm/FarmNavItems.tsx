@@ -3,14 +3,15 @@ import { Link, useLocation } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { UsersIcon, LayoutPanelLeft, ScrollText, ClipboardList, Receipt, HandCoins  } from "lucide-react";
-import { TractorIcon } from "@/components/Icons";
+import { TractorIcon } from "@/components/ui/icons";
 
 interface FarmNavItemsProps {
   shortRef: string;
   orientation?: 'vertical' | 'horizontal';
+  onCloseSheet?: () => void;
 }
 
-export const FarmNavItems: React.FC<FarmNavItemsProps> = ({ shortRef, orientation = 'vertical' }) => {
+export const FarmNavItems: React.FC<FarmNavItemsProps> = ({ shortRef, orientation = 'vertical', onCloseSheet }) => {
   const location = useLocation();
   const isActive = (path: string) => location.pathname === path;
 
@@ -22,9 +23,6 @@ export const FarmNavItems: React.FC<FarmNavItemsProps> = ({ shortRef, orientatio
     { to: `/farm/${shortRef}/logs`, icon: ScrollText, label: 'Logs' },
     { to: `/farm/${shortRef}/invoices`, icon: Receipt, label: 'Invoices' },
     { to: `/farm/${shortRef}/finances`, icon: HandCoins , label: 'Finances' },
-    // { to: '#', icon: Cctv, label: 'Cameras' },
-    // { to: '#', icon: SmartphoneNfc , label: 'Sensors' },
-    // { to: '#', icon: Joystick, label: 'Actuators' },
   ];
 
   const commonClasses = "flex items-center md:text-sm font-medium gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary";
@@ -41,6 +39,7 @@ export const FarmNavItems: React.FC<FarmNavItemsProps> = ({ shortRef, orientatio
             className={`${commonClasses} ${
               isActive(item.to) ? activeClasses : inactiveClasses
             }`}
+            onClick={onCloseSheet}
           >
             <item.icon className="h-5 w-5" />
             <span>{item.label}</span>

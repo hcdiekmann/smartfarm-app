@@ -1,14 +1,14 @@
 import React from 'react';
-import { CreateFarmForm } from "@/components/CreateFarmForm";
-import { FarmIcon } from "@/components/Icons";
+import { CreateFarmForm } from "@/pages/root/home/CreateFarmForm";
+import { FarmIcon } from "@/components/ui/icons";
 import { ChevronRight } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useFetchFarms } from "@/hooks/farm/useFarms";
 import { Link } from "react-router-dom";
-import Greeting from "@/components/Greeting";
+import Greeting from "@/pages/root/home/Greeting";
 
-const Home: React.FC = () => {
+const HomePage: React.FC = () => {
   const { data: farms, isLoading } = useFetchFarms();
 
   return (
@@ -69,4 +69,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default HomePage;

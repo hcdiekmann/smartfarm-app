@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import useLogin from "@/hooks/auth/useLogin";
-import { GoogleLogoIcon } from "../Icons";
+import { GoogleLogoIcon } from "../ui/icons";
 
 const formSchema = z.object({
   email: z

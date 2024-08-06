@@ -5,6 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { assets } from "../asset-types";
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions";
+import { Badge } from "@/components/ui/badge";
 
 export const columns: ColumnDef<Asset>[] = [
   {
@@ -45,10 +46,10 @@ export const columns: ColumnDef<Asset>[] = [
   {
     accessorKey: "asset_type",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Type" />
+      <DataTableColumnHeader column={column} title="Asset Type" />
     ),
     meta: {
-      lable: "Type",
+      lable: "Asset Type",
     },
     cell: ({ row }) => {
       const type = assets.find(
@@ -80,10 +81,13 @@ export const columns: ColumnDef<Asset>[] = [
     cell: ({ row }) => {
       const status = row.getValue("status") as string;
       return (
-        <div className="capitalize">
+        <Badge className="capitalize" variant={status === "active" ? "active" : "archived"}>
           {status}
-        </div>
+        </Badge>
       );
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
     },
     enableSorting: false,
   },

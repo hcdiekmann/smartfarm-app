@@ -10,7 +10,7 @@
     DropdownMenuSeparator,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
-  import { ArrowDownZA, ArrowUpAZ, ChevronsUpDown, EyeOff } from "lucide-react";
+  import { CalendarArrowUp, CalendarArrowDown, ChevronsUpDown, EyeOff } from "lucide-react";
   
   interface DataTableColumnHeaderProps<TData, TValue>
     extends React.HTMLAttributes<HTMLDivElement> {
@@ -38,9 +38,9 @@
             >
               <span>{title}</span>
               {column.getIsSorted() === "desc" ? (
-                <ArrowDownZA  className="ml-2 h-4 w-4" />
+                <CalendarArrowUp  className="ml-2 h-4 w-4" />
               ) : column.getIsSorted() === "asc" ? (
-                <ArrowUpAZ  className="ml-2 h-4 w-4" />
+                <CalendarArrowDown  className="ml-2 h-4 w-4" />
               ) : (
                 <ChevronsUpDown className="ml-2 h-4 w-4" />
               )}
@@ -48,17 +48,17 @@
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
             <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
-              <ArrowUpAZ className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-              Asc
+              <CalendarArrowDown className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+              Oldest First
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
-              <ArrowDownZA className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-              Desc
+              <CalendarArrowUp className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+              Newest First
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
               <EyeOff className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-              Hide
+              Hide Column
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

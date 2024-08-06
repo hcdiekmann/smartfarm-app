@@ -27,6 +27,13 @@ module.exports = {
         sfagreen: {
           DEFAULT: "#00431C",
         },
+        active: {
+          DEFAULT: "#185431",
+        },
+        archived: {
+          DEFAULT: "#6B7280",
+        },
+
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

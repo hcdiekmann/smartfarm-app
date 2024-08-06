@@ -1,4 +1,4 @@
-import { LogoIcon } from "@/components/Icons";
+import { LogoIcon } from "@/components/ui/icons";
 import { LoginForm } from "@/components/auth/LoginForm";
 import { useAuth } from "@/provider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";

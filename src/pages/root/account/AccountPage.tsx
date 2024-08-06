@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Label } from "@radix-ui/react-label";
-import { Button } from "../../components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../../components/ui/card";
-import { Input } from "../../components/ui/input";
+import { Button } from "../../../components/ui/button";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../../../components/ui/card";
+import { Input } from "../../../components/ui/input";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { useAuth } from "@/provider/AuthProvider";
 
 type AccountTabOption = "account" | "settings" | "billing";
 
-export default function Account() {
+export default function AccountPage() {
   const { user } = useAuth();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState<AccountTabOption>("account");

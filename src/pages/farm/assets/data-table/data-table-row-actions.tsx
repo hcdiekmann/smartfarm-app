@@ -1,7 +1,19 @@
+import React, { useState } from "react";
 import { Row } from "@tanstack/react-table";
-import { Asset, useDeleteAsset } from "@/hooks/assets/useAssets";
+import {
+  Asset,
+  useArchiveAsset,
+  useDeleteAsset,
+  useRestoreAsset,
+} from "@/hooks/assets/useAssets";
 
-import { MoreHorizontal } from "lucide-react";
+import {
+  MoreHorizontal,
+  FilePenLine,
+  Archive,
+  ArchiveRestore,
+  Trash2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,20 +22,52 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface DataTableRowActionsProps<TData> {
-  row: Row<TData>
+  row: Row<TData>;
 }
 
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const asset = row.original as Asset;
+  const archiveAssetMutation = useArchiveAsset();
   const deleteAssetMutation = useDeleteAsset();
+  const restoreAssetMutation = useRestoreAsset();
+
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
+  const handleArchive = async () => {
+    await archiveAssetMutation.mutateAsync({
+      id: asset.id,
+      farm_id: asset.farm_id,
+    });
+  };
 
   const handleDelete = async () => {
-    await deleteAssetMutation.mutateAsync({
+    try {
+      await deleteAssetMutation.mutateAsync({
+        id: asset.id,
+        farm_id: asset.farm_id,
+      });
+    } finally {
+      setIsDeleteDialogOpen(false);
+    }
+  };
+
+  const handleRestore = async () => {
+    await restoreAssetMutation.mutateAsync({
       id: asset.id,
       farm_id: asset.farm_id,
     });
@@ -38,10 +82,58 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <DropdownMenuItem>
+          <FilePenLine className="mr-2 h-4 w-4 text-muted-foreground/70" />
+          Edit
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleDelete}>Delete</DropdownMenuItem>
+        {asset.status === "archived" && (
+          <DropdownMenuItem onClick={handleRestore}>
+            <ArchiveRestore className="mr-2 h-4 w-4 text-muted-foreground/70" />
+            Restore
+          </DropdownMenuItem>
+        )}
+        {asset.status === "active" ? (
+          <DropdownMenuItem onClick={handleArchive}>
+            <Archive className="mr-2 h-4 w-4 text-muted-foreground/70" />
+            Archive
+          </DropdownMenuItem>
+        ) : (
+          <AlertDialog
+            open={isDeleteDialogOpen}
+            onOpenChange={setIsDeleteDialogOpen}
+          >
+            <AlertDialogTrigger asChild>
+              <DropdownMenuItem
+                onSelect={(event) => {
+                  event.preventDefault();
+                  setIsDeleteDialogOpen(true);
+                }}
+              >
+                <Trash2 className="mr-2 h-4 w-4 text-muted-foreground/70" />
+                Delete
+              </DropdownMenuItem>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  Are you sure you want to delete this {asset.asset_type} asset?
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete the
+                  asset and remove its data from our servers.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={handleDelete}>
+                    Delete
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );
-};
+}

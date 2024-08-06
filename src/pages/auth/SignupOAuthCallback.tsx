@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "../../api/supabase/client";
 import { toast } from "sonner";
-import RootSkeleton from "@/components/RootSkeleton";
+import RootSkeleton from "@/pages/root/RootSkeleton";
 
 const SignupOAuthCallback = () => {
   const navigate = useNavigate();
