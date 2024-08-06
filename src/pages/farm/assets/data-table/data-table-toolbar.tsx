@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { FilterX } from "lucide-react"
 
-import { assets } from "./filter-options"
+import { assets } from "../asset-types"
 import { DataTableFacetedFilter } from "./data-table-faceted-filter"
 import { DataTableViewOptions } from "./data-table-view-options"
 
@@ -26,7 +26,7 @@ export function DataTableToolbar<TData>({
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
           }
-          className="h-8 w-[150px] lg:w-[250px]"
+          className="h-8 w-[140px] lg:w-[200px]"
         />
         {table.getColumn("asset_type") && (
           <DataTableFacetedFilter
@@ -41,8 +41,8 @@ export function DataTableToolbar<TData>({
             onClick={() => table.resetColumnFilters()}
             className="h-8 px-2 lg:px-3"
           >
+            <FilterX  className="mr-2 h-4 w-4" />
             Reset
-            <FilterX  className="ml-2 h-4 w-4" />
           </Button>
         )}
       </div>

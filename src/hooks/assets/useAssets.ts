@@ -1,11 +1,11 @@
 import { supabase } from "../../api/supabase/client";
-import { Tables, Database } from "types/database.types";
+import { Tables, TablesInsert, TablesUpdate } from "types/database.types";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export type Asset = Tables<'assets'>;
-export type AssetInsert = Database['public']['Tables']['assets']['Insert'];
-export type AssetUpdate = Database['public']['Tables']['assets']['Update'];
+export type AssetInsert = TablesInsert<'assets'>;
+export type AssetUpdate = TablesUpdate<'assets'>;
 
 export const useFetchAssets = (farmId?: string) => {
   return useQuery<Asset[], Error>({

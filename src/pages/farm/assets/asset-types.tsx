@@ -1,12 +1,14 @@
 import { 
     Wrench,
+    Tractor,
     LandPlot, 
     PawPrint, 
-    Leaf, 
+    Sprout, 
     Building, 
     Droplet, 
     Package, 
     Fence,
+    BrickWall,
     Group 
   } from 'lucide-react';
 
@@ -17,6 +19,11 @@ export const assets = [
         icon: LandPlot
     },
     {
+        value: "field",
+        label: "Field",
+        icon: Fence
+    },
+    {
         value: "animal",
         label: "Animal",
         icon: PawPrint
@@ -24,12 +31,17 @@ export const assets = [
     {
         value: "plant",
         label: "Plant",
-        icon: Leaf
+        icon: Sprout
     },
     {
         value: "water",
         label: "Water",
         icon: Droplet
+    },
+    {
+        value: "vehicle",
+        label: "Vehicle",
+        icon: Tractor
     },
     {
         value: "equipment",
@@ -44,7 +56,7 @@ export const assets = [
     {
         value: "material",
         label: "Material",
-        icon: Fence
+        icon: BrickWall
     },
     {
         value: "product",

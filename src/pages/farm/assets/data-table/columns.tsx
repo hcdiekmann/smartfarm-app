@@ -2,7 +2,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Asset } from "@/hooks/assets/useAssets";
 import { Checkbox } from "@/components/ui/checkbox";
 
-import { assets } from "./filter-options";
+import { assets } from "../asset-types";
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions";
 
@@ -66,7 +66,26 @@ export const columns: ColumnDef<Asset>[] = [
     },
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id));
-    }
+    },
+    enableSorting: false,
+  },
+  {
+    accessorKey: "status",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Status" />
+    ),
+    meta: {
+      lable: "Status",
+    },
+    cell: ({ row }) => {
+      const status = row.getValue("status") as string;
+      return (
+        <div className="capitalize">
+          {status}
+        </div>
+      );
+    },
+    enableSorting: false,
   },
   {
     accessorKey: "updated_at",
@@ -98,8 +117,8 @@ export const columns: ColumnDef<Asset>[] = [
       const date = new Date(row.getValue("created_at"));
       return (
       <div>
-        {date.toLocaleDateString()}
-        {/* {date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })} */}
+        {date.toLocaleDateString()}{" "}
+        {date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
       </div>
       );
     },

@@ -11,18 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Loader2,
-  Wrench,
-  LandPlot,
-  PawPrint,
-  Leaf,
-  Building,
-  Droplet,
-  Package,
-  Fence,
-  Group,
-} from "lucide-react";
+import { Loader2 } from "lucide-react";
 import {
   Form,
   FormField,
@@ -34,21 +23,12 @@ import {
 import { ResponsiveDialog } from "@/components/ui/responsive-dialog";
 import { useCreateAsset, AssetInsert } from "@/hooks/assets/useAssets";
 import { useFarm } from "@/provider/FarmProvider";
+import { assets } from "./asset-types";
 
 const formSchema = z.object({
   name: z.string().min(1, "A name is required."),
   asset_type: z.enum(
-    [
-      "land",
-      "animal",
-      "plant",
-      "equipment",
-      "structure",
-      "water",
-      "material",
-      "product",
-      "group",
-    ],
+    assets.map(asset => asset.value) as [string, ...string[]],
     {
       required_error: "Please select an asset type.",
     }
@@ -139,87 +119,18 @@ export const AddAssetDialog: React.FC<AddAssetDialogProps> = ({
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem
-                      value="land"
-                      className="hover:bg-accent hover:text-accent-foreground"
-                    >
-                      <div className="flex items-center">
-                        <LandPlot className="mr-2 h-4 w-4" />
-                        <span>Land</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem
-                      value="animal"
-                      className="hover:bg-accent hover:text-accent-foreground"
-                    >
-                      <div className="flex items-center">
-                        <PawPrint className="mr-2 h-4 w-4" />
-                        <span>Animal</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem
-                      value="plant"
-                      className="hover:bg-accent hover:text-accent-foreground"
-                    >
-                      <div className="flex items-center">
-                        <Leaf className="mr-2 h-4 w-4" />
-                        <span>Plant</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem
-                      value="water"
-                      className="hover:bg-accent hover:text-accent-foreground"
-                    >
-                      <div className="flex items-center">
-                        <Droplet className="mr-2 h-4 w-4" />
-                        <span>Water</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem
-                      value="equipment"
-                      className="hover:bg-accent hover:text-accent-foreground"
-                    >
-                      <div className="flex items-center">
-                        <Wrench className="mr-2 h-4 w-4" />
-                        <span>Equipment</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem
-                      value="structure"
-                      className="hover:bg-accent hover:text-accent-foreground"
-                    >
-                      <div className="flex items-center">
-                        <Building className="mr-2 h-4 w-4" />
-                        <span>Structure</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem
-                      value="material"
-                      className="hover:bg-accent hover:text-accent-foreground"
-                    >
-                      <div className="flex items-center">
-                        <Fence className="mr-2 h-4 w-4" />
-                        <span>Material</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem
-                      value="product"
-                      className="hover:bg-accent hover:text-accent-foreground"
-                    >
-                      <div className="flex items-center">
-                        <Package className="mr-2 h-4 w-4" />
-                        <span>Product</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem
-                      value="group"
-                      className="hover:bg-accent hover:text-accent-foreground"
-                    >
-                      <div className="flex items-center">
-                        <Group className="mr-2 h-4 w-4" />
-                        <span>Group</span>
-                      </div>
-                    </SelectItem>
+                    {assets.map((asset) => (
+                      <SelectItem
+                        key={asset.value}
+                        value={asset.value}
+                        className="hover:bg-accent hover:text-accent-foreground"
+                      >
+                        <div className="flex items-center">
+                          {React.createElement(asset.icon, { className: "mr-2 h-4 w-4" })}
+                          <span>{asset.label}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
                 <FormMessage />
