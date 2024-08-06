@@ -10,7 +10,7 @@ import {
 import { useTheme } from "@/provider/ThemeProvider";
 import { Moon, Sun, SunMoon } from "lucide-react";
 
-export function ThemeToggle() {
+export function ThemeDropdownMenu() {
   const { setTheme } = useTheme();
 
   return (

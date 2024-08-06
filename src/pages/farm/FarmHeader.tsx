@@ -7,7 +7,6 @@ import { useFarm } from "@/provider/FarmProvider";
 import { FarmNavItems } from '@/pages/farm/FarmNavItems';
 import { LogoIcon } from '@/components/ui/icons';
 import { AvatarMenu } from '@/components/header/AvatarMenu';
-import { ThemeToggle } from '@/components/header/ThemeToggle';
 import { FarmSelector } from '@/components/header/FarmSelector';
 
 const FarmHeader = () => {
@@ -56,8 +55,7 @@ const FarmHeader = () => {
           <div className="flex-1 mt-8">
             <FarmNavItems shortRef={shortRef!} onCloseSheet={handleCloseSheet} />
           </div>
-          <div className="mt-auto flex items-center justify-between">
-            <ThemeToggle />
+          <div className="mt-auto ml-auto">
             <AvatarMenu />
           </div>
         </SheetContent>
