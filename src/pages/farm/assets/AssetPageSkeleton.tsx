@@ -7,7 +7,7 @@ const AssetsPageSkeleton: React.FC = () => {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <Skeleton className="h-8 w-40" />
+      <h1 className="text-2xl font-bold">Assets</h1>
         <Button disabled>
           <CirclePlus className="mr-2 h-4 w-4" /> Add Asset
         </Button>

@@ -14,7 +14,7 @@ import {
 import { Button } from "../../../components/ui/button";
 import { Wiggle } from "react-subtle-nudge";
 import { IconLoader2 } from "@tabler/icons-react";
-import { useAuth } from "@/provider/AuthProvider";
+import { useAccount } from "@/provider/AccountProvider";
 
 const formSchema = z.object({
   name: z.string().min(1, "A name is required."),
@@ -23,8 +23,8 @@ const formSchema = z.object({
 type CreateFarmFormInputs = z.infer<typeof formSchema>;
 
 export function CreateFarmForm() {
-  const { user } = useAuth();
-  const farmName = user?.user_metadata.full_name.split(' ')[0] + "'s Farm";
+  const { profile } = useAccount();
+  const farmName = profile?.full_name.split(' ')[0] + "'s Farm";
   const createFarm = useCreateFarm();
   const form = useForm<CreateFarmFormInputs>({
     resolver: zodResolver(formSchema),

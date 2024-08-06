@@ -70,7 +70,7 @@ export default function RootHeader() {
           <LogoIcon className="w-12 h-12 fill-current text-sfagreen dark:text-current" />
         </a>
       </div>
-      <div className="flex-1">
+      <div className="flex-1 pl-2">
         <Breadcrumb>
           <BreadcrumbList>
             {pathNames.map((name, index) => {

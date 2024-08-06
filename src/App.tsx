@@ -23,6 +23,7 @@ import HomePage from "@/pages/root/home/HomePage";
 import AccountPage from "@/pages/root/account/AccountPage";
 import NewsPage from "@/pages/root/news/NewsPage";
 import ShopPage from "@/pages/root/shop/ShopPage";
+import { AccountProvider } from "./provider/AccountProvider";
 
 const Private: React.FC<{ element: React.ReactElement }> = ({ element }) => {
   const { user, loading } = useAuth();
@@ -35,43 +36,58 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <FarmProvider>
-          <Routes>
-            {/* PUBLIC ROUTES */}
-            {/* Auth */}
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/auth/callback/login" element={<LoginOAuthCallback />} />
-            <Route path="/auth/callback/signup" element={<SignupOAuthCallback />} />
-            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <AccountProvider>
+          <FarmProvider>
+            <Routes>
+              {/* PUBLIC ROUTES */}
+              {/* Auth */}
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route
+                path="/auth/callback/login"
+                element={<LoginOAuthCallback />}
+              />
+              <Route
+                path="/auth/callback/signup"
+                element={<SignupOAuthCallback />}
+              />
+              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
-            {/* PRIVATE ROUTES */}
-            {/* Root */}
-            <Route path="/" element={<Private element={<RootLayout />} />} >
-              <Route index element={<HomePage />} />
-              <Route path="/news" element={<NewsPage />} />
-              <Route path="/products" element={<ShopPage />} />
-              <Route path="/account" element={<AccountPage />} />
-            </Route>
-          
-            {/* Farm */}
-            <Route path="/farm/:shortRef" element={<Private element={<FarmLayout />} />}>
-              <Route index element={<FarmOverview />} />
-              <Route path="assets" element={<AssetsPage />} />
-              <Route path="people" element={<PeoplePage />} />
-              <Route path="tasks" element={<TasksPage />} />
-              <Route path="logs" element={<LogsPage />} />
-              <Route path="invoices" element={<InvoicesPage />} />
-              <Route path="finances" element={<FinancesPage />} />
-            </Route>
+              {/* PRIVATE ROUTES */}
+              {/* Root */}
+              <Route path="/" element={<Private element={<RootLayout />} />}>
+                <Route index element={<HomePage />} />
+                <Route path="/news" element={<NewsPage />} />
+                <Route path="/products" element={<ShopPage />} />
+                <Route path="/settings" element={<NotFoundPage />} />
+                <Route path="/account" element={<AccountPage />} />
+              </Route>
 
-            {/* Password Update */}
-            <Route path="/update-password" element={<Private element={<UpdatePasswordPage />} />} />
+              {/* Farm */}
+              <Route
+                path="/farm/:shortRef"
+                element={<Private element={<FarmLayout />} />}
+              >
+                <Route index element={<FarmOverview />} />
+                <Route path="assets" element={<AssetsPage />} />
+                <Route path="people" element={<PeoplePage />} />
+                <Route path="tasks" element={<TasksPage />} />
+                <Route path="logs" element={<LogsPage />} />
+                <Route path="invoices" element={<InvoicesPage />} />
+                <Route path="finances" element={<FinancesPage />} />
+              </Route>
 
-            {/* Fallback 404 Route */}
-            <Route path="/*" element={<NotFoundPage />} />
-          </Routes>
-        </FarmProvider>
+              {/* Password Update */}
+              <Route
+                path="/update-password"
+                element={<Private element={<UpdatePasswordPage />} />}
+              />
+
+              {/* Fallback 404 Route */}
+              <Route path="/*" element={<NotFoundPage />} />
+            </Routes>
+          </FarmProvider>
+        </AccountProvider>
       </AuthProvider>
     </BrowserRouter>
   );
