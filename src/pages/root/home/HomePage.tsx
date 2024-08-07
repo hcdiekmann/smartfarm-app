@@ -4,12 +4,12 @@ import { FarmIcon } from "@/components/ui/icons";
 import { ChevronRight } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useFetchFarms } from "@/hooks/farm/useFarms";
 import { Link } from "react-router-dom";
 import Greeting from "@/pages/root/home/Greeting";
+import { useFarm } from '@/provider/FarmProvider';
 
 const HomePage: React.FC = () => {
-  const { data: farms, isLoading } = useFetchFarms();
+  const { farms, isLoading } = useFarm();
 
   return (
     <>

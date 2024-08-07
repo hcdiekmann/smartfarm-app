@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/provider/AuthProvider";
+import { AccountProvider, useAccount } from "./provider/AccountProvider";
 import { FarmProvider } from "@/provider/FarmProvider";
 import UpdatePasswordPage from "@/pages/auth/UpdatePasswordPage";
 import RootSkeleton from "@/pages/root/RootSkeleton";
@@ -23,13 +24,14 @@ import HomePage from "@/pages/root/home/HomePage";
 import AccountPage from "@/pages/root/account/AccountPage";
 import NewsPage from "@/pages/root/news/NewsPage";
 import ShopPage from "@/pages/root/shop/ShopPage";
-import { AccountProvider } from "./provider/AccountProvider";
+import SettingsPage from "./pages/root/settings/SettingsPage";
 
 const Private: React.FC<{ element: React.ReactElement }> = ({ element }) => {
-  const { user, loading } = useAuth();
+  const { loading: userLoading } = useAuth();
+  const { profile, loading: profileLoading } = useAccount();
 
-  if (loading) return <RootSkeleton />;
-  return user ? element : <Navigate to="/login" />;
+  if (userLoading || profileLoading) return <RootSkeleton />;
+  return profile ? element : <Navigate to="/login" />;
 };
 
 const App: React.FC = () => {
@@ -59,7 +61,7 @@ const App: React.FC = () => {
                 <Route index element={<HomePage />} />
                 <Route path="/news" element={<NewsPage />} />
                 <Route path="/products" element={<ShopPage />} />
-                <Route path="/settings" element={<NotFoundPage />} />
+                <Route path="/settings" element={<SettingsPage />} />
                 <Route path="/account" element={<AccountPage />} />
               </Route>
 

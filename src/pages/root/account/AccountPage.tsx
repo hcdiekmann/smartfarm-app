@@ -7,7 +7,7 @@ import { Input } from "../../../components/ui/input";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { useAuth } from "@/provider/AuthProvider";
 
-type AccountTabOption = "account" | "settings" | "billing";
+type AccountTabOption = "account" | "plan" | "billing";
 
 export default function AccountPage() {
   const { user } = useAuth();
@@ -16,7 +16,7 @@ export default function AccountPage() {
 
   useEffect(() => {
     const hash = location.hash.replace("#", "");
-    if (hash === "settings" || hash === "billing") {
+    if (hash === "plan" || hash === "billing") {
       setActiveTab(hash as AccountTabOption);
     } else {
       setActiveTab("account");
@@ -27,19 +27,15 @@ export default function AccountPage() {
     <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as AccountTabOption)} className="w-[400px]">
       <TabsList className="grid w-full grid-cols-3">
         <TabsTrigger value="account">Profile</TabsTrigger>
-        <TabsTrigger value="settings">Settings</TabsTrigger>
+        <TabsTrigger value="plan">Plan</TabsTrigger>
         <TabsTrigger value="billing">Billing</TabsTrigger>
       </TabsList>
       <TabsContent value="account" className="space-y-2">
         <Card>
           <CardHeader>
-            <CardTitle>Profile</CardTitle>
             <CardDescription>Make changes to your account information here.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-            {/* <div className="space-y-1">
-              <ProfilePicture />
-            </div> */}
             <div className="space-y-1">
               <Label htmlFor="name">Name</Label>
               <Input id="name" placeholder="Name" defaultValue={user?.user_metadata.full_name} />
@@ -54,11 +50,10 @@ export default function AccountPage() {
           </CardFooter>
         </Card>
       </TabsContent>
-      <TabsContent value="settings" className="space-y-2">
+      <TabsContent value="plan" className="space-y-2">
         <Card>
           <CardHeader>
-            <CardTitle>Settings</CardTitle>
-            <CardDescription>Update your account settings here.</CardDescription>
+            <CardDescription>Update your subscription plan here</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="space-y-1">

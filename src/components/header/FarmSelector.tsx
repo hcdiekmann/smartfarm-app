@@ -49,7 +49,7 @@ export const FarmSelector: React.FC<FarmSelectorProps> = ({ currentFarmRef, onFa
           aria-expanded={open}
           className="w-[200px] justify-between"
         >
-          <FarmIcon className="h-4 w-4" />
+          <FarmIcon className="h-5 w-5" />
           {currentFarm ? currentFarm.name : "Select a farm"}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>

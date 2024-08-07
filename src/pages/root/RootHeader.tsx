@@ -66,9 +66,9 @@ export default function RootHeader() {
   return (
     <header className="flex h-14 items-center gap-2 border-b bg-muted/40 px-1 lg:h-[60px] lg:px-6">
       <div className="md:hidden">
-        <a href="/">
+        <Link to="/">
           <LogoIcon className="w-12 h-12 fill-current text-sfagreen dark:text-current" />
-        </a>
+        </Link>
       </div>
       <div className="flex-1 pl-2">
         <Breadcrumb>
@@ -111,6 +111,11 @@ export default function RootHeader() {
           </div>
         </SheetContent>
       </Sheet>
+
+      {/* Desktop only */}
+      <div className="hidden md:block">
+          <AvatarMenu />
+        </div>
     </header>
   );
 }

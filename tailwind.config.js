@@ -33,6 +33,9 @@ module.exports = {
         archived: {
           DEFAULT: "#6B7280",
         },
+        destructive: {
+          DEFAULT: "#731b1b",
+        },
 
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

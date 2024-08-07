@@ -1,17 +1,15 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useEffect, useMemo } from "react";
 import { useAuth } from "./AuthProvider";
 import { Profile, useFetchProfile } from "@/hooks/auth/useProfile";
 
 interface AccountContextType {
-    profile: Profile | undefined;
-    isLoading: boolean;
-    isError: boolean;
+    profile: Profile | null;
+    loading: boolean;
 }
 
 const AccountContext = createContext<AccountContextType>({
-    profile: undefined,
-    isLoading: false,
-    isError: false,
+    profile: null,
+    loading: true,
 });
 
 export const AccountProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -20,11 +18,14 @@ export const AccountProvider: React.FC<{ children: React.ReactNode }> = ({
     const { user } = useAuth();
     const { data: profile, isLoading, isError } = useFetchProfile(user?.id ?? '');
 
-    const contextValue: AccountContextType = {
-        profile: profile,
-        isLoading,
-        isError,
-    };
+    const contextValue = useMemo(() => ({
+        profile: profile ?? null,
+        loading: isLoading || (!!user && !profile && !isError),
+    }), [profile, isLoading, user, isError]);
+
+    if (isError) {
+        console.error("Error loading profile");
+    }
 
     return (
         <AccountContext.Provider value={contextValue}>
@@ -33,4 +34,10 @@ export const AccountProvider: React.FC<{ children: React.ReactNode }> = ({
     );
 };
 
-export const useAccount = () => useContext(AccountContext);
+export const useAccount = (): AccountContextType => {
+    const context = useContext(AccountContext);
+    if (context === undefined) {
+        throw new Error("useAccount must be used within an AccountProvider");
+    }
+    return context;
+};

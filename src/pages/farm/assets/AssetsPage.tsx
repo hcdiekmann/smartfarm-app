@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useFetchAssets } from '@/hooks/assets/useAssets';
 import { Button } from '@/components/ui/button';
-import { CirclePlus } from 'lucide-react';
+import { ChevronDown, CirclePlus } from 'lucide-react';
 import { useFarm } from '@/provider/FarmProvider';
 import { AddAssetDialog } from './AddAssetDialog';
 import { columns } from './data-table/columns';
@@ -20,9 +20,13 @@ const AssetsPage: React.FC = () => {
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Assets</h1>
         <Button onClick={() => setIsAddAssetDialogOpen(true)}>
-          <CirclePlus className="mr-2 h-4 w-4" /> Add Asset
+          <CirclePlus className="mr-2 h-4 w-4" /> 
+          Add Asset
+          <ChevronDown className="ml-1 h-3.5 w-3.5" />
         </Button>
       </div>
+
+      {/* Change to using a dropdown of asset types linking to a specific page*/}
 
       <AddAssetDialog
         isOpen={isAddAssetDialogOpen}

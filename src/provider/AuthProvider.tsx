@@ -1,4 +1,11 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  useCallback,
+} from "react";
 import {
   User,
   AuthError,
@@ -10,14 +17,15 @@ import {
 import { supabase } from "../api/supabase/client";
 import { useNavigate } from "react-router-dom";
 
-type PasswordResetResponse = {
-  data: {};
-  error: null;
-}
-| {
-  data: null;
-  error: AuthError;
-}
+type PasswordResetResponse =
+  | {
+      data: {};
+      error: null;
+    }
+  | {
+      data: null;
+      error: AuthError;
+    };
 
 interface AuthContextType {
   user: User | null;
@@ -48,41 +56,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const getSession = async () => {
-      if (user) return setLoading(false);
-
       const { data, error } = await supabase.auth.getSession();
-      console.log("getSession", data, error);
       if (error) {
         console.error("Error fetching session:", error.message);
         setUser(null);
-      }
-      if (data?.session?.user) {
+      } else if (data?.session?.user) {
         setUser(data.session.user);
       }
       setLoading(false);
     };
 
     getSession();
-  }, []);
 
-  useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, session) => {
-        switch (event) {
-          case "INITIAL_SESSION":
-          case "SIGNED_IN":
-          case "TOKEN_REFRESHED":
-          case "USER_UPDATED":
-            if (session?.user) {
-              setUser(session.user);
-            }
-            break;
-          case "SIGNED_OUT":
-            setUser(null);
-            break;
-          case "PASSWORD_RECOVERY":
-            navigate("/update-password");
-            break;
+        setUser(session?.user ?? null);
+        if (event === "PASSWORD_RECOVERY") {
+          navigate("/update-password");
         }
       }
     );
@@ -92,51 +82,60 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     };
   }, []);
 
-  const signUp = async (
-    name: string,
-    email: string,
-    password: string
-  ) => {
-    const authResponse = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: name,
-          email: email,
+  const signUp = useCallback(
+    async (
+      name: string,
+      email: string,
+      password: string
+    ): Promise<AuthResponse> => {
+      return await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: name,
+            email: email,
+          },
         },
-      },
-    });
+      });
+    },
+    []
+  );
 
-    return authResponse;
-  };
+  const signInWithGoogle = useCallback(
+    async (isLogin: boolean): Promise<OAuthResponse> => {
+      return await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback/${
+            isLogin ? "login" : "signup"
+          }`,
+        },
+      });
+    },
+    []
+  );
 
-  const signInWithGoogle = async (isLogin: boolean) => {
-    return await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback/${
-          isLogin ? "login" : "signup"
-        }`,
-      },
-    });
-  };
+  const contextValue = useMemo(
+    () => ({
+      user,
+      loading,
+      signUp,
+      login: (email: string, password: string) =>
+        supabase.auth.signInWithPassword({ email, password }),
+      signInWithGoogle,
+      signOut: () => supabase.auth.signOut(),
+      resetPassword: (email: string) =>
+        supabase.auth.resetPasswordForEmail(email),
+      updatePassword: (newPassword: string) =>
+        supabase.auth.updateUser({ password: newPassword }),
+    }),
+    [user, loading, signUp, signInWithGoogle]
+  );
 
-  const value = {
-    user,
-    loading,
-    signUp,
-    login: (email: string, password: string) =>
-      supabase.auth.signInWithPassword({ email, password }),
-    signInWithGoogle,
-    signOut: () => supabase.auth.signOut(),
-    resetPassword: (email: string) =>
-      supabase.auth.resetPasswordForEmail(email),
-    updatePassword: (newPassword: string) =>
-      supabase.auth.updateUser({ password: newPassword }),
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+  );
 };
 
 export const useAuth = (): AuthContextType => {

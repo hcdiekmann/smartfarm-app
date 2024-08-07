@@ -83,19 +83,19 @@ export function DataTableRowActions<TData>({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem>
-          <FilePenLine className="mr-2 h-4 w-4 text-muted-foreground/70" />
+          <FilePenLine className="mr-2 h-4 w-4 " />
           Edit
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         {asset.status === "archived" && (
           <DropdownMenuItem onClick={handleRestore}>
-            <ArchiveRestore className="mr-2 h-4 w-4 text-muted-foreground/70" />
+            <ArchiveRestore className="mr-2 h-4 w-4" />
             Restore
           </DropdownMenuItem>
         )}
         {asset.status === "active" ? (
           <DropdownMenuItem onClick={handleArchive}>
-            <Archive className="mr-2 h-4 w-4 text-muted-foreground/70" />
+            <Archive className="mr-2 h-4 w-4 " />
             Archive
           </DropdownMenuItem>
         ) : (
@@ -110,14 +110,14 @@ export function DataTableRowActions<TData>({
                   setIsDeleteDialogOpen(true);
                 }}
               >
-                <Trash2 className="mr-2 h-4 w-4 text-muted-foreground/70" />
+                <Trash2 className="mr-2 h-4 w-4" />
                 Delete
               </DropdownMenuItem>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
                 <AlertDialogTitle>
-                  Are you sure you want to delete this {asset.asset_type} asset?
+                  Are you sure you want to delete this {asset.asset_type}?
                 </AlertDialogTitle>
                 <AlertDialogDescription>
                   This action cannot be undone. This will permanently delete the
@@ -126,9 +126,11 @@ export function DataTableRowActions<TData>({
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={handleDelete}>
-                    Delete
-                </AlertDialogAction>
+                <Button onClick={handleDelete}
+                  variant="destructive"
+                  >
+                  Delete
+                </Button>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>

@@ -24,7 +24,7 @@ type CreateFarmFormInputs = z.infer<typeof formSchema>;
 
 export function CreateFarmForm() {
   const { profile } = useAccount();
-  const farmName = profile?.full_name.split(' ')[0] + "'s Farm";
+  const farmName = profile ? profile.full_name.split(' ')[0] + "'s Farm" : "";
   const createFarm = useCreateFarm();
   const form = useForm<CreateFarmFormInputs>({
     resolver: zodResolver(formSchema),
