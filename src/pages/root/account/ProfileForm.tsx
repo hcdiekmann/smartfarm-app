@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useUpdateProfile, Profile } from "@/hooks/account/useProfile";
 import { useFetchCountries, Country } from "@/hooks/account/useCountries";
+import { Loader2 } from "lucide-react";
 
 
 const formSchema = z.object({
@@ -36,6 +37,8 @@ export function ProfileForm({ profile }: ProfileFormProps) {
       country: profile.country,
     },
   });
+
+  const isDirty = form.formState.isDirty;
 
   useEffect(() => {
     form.reset({
@@ -90,7 +93,6 @@ export function ProfileForm({ profile }: ProfileFormProps) {
                     <SelectContent>
                       {countries?.map((country: Country) => (
                         <SelectItem key={country.id} value={country.name}>
-                          <div className="flex items-center">
                             <ReactCountryFlag
                               countryCode={country.iso2}
                               svg
@@ -102,7 +104,6 @@ export function ProfileForm({ profile }: ProfileFormProps) {
                               title={country.name}
                             />
                             {country.name}
-                          </div>
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -119,7 +120,9 @@ export function ProfileForm({ profile }: ProfileFormProps) {
             </FormItem>
           </CardContent>
           <CardFooter>
-            <Button type="submit">Save changes</Button>
+          <Button type="submit" disabled={!isDirty || updateProfileMutation.isPending}>
+              {updateProfileMutation.isPending ? <Loader2/> : "Save"}
+            </Button>
           </CardFooter>
         </form>
       </Form>
