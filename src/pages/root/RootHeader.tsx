@@ -64,7 +64,7 @@ export default function RootHeader() {
   const pathNames = location.pathname.split("/").filter((x) => x);
 
   return (
-    <header className="flex h-14 items-center gap-2 border-b bg-muted/40 px-1 lg:h-[60px] lg:px-6">
+    <header className="flex h-14 items-center gap-2 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
       <div className="md:hidden">
         <Link to="/">
           <LogoIcon className="w-12 h-12 fill-current text-sfagreen dark:text-current" />

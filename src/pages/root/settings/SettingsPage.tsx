@@ -41,10 +41,34 @@ export default function SettingsPage() {
         </Card>
       </TabsContent>
       <TabsContent value="notifications" className="space-y-2">
-        <h1>Notifications</h1>
+        <Card>
+            <CardHeader>
+                <CardDescription>
+                Update your notification settings here.
+                </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+                
+            </CardContent>
+            {/* <CardFooter>
+                <Button>Save</Button>
+            </CardFooter> */}
+        </Card>
       </TabsContent>
       <TabsContent value="security" className="space-y-2">
-        <h1>Security</h1>
+        <Card>
+            <CardHeader>
+                <CardDescription>
+                Manage your security settings here.
+                </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+                
+            </CardContent>
+            {/* <CardFooter>
+                <Button>Save</Button>
+            </CardFooter> */}
+        </Card>
       </TabsContent>
     </Tabs>
   );

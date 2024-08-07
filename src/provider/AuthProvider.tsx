@@ -29,7 +29,7 @@ type PasswordResetResponse =
 
 interface AuthContextType {
   user: User | null;
-  loading: boolean;
+  isLoading: boolean;
   login: (
     email: string,
     password: string
@@ -52,7 +52,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getSession = async () => {
@@ -63,7 +63,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       } else if (data?.session?.user) {
         setUser(data.session.user);
       }
-      setLoading(false);
+      setIsLoading(false);
     };
 
     getSession();
@@ -119,7 +119,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const contextValue = useMemo(
     () => ({
       user,
-      loading,
+      isLoading,
       signUp,
       login: (email: string, password: string) =>
         supabase.auth.signInWithPassword({ email, password }),
@@ -130,7 +130,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       updatePassword: (newPassword: string) =>
         supabase.auth.updateUser({ password: newPassword }),
     }),
-    [user, loading, signUp, signInWithGoogle]
+    [user, isLoading, signUp, signInWithGoogle]
   );
 
   return (

@@ -1,31 +1,29 @@
-import React, { createContext, useContext, useEffect, useMemo } from "react";
+import React, { createContext, useContext, useMemo } from "react";
 import { useAuth } from "./AuthProvider";
-import { Profile, useFetchProfile } from "@/hooks/auth/useProfile";
+import { Profile, useFetchProfile } from "@/hooks/account/useProfile";
 
 interface AccountContextType {
     profile: Profile | null;
-    loading: boolean;
+    isLoading: boolean;
 }
 
 const AccountContext = createContext<AccountContextType>({
     profile: null,
-    loading: true,
+    isLoading: true,
 });
 
 export const AccountProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
 }) => {
     const { user } = useAuth();
-    const { data: profile, isLoading, isError } = useFetchProfile(user?.id ?? '');
+    const { data: profile, isLoading } = useFetchProfile(user?.id ?? "");
 
     const contextValue = useMemo(() => ({
         profile: profile ?? null,
-        loading: isLoading || (!!user && !profile && !isError),
-    }), [profile, isLoading, user, isError]);
+        isLoading,
+    }), [user, profile, isLoading]);
 
-    if (isError) {
-        console.error("Error loading profile");
-    }
+  
 
     return (
         <AccountContext.Provider value={contextValue}>

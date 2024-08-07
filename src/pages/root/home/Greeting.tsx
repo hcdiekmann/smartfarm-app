@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuth } from '@/provider/AuthProvider';
+import { useAccount } from '@/provider/AccountProvider';
 
 const getGreeting = () => {
   const currentHour = new Date().getHours();
@@ -12,13 +12,13 @@ const getGreeting = () => {
 };
 
 const Greeting = () => {
-  const { user } = useAuth();
+  const { profile } = useAccount();
   const greeting = React.useMemo(() => getGreeting(), []);
 
   return (
     <div className="flex items-center">
       <h1 className="text-lg font-semibold md:text-2xl">
-        {greeting}, {user?.user_metadata.full_name}
+        {greeting}, {profile?.full_name}
       </h1>
     </div>
   );

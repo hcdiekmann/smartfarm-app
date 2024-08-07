@@ -27,8 +27,8 @@ import ShopPage from "@/pages/root/shop/ShopPage";
 import SettingsPage from "./pages/root/settings/SettingsPage";
 
 const Private: React.FC<{ element: React.ReactElement }> = ({ element }) => {
-  const { loading: userLoading } = useAuth();
-  const { profile, loading: profileLoading } = useAccount();
+  const { isLoading: userLoading } = useAuth();
+  const { profile, isLoading: profileLoading } = useAccount();
 
   if (userLoading || profileLoading) return <RootSkeleton />;
   return profile ? element : <Navigate to="/login" />;
