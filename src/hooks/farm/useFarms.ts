@@ -1,9 +1,11 @@
 import { supabase } from "../../api/supabase/client";
-import { Tables } from "types/database.types";
+import { Tables, TablesInsert, TablesUpdate } from "types/database.types";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export type Farm = Tables<'farms'>;
+export type FarmInsert = TablesInsert<'farms'>;
+export type FarmUpdate = TablesUpdate<'farms'>;
 
 export const useFetchFarms = () => {
   return useQuery<Farm[], Error>({
@@ -24,6 +26,7 @@ export const useCreateFarm = () => {
   });
 };
 
+// change to use FarmInsert
 const createFarm = async (name: string) => {
   const { data: farm, error } = await supabase
     .from("farms")
@@ -31,7 +34,6 @@ const createFarm = async (name: string) => {
   if (error) {
     toast.error("Error creating farm", {
       duration: 4000,
-      description: `${error.message}`,
     });
     throw new Error(error.message);
   }
@@ -45,7 +47,6 @@ const fetchFarms = async () => {
   if (error) {
     toast.error("Error loading farms", {
       duration: 4000,
-      description: `${error.message}`,
     });
     throw new Error(error.message);
   }

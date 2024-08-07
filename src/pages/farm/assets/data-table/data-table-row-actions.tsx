@@ -5,7 +5,7 @@ import {
   useArchiveAsset,
   useDeleteAsset,
   useRestoreAsset,
-} from "@/hooks/assets/useAssets";
+} from "@/hooks/farm/useAssets";
 
 import {
   MoreHorizontal,

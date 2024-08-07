@@ -25,7 +25,7 @@ export default function RootHeader() {
 
   if (location.pathname === "/")
     return (
-      <header className="flex h-14 items-center gap-2 border-b px-2 lg:h-[60px] lg:px-6">
+      <header className="flex h-14 items-center gap-2 border-b bg-muted/40 px-2 lg:h-[60px] lg:px-6">
         <div className="md:hidden">
           <Link to="/">
             <LogoIcon className="w-12 h-12 fill-current text-sfagreen dark:text-current" />

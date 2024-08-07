@@ -21,7 +21,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { ResponsiveDialog } from "@/components/ui/responsive-dialog";
-import { useCreateAsset, AssetInsert } from "@/hooks/assets/useAssets";
+import { useCreateAsset, AssetInsert } from "@/hooks/farm/useAssets";
 import { useFarm } from "@/provider/FarmProvider";
 import { assets } from "./asset-types";
 

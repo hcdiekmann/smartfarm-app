@@ -47,7 +47,7 @@ export const FarmSelector: React.FC<FarmSelectorProps> = ({ currentFarmRef, onFa
           variant="ghost"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="w-[200px] h-8 justify-between hover:bg-white"
         >
           <FarmIcon className="h-5 w-5" />
           {currentFarm ? currentFarm.name : "Select a farm"}

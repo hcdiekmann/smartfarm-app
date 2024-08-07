@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { Asset } from "@/hooks/assets/useAssets";
+import { Asset } from "@/hooks/farm/useAssets";
 import { Checkbox } from "@/components/ui/checkbox";
 
 import { assets } from "../asset-types";

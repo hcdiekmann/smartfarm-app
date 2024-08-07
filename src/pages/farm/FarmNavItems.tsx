@@ -4,6 +4,9 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { UsersIcon, LayoutPanelLeft, ScrollText, ClipboardList, Receipt, HandCoins  } from "lucide-react";
 import { TractorIcon } from "@/components/ui/icons";
+import { useFetchPeople } from '@/hooks/farm/usePeople';
+import { useFetchAssets } from '@/hooks/farm/useAssets';
+import { useFarm } from '@/provider/FarmProvider';
 
 interface FarmNavItemsProps {
   shortRef: string;
@@ -14,11 +17,15 @@ interface FarmNavItemsProps {
 export const FarmNavItems: React.FC<FarmNavItemsProps> = ({ shortRef, orientation = 'vertical', onCloseSheet }) => {
   const location = useLocation();
   const isActive = (path: string) => location.pathname === path;
+  const { currentFarm } = useFarm();
+
+  const { data: people, isLoading: isPeopleLoading } = useFetchPeople(currentFarm?.id);
+  const { data: assets, isLoading: isAssetsLoading } = useFetchAssets(currentFarm?.id);
 
   const navItems = [
     { to: `/farm/${shortRef}`, icon: LayoutPanelLeft, label: 'Overview' },
-    { to: `/farm/${shortRef}/assets`, icon: TractorIcon, label: 'Assets', badge: '0' },
-    { to: `/farm/${shortRef}/people`, icon: UsersIcon, label: 'People', badge: '1' },
+    { to: `/farm/${shortRef}/assets`, icon: TractorIcon, label: 'Assets', badge: isAssetsLoading ? "" : assets?.length.toString() },
+    { to: `/farm/${shortRef}/people`, icon: UsersIcon, label: 'People', badge: isPeopleLoading ? "" : people?.length.toString() },
     { to: `/farm/${shortRef}/tasks`, icon: ClipboardList, label: 'Tasks' },
     { to: `/farm/${shortRef}/logs`, icon: ScrollText, label: 'Logs' },
     { to: `/farm/${shortRef}/invoices`, icon: Receipt, label: 'Invoices' },

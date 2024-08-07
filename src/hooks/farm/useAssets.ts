@@ -11,6 +11,7 @@ export const useFetchAssets = (farmId?: string) => {
   return useQuery<Asset[], Error>({
     queryKey: ["assets", farmId],
     queryFn: () => fetchAssets(farmId),
+    enabled: !!farmId,
   });
 };
 
@@ -88,7 +89,7 @@ export const useRestoreAsset = () => {
 
 const fetchAssets = async (farmId?: string) => {
   let query = supabase.from("assets").select();
-  
+  // review this logic
   if (farmId) {
     query = query.eq('farm_id', farmId);
   }
