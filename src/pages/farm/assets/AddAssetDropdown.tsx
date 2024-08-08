@@ -2,14 +2,13 @@ import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { CirclePlus, ChevronDown } from "lucide-react";
 import { assets } from "./asset-types";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function AddAssetDropdown() {
-    const location = useLocation();
     const navigate = useNavigate();
 
     const handleAddAssetClick = (assetType: string) => {
-        navigate(`${location.pathname}/${assetType}/add`);
+        navigate(`${assetType}/create`);
       };
 
     return (

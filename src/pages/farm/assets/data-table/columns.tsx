@@ -6,6 +6,7 @@ import { assets } from "../asset-types";
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions";
 import { Badge } from "@/components/ui/badge";
+import { Activity } from "lucide-react";
 
 export const columns: ColumnDef<Asset>[] = [
   {
@@ -82,6 +83,7 @@ export const columns: ColumnDef<Asset>[] = [
       const status = row.getValue("status") as string;
       return (
         <Badge className="capitalize" variant={status === "active" ? "active" : "archived"}>
+          {status === "active" && <Activity className="mr-0.5 h-3 w-3" />}
           {status}
         </Badge>
       );

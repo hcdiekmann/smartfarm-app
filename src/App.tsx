@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/provider/AuthProvider";
 import { AccountProvider, useAccount } from "./provider/AccountProvider";
 import { FarmProvider } from "@/provider/FarmProvider";
@@ -25,6 +25,7 @@ import AccountPage from "@/pages/root/account/AccountPage";
 import NewsPage from "@/pages/root/news/NewsPage";
 import ShopPage from "@/pages/root/shop/ShopPage";
 import SettingsPage from "./pages/root/settings/SettingsPage";
+import CreateLandAssetForm from "./pages/farm/assets/forms/CreateLandAssetForm";
 
 const Private: React.FC<{ element: React.ReactElement }> = ({ element }) => {
   const { isLoading: userLoading } = useAuth();
@@ -71,7 +72,11 @@ const App: React.FC = () => {
                 element={<Private element={<FarmLayout />} />}
               >
                 <Route index element={<FarmOverview />} />
-                <Route path="assets" element={<AssetsPage />} />
+                <Route path="assets" element={<Outlet />}>
+                  <Route index element={<AssetsPage />} />
+                  <Route path="land/create" element={<CreateLandAssetForm />} />
+                  
+                </Route>
                 <Route path="people" element={<PeoplePage />} />
                 <Route path="tasks" element={<TasksPage />} />
                 <Route path="logs" element={<LogsPage />} />
