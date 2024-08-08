@@ -21,57 +21,56 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { ResponsiveDialog } from "@/components/ui/responsive-dialog";
-import { useCreateAsset, AssetInsert } from "@/hooks/farm/useAssets";
 import { useFarm } from "@/provider/FarmProvider";
-import { assets } from "./asset-types";
+import { PersonInsert, useCreatePerson } from "@/hooks/farm/usePeople";
 
 const formSchema = z.object({
   name: z.string().min(1, "A name is required."),
-  asset_type: z.enum(
-    assets.map(asset => asset.value) as [string, ...string[]],
+  role: z.enum(
+    ["manager", "worker"] as const,
     {
-      required_error: "Please select an asset type.",
+      required_error: "Please select a role.",
     }
   ),
 });
 
-type CreateAssetFormInputs = z.infer<typeof formSchema>;
+type AddPersonFormInputs = z.infer<typeof formSchema>;
 
-interface AddAssetDialogProps {
+interface AddPersonDialogProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const AddAssetDialog: React.FC<AddAssetDialogProps> = ({
+export const AddPersonDialog: React.FC<AddPersonDialogProps> = ({
   isOpen,
   setIsOpen,
 }) => {
   const { currentFarm } = useFarm();
-  const { mutate: createAsset, isPending } = useCreateAsset();
+  const { mutate: createPerson, isPending } = useCreatePerson();
 
-  const form = useForm<CreateAssetFormInputs>({
+  const form = useForm<AddPersonFormInputs>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      asset_type: "animal",
+      role: "worker",
     },
   });
 
-  const handleSubmit = (values: CreateAssetFormInputs) => {
+  const handleSubmit = (values: AddPersonFormInputs) => {
     if (!currentFarm) return;
 
-    createAsset(
+    createPerson(
       {
         ...values,
         farm_id: currentFarm.id,
-      } as AssetInsert,
+      } as PersonInsert,
       {
         onSuccess: () => {
           setIsOpen(false);
           form.reset();
         },
         onError: (error) => {
-          console.error("Failed to create asset:", error);
+          console.error("Failed to add person", error);
           // Add user-facing error message here and remove supabase error message from queryFn
         },
       }
@@ -82,8 +81,8 @@ export const AddAssetDialog: React.FC<AddAssetDialogProps> = ({
     <ResponsiveDialog
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      title="New Asset"
-      description={`Add a new asset to ${currentFarm?.name}`}
+      title="New Person"
+      description={`Add a new person to ${currentFarm?.name}`}
     >
       <Form {...form}>
         <form
@@ -95,7 +94,7 @@ export const AddAssetDialog: React.FC<AddAssetDialogProps> = ({
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Asset Name</FormLabel>
+                <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input placeholder="Enter a name" {...field} />
                 </FormControl>
@@ -105,32 +104,22 @@ export const AddAssetDialog: React.FC<AddAssetDialogProps> = ({
           />
           <FormField
             control={form.control}
-            name="asset_type"
+            name="role"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Asset Type</FormLabel>
+                <FormLabel>Role</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select the asset type" />
+                      <SelectValue placeholder="Choose the role" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {assets.map((asset) => (
-                      <SelectItem
-                        key={asset.value}
-                        value={asset.value}
-                        className="hover:bg-accent hover:text-accent-foreground"
-                      >
-                        <div className="flex items-center">
-                          {React.createElement(asset.icon, { className: "mr-2 h-4 w-4" })}
-                          <span>{asset.label}</span>
-                        </div>
-                      </SelectItem>
-                    ))}
+                    <SelectItem value="manager">Manager</SelectItem>
+                    <SelectItem value="worker">Worker</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -144,7 +133,7 @@ export const AddAssetDialog: React.FC<AddAssetDialogProps> = ({
                 Adding...
               </>
             ) : (
-              "Add Asset"
+              "Add Person"
             )}
           </Button>
         </form>

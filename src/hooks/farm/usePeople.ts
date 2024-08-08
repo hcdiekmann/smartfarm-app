@@ -30,6 +30,20 @@ export const useCreatePerson = () => {
     });
 };
 
+export const useDeletePerson = () => {
+    const queryClient = useQueryClient();
+    return useMutation<{ id: string; farm_id: string | null }, Error, { id: string; farm_id: string | null }>({
+        mutationFn: deletePerson,
+        onSuccess: (data) => {
+        queryClient.invalidateQueries({
+            queryKey: ["farm_members", data.farm_id],
+        });
+        toast.success("Person deleted successfully", {
+            duration: 5000,
+        });
+        },
+    });
+};
 
 
 const fetchPeople = async (farmId?: string) => {
@@ -56,6 +70,19 @@ const createPerson = async (newPerson: PersonInsert) => {
     if (error) {
       throw new Error(error.message);
     }
+    return person;
+}
+
+const deletePerson = async (person: { id: string; farm_id: string | null }) => {
+    const { error } = await supabase
+    .from("farm_members")
+    .delete()
+    .eq("id", person.id);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
     return person;
 }
     

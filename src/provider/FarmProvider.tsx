@@ -1,11 +1,13 @@
 import React, { createContext, useContext, useState } from 'react';
 import { Farm, useFetchFarms } from '@/hooks/farm/useFarms';
+import { useAccount } from './AccountProvider';
 
 
 type FarmContextType = {
+  farms: Farm[];
   currentFarm: Farm | null;
   setCurrentFarm: (farm: Farm | null) => void;
-  farms: Farm[];
+  owner: boolean;
   isLoading: boolean;
   isError: boolean;
 };
@@ -13,11 +15,15 @@ type FarmContextType = {
 const FarmContext = createContext<FarmContextType | undefined>(undefined);
 
 export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [currentFarm, setCurrentFarm] = useState<Farm | null>(null);
   const { data: farms, isLoading, isError } = useFetchFarms();
+  const { profile } = useAccount();
+  
+  const [currentFarm, setCurrentFarm] = useState<Farm | null>(null);
+
+  const owner = currentFarm?.owner_id === profile?.id;
 
   return (
-    <FarmContext.Provider value={{ currentFarm, setCurrentFarm, farms: farms || [], isLoading, isError }}>
+    <FarmContext.Provider value={{farms: farms || [], currentFarm, setCurrentFarm,owner, isLoading, isError }}>
       {children}
     </FarmContext.Provider>
   );
