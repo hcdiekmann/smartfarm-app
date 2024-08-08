@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { MenuIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
+import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { useFarm } from "@/provider/FarmProvider";
 import { FarmNavItems } from '@/pages/farm/FarmNavItems';
 import { LogoIcon } from '@/components/ui/icons';
@@ -11,7 +11,7 @@ import { FarmSelector } from '@/components/header/FarmSelector';
 
 const FarmHeader = () => {
   const { shortRef } = useParams<{ shortRef: string }>();
-  const { setCurrentFarm, farms} = useFarm();
+  const { setCurrentFarm, farms, getUserRole } = useFarm();
   const [open, setOpen] = React.useState(false);
 
   const currentFarm = React.useMemo(() => {
@@ -52,6 +52,10 @@ const FarmHeader = () => {
           </Button>
         </SheetTrigger>
         <SheetContent side="right" className="flex flex-col">
+          <SheetTitle>{currentFarm?.name}</SheetTitle>
+          <SheetDescription className='capitalize'>
+            {getUserRole(currentFarm?.id || "")}
+          </SheetDescription>
           <div className="flex-1 mt-8">
             <FarmNavItems shortRef={shortRef!} onCloseSheet={handleCloseSheet} />
           </div>

@@ -11,7 +11,7 @@ import {
 import { Link, useLocation } from "react-router-dom";
 import { AvatarMenu } from "@/components/header/AvatarMenu";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
+import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { MenuIcon } from "lucide-react";
 import { RootNavItems } from './RootNavItems';
 
@@ -22,6 +22,31 @@ export default function RootHeader() {
   const handleCloseSheet = () => {
     setOpen(false);
   };
+
+  const MobileSheetMenu = () => {
+    return (
+      <Sheet open={open} onOpenChange={setOpen}>
+          <SheetTrigger asChild>
+            <Button
+              variant="outline"
+              size="icon"
+              className="shrink-0 md:hidden"
+            >
+              <MenuIcon className="h-5 w-5" />
+              <span className="sr-only">Toggle navigation menu</span>
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="right" className="flex flex-col">
+            <SheetTitle className='font-baloo text-sfagreen dark:text-white'>Smart Farming Africa</SheetTitle>
+            <SheetDescription></SheetDescription>
+            <div className="flex-1 mt-8">
+              <RootNavItems onCloseSheet={handleCloseSheet} />
+            </div>
+          </SheetContent>
+        </Sheet>
+    );
+  }
+      
 
   if (location.pathname === "/")
     return (
@@ -35,24 +60,8 @@ export default function RootHeader() {
           <FarmSelector />
         </div>
         
-        {/* Mobile only Sheet component */}
-        <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger asChild>
-            <Button
-              variant="outline"
-              size="icon"
-              className="shrink-0 md:hidden"
-            >
-              <MenuIcon className="h-5 w-5" />
-              <span className="sr-only">Toggle navigation menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="right" className="flex flex-col">
-            <div className="flex-1 mt-8">
-              <RootNavItems onCloseSheet={handleCloseSheet} />
-            </div>
-          </SheetContent>
-        </Sheet>
+        {/* Mobile only */}
+        <MobileSheetMenu />
 
         {/* Desktop only */}
         <div className="hidden md:block">
@@ -93,24 +102,8 @@ export default function RootHeader() {
         </Breadcrumb>
       </div>
       
-      {/* Mobile only Sheet component for non-root pages */}
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger asChild>
-          <Button
-            variant="outline"
-            size="icon"
-            className="shrink-0 md:hidden"
-          >
-            <MenuIcon className="h-5 w-5" />
-            <span className="sr-only">Toggle navigation menu</span>
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="right" className="flex flex-col">
-          <div className="flex-1 mt-8">
-            <RootNavItems onCloseSheet={handleCloseSheet} />
-          </div>
-        </SheetContent>
-      </Sheet>
+      {/* Mobile only */}
+      <MobileSheetMenu />
 
       {/* Desktop only */}
       <div className="hidden md:block">
