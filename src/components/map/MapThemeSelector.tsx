@@ -10,12 +10,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../ui/tooltip";
 
 interface MapThemeSelectorProps {
   setMapTheme: (theme: MapTheme) => void;
@@ -24,19 +18,13 @@ interface MapThemeSelectorProps {
 const MapThemeSelector: React.FC<MapThemeSelectorProps> = ({ setMapTheme }) => {
   return (
     <DropdownMenu>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <DropdownMenuTrigger asChild>
-              <Button size="icon" variant="outline" className="ghost">
-                <Map className="h-5 w-5" />
-                <span className="sr-only">Toggle map style</span>
-              </Button>
-            </DropdownMenuTrigger>
-          </TooltipTrigger>
-          <TooltipContent>Map style</TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+
+      <DropdownMenuTrigger asChild>
+        <Button size="icon" variant="outline" className="ghost">
+          <Map className="h-5 w-5" />
+          <span className="sr-only">Toggle map style</span>
+        </Button>
+      </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Map style</DropdownMenuLabel>
@@ -54,6 +42,7 @@ const MapThemeSelector: React.FC<MapThemeSelectorProps> = ({ setMapTheme }) => {
           <span>Satellite</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
+      
     </DropdownMenu>
   );
 };
