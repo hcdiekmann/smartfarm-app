@@ -4,22 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions";
 import { Person } from "@/hooks/farm/usePeople";
-import { Badge } from "@/components/ui/badge";
-
-const RoleBadge = ({ role }: { role: string }) => {
-  const baseClasses = "uppercase text-xs font-semibold rounded-sm px-2 py-1";
-  const roleColors = {
-    worker: "bg-blue-100 text-blue-800 dark:bg-blue-800/50 dark:text-blue-100",
-    owner: "bg-green-100 text-green-800 dark:bg-green-800/50 dark:text-green-100",
-    manager: "bg-orange-100 text-orange-800 dark:bg-orange-800/50 dark:text-orange-100",
-  };
-
-  return (
-    <Badge className={`${baseClasses} ${roleColors[role as keyof typeof roleColors]}`}>
-      {role}
-    </Badge>
-  );
-};
+import { RoleBadge } from "@/components/people/RoleBadge";
 
 export const columns: ColumnDef<Person>[] = [
   {

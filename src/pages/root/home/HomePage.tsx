@@ -7,9 +7,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "react-router-dom";
 import Greeting from "@/pages/root/home/Greeting";
 import { useFarm } from '@/provider/FarmProvider';
+import { RoleBadge } from '@/components/people/RoleBadge';
 
 const HomePage: React.FC = () => {
-  const { farms, isLoading } = useFarm();
+  const { farms, isLoading, getUserRole } = useFarm();
 
   return (
     <>
@@ -42,12 +43,7 @@ const HomePage: React.FC = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center gap-4">
-                    <span className="text-sm text-muted-foreground">
-                      Assets: 0
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      People: 1
-                    </span>
+                    <RoleBadge role={getUserRole(farm.id)} />
                   </div>
                 </CardContent>
               </Card>

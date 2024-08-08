@@ -1,6 +1,6 @@
-import React from "react";
 import { Row } from "@tanstack/react-table";
-import { MoreHorizontal, Trash2 } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
+import { IconUserX } from '@tabler/icons-react';
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -38,7 +38,6 @@ export function DataTableRowActions<TData>({
       });
     } catch (error) {
       console.error("Failed to delete person:", error);
-      // Optionally, add error handling here, such as showing a toast notification
     }
   };
 
@@ -54,7 +53,7 @@ export function DataTableRowActions<TData>({
         <DropdownMenuContent align="end">
           <AlertDialogTrigger asChild>
             <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-              <Trash2 className="mr-2 h-4 w-4" />
+              <IconUserX className="mr-2 h-4 w-4" />
               Remove
             </DropdownMenuItem>
           </AlertDialogTrigger>
